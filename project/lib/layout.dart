@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+
 /// a. creating StatefulWidget
 class AppLayout extends StatefulWidget{
   const AppLayout({Key? key}) : super(key: key);
@@ -13,55 +14,64 @@ class _AppLayoutState extends State{
   @override
   Widget build(BuildContext context) {
 /// returning a container widget
-    return Container(
-/// c. Setting a background image for entire layout
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/img/bg.jpg"),
-          fit: BoxFit.cover,
-        ),
-      ),
-/// d. Using Backdrop filter to blur the underlying image for the background
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-/// e. Creating the parent row
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-/// f. First Column for Left pane Section
-            Container(
-              width: 300,
-              child: Column(),
-              color: Colors.indigo.withOpacity(0.95),
-            ),
-/// g. Second column for Headers and Main Pane sections
-            Expanded(
-                child: Column(
-                  children: [
-/// h. Main Header section
-                    Container(
-                      height: 120,
-                      color: Colors.indigo.withOpacity(0.80),
-                      child: Row(),
-                    ),
-/// filter section
-                    Container(
-                      height: 120,
-                      color: Colors.deepPurple.withOpacity(0.60),
-                      child: Row(),
-                    ),
-/// i. Main Pane section
-                    const Expanded(
-                        child: Center(
-                          child: Text("Hellooooo World"),
-                        )
-                    )
-                  ],
-                )
-            )
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100.0),
+          child:AppBar(
+          backgroundColor: const Color(0xFF29324e),
+          actions: <Widget>[
+            Image(
+            image: AssetImage('img/logo.png'),
+            width: 160,
+            height: 45,
+          ),
+          SearchBarApp()
           ],
+          ),
         ),
-      ),
+    );
+  }
+}
+class SearchBarApp extends StatefulWidget {
+  const SearchBarApp({ Key? key }) : super(key: key);
+
+  @override
+  _SearchBarAppState createState() => _SearchBarAppState();
+}
+
+class _SearchBarAppState extends State<SearchBarApp> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+          child: SearchAnchor(
+              builder: (BuildContext context, SearchController controller) {
+            return SearchBar(
+              controller: controller,
+              padding: const MaterialStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.0)),
+              onTap: () {
+                controller.openView();
+              },
+              onChanged: (_) {
+                controller.openView();
+              },
+              leading: const Icon(Icons.search),
+            );
+          }, 
+          suggestionsBuilder: (BuildContext context, SearchController controller) {
+            return List<ListTile>.generate(5, (int index) {
+              final String item = 'item $index';
+              return ListTile(
+                title: Text(item),
+                onTap: () {
+                  setState(() {
+                    controller.closeView(item);
+                  });
+                },
+              );
+            });
+          }),
     );
   }
 }

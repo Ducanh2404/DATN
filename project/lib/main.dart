@@ -14,10 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Website Technologies',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorSchemeSeed: Colors.blueAccent,
+        useMaterial3: true,
       ),
-      home: const Scaffold(
-        body:AppLayout(),
+      home: const SafeArea(
+        child: Scaffold(
+          body: AppLayout()
+        )
       ),
     );
   }
