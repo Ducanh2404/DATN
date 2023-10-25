@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project/layout.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -13,33 +15,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Website Technologies',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-        home : Container(
-          child: Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.pink,
-      title: Text('Cua nàng Flutter'),
-    ),
-    body: buildColumn(),
-  )));
-  }
-}
-// extract ra hàm buildColumn ở đây
-class buildColumn extends StatelessWidget {
-const buildColumn({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context){
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.blueAccent,
-        image: DecorationImage(
-          image: AssetImage('assets/img/logo.png'),
-          fit:BoxFit.cover,
-          )
+      home: const Scaffold(
+        body:AppLayout(),
       ),
     );
   }
 }
+
+// // extract ra hàm buildColumn ở đây
+// class buildColumn extends StatelessWidget {
+//   const buildColumn({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: const BoxDecoration(
+//           color: Colors.blueAccent,
+//           image: DecorationImage(
+//             image: AssetImage('assets/img/logo.png'),
+//             fit: BoxFit.cover,
+//           )),
+//     );
+//   }
+// }
