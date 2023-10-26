@@ -17,11 +17,9 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Colors.blueAccent,
         useMaterial3: true,
       ),
-      home: const SafeArea(
-        child: Scaffold(
-          body: AppLayout()
-        )
-      ),
+      home: const Scaffold(
+        body: AppLayout()
+        ),
     );
   }
 }
