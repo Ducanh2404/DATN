@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/layout.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Website Technologies',
       theme: ThemeData(
+        fontFamily: GoogleFonts.chakraPetch().fontFamily,
         colorSchemeSeed: Colors.blueAccent,
         useMaterial3: true,
       ),
