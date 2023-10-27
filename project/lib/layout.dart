@@ -121,7 +121,10 @@ class _AppLayoutState extends State {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Image(image: AssetImage('img/logo.png'), width: 160),
+                InkWell(
+                    onTap: () {},
+                    child: const Image(
+                        image: AssetImage('img/logo.png'), width: 160)),
                 const SearchBarApp(),
                 Container(
                     child: Row(
