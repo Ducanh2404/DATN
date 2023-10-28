@@ -45,6 +45,7 @@ class _AppLayoutState extends State {
     /// returning a container widget
     return Scaffold(
       body: Column(children: [
+        //Header top
         Container(
             alignment: Alignment.center,
             width: double.infinity,
@@ -109,6 +110,7 @@ class _AppLayoutState extends State {
                 ],
               ),
             )),
+        //header mid
         Container(
           alignment: Alignment.center,
           width: double.infinity,
@@ -126,8 +128,7 @@ class _AppLayoutState extends State {
                     child: const Image(
                         image: AssetImage('img/logo.png'), width: 160)),
                 const SearchBarApp(),
-                Container(
-                    child: Row(
+                Row(
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 20.0),
@@ -175,11 +176,36 @@ class _AppLayoutState extends State {
                                   fontWeight: FontWeight.bold)),
                         )),
                   ],
-                )),
+                )
               ],
             ),
           ),
         ),
+        //Menu bar
+        Container(
+          decoration: const BoxDecoration(color: Color(0xFF29324e)),
+          alignment: Alignment.center,
+          child: const SizedBox(
+              width: 1600,
+              child: Row(
+                children: [
+                  Text(
+                    'Home',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  SizedBox(width: 100.0),
+                  Text(
+                    'About',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                  SizedBox(width: 100.0),
+                  Text(
+                    'Contact',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ],
+              )),
+        )
       ]),
     );
   }

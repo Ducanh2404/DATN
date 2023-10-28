@@ -25,20 +25,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// // extract ra hàm buildColumn ở đây
-// class buildColumn extends StatelessWidget {
-//   const buildColumn({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: const BoxDecoration(
-//           color: Colors.blueAccent,
-//           image: DecorationImage(
-//             image: AssetImage('assets/img/logo.png'),
-//             fit: BoxFit.cover,
-//           )),
-//     );
-//   }
-// }
