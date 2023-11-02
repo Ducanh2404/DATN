@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:project/header/header_top.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 /// a. creating StatefulWidget
 class AppLayout extends StatefulWidget {
@@ -15,8 +17,6 @@ class AppLayout extends StatefulWidget {
 
 /// b. Creating state for stateful widget
 class _AppLayoutState extends State {
- 
-
   @override
   Widget build(BuildContext context) {
     /// returning a container widget
@@ -24,6 +24,7 @@ class _AppLayoutState extends State {
       body: Column(children: [
         //Header top
         HeaderTop(),
+       
         //header mid
         Container(
           alignment: Alignment.center,
@@ -125,6 +126,32 @@ class _AppLayoutState extends State {
   }
 }
 
+class Example extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(itemBuilder: (context, index) {
+      return StickyHeader(
+        header: Container(
+          height: 50.0,
+          color: Colors.blueGrey[700],
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          alignment: Alignment.centerLeft,
+          child: Text('Header #$index',
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+        content: Container(
+          child: Image.network(
+            'https://ampet.vn/wp-content/uploads/2022/10/nuoi-cho-Corgi-6-1200x1200.jpg',
+            fit: BoxFit.cover,
+            width: 200.0, 
+            height: 200.0,
+          ),
+        ),
+      );
+    });
+  }
+}
 class SearchBarApp extends StatefulWidget {
   const SearchBarApp({Key? key}) : super(key: key);
 
