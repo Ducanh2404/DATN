@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:project/header/header_bottom.dart';
-import 'package:project/header/header_top.dart';
-import 'package:project/header/menu_bar.dart';
+import 'package:project/screen/header/header_bottom.dart';
+import 'package:project/screen/header/header_top.dart';
+import 'package:project/screen/header/menu_bar.dart';
 
 /// a. creating StatefulWidget
 class AppLayout extends StatefulWidget {
