@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:project/layout.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:project/all_imports.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Scaffold(
-        body: AppLayout()
+        body: WebLayout()
         ),
     );
   }

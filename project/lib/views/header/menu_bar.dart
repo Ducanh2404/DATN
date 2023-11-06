@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:project/all_imports.dart';
 
 class MenuItems extends StatefulWidget {
   const MenuItems({Key? key}) : super(key: key);
