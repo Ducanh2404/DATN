@@ -24,7 +24,7 @@ class _WebLayoutState extends State {
         HeaderBottom(),
         //Menu bar
         MenuItems(),
-        CarouselDemo(),
+        CarouselBanner(),
       ]),
     );
   }
