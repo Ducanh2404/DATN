@@ -1,4 +1,5 @@
 import 'package:project/all_imports.dart';
+import 'package:project/views/home/categories.dart';
 
 
 /// a. creating StatefulWidget
@@ -16,16 +17,21 @@ class _WebLayoutState extends State {
   Widget build(BuildContext context) {
     /// returning a container widget
     return Scaffold(
-      body: Column(children: [
-        //Header top
-        HeaderTop(),
-       
-        //header Bottom
-        HeaderBottom(),
-        //Menu bar
-        MenuItems(),
-        CarouselBanner(),
-      ]),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          //Header top
+          HeaderTop(),
+          //header Bottom
+          HeaderBottom(),
+          //Menu bar
+          MenuItems(),
+          //Banner
+          CarouselBanner(),
+          //Categories
+          Categories(),
+          OwlCarouselDemo(),
+        ]),
+      ),
     );
   }
 }
