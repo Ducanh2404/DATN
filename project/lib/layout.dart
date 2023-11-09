@@ -29,7 +29,7 @@ class _WebLayoutState extends State {
           CarouselBanner(),
           //Categories
           Categories(),
-          OwlCarouselDemo(),
+          Container(height: 800,)
         ]),
       ),
     );
