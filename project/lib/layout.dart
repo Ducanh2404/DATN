@@ -1,5 +1,4 @@
 import 'package:project/all_imports.dart';
-import 'package:project/views/home/categories.dart';
 
 
 /// a. creating StatefulWidget
@@ -29,7 +28,7 @@ class _WebLayoutState extends State {
           CarouselBanner(),
           //Categories
           Categories(),
-          Container(height: 800,)
+          PruductSlider(),
         ]),
       ),
     );

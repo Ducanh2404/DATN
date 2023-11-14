@@ -8,6 +8,7 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
+  CarouselController buttonCarouselController = CarouselController();
   final List<String> imageUrls = [
     'cate1.png',
     'cate2.jpg',
@@ -19,33 +20,42 @@ class _CategoriesState extends State<Categories> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 1600,
-        child: CarouselSlider(
-          items: imageUrls.map((imageUrl) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width / 4,
-                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
-                    child: Row(
-                      children: [
-                        Image(
-                          image: AssetImage(imageUrl),
-                          width: 394,
-                        )
-                      ],
-                    ));
-              },
-            );
-          }).toList(),
-          options: CarouselOptions(
-            padEnds: false,
-            height: 400,
-            viewportFraction: 1.0 / 4.0,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-          ),
+        child: Stack(
+          children: [
+            CarouselSlider(
+              carouselController: buttonCarouselController,
+              items: imageUrls.map((imageUrl) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: TextButton(
+                        style: ButtonStyle(
+                          overlayColor: TransparentButton(),
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.all(0)),
+                          
+                        ),
+                        child: Image(image: AssetImage(imageUrl),width: MediaQuery.sizeOf(context).width,),
+                        onPressed: () {},
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+              options: CarouselOptions(
+                aspectRatio: 7.4,
+                padEnds: false,
+                viewportFraction: 1.0 / 4.0,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+              ),
+            ),
+            ButtonNext(buttonCarouselController: buttonCarouselController),
+            ButtonPrev(buttonCarouselController: buttonCarouselController),
+          ],
         ));
   }
 }
