@@ -1,7 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class HeaderBottom extends StatefulWidget {
-const HeaderBottom({ Key? key }) : super(key: key);
+const HeaderBottom({ super.key });
 
   @override
   State<HeaderBottom> createState() => _HeaderBottomState();
@@ -53,7 +53,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                     ),
                     TextButton.icon(
                         style: TextButton.styleFrom(
-                            backgroundColor: Color(0xFF3E4B75),
+                            backgroundColor: const Color(0xFF3E4B75),
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.zero))),
                         onPressed: () {
@@ -68,7 +68,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                           width: 24,
                           height: 24,
                           alignment: Alignment.center,
-                          decoration: BoxDecoration(color: Color(0xFFfb4e4e)),
+                          decoration: const BoxDecoration(color: Color(0xFFfb4e4e)),
                           child: const Text('1',
                               style: TextStyle(
                                   color: Colors.white,
@@ -84,7 +84,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
   }
 }
 class SearchBarApp extends StatefulWidget {
-  const SearchBarApp({Key? key}) : super(key: key);
+  const SearchBarApp({super.key});
 
   @override
   _SearchBarAppState createState() => _SearchBarAppState();

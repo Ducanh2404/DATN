@@ -1,7 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class Categories extends StatefulWidget {
-  const Categories({Key? key}) : super(key: key);
+  const Categories({super.key});
 
   @override
   _CategoriesState createState() => _CategoriesState();
@@ -10,12 +10,12 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   CarouselController buttonCarouselController = CarouselController();
   final List<String> imageUrls = [
-    'cate1.png',
-    'cate2.jpg',
-    'cate3.png',
-    'cate4.png',
-    'cate5.png',
-    'cate6.png',
+    'img/cate1.png',
+    'img/cate2.jpg',
+    'img/cate3.png',
+    'img/cate4.png',
+    'img/cate5.png',
+    'img/cate6.png',
     // Add more image URLs as needed
   ];
   @override
@@ -35,7 +35,7 @@ class _CategoriesState extends State<Categories> {
                         style: ButtonStyle(
                           overlayColor: TransparentButton(),
                           padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(0)),
+                              const EdgeInsets.all(0)),
                           
                         ),
                         child: Image(image: AssetImage(imageUrl),width: MediaQuery.sizeOf(context).width,),

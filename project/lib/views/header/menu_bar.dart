@@ -1,7 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class MenuItems extends StatefulWidget {
-  const MenuItems({Key? key}) : super(key: key);
+  const MenuItems({super.key});
 
   @override
   _MenuItemsState createState() => _MenuItemsState();
@@ -18,7 +18,7 @@ class _MenuItemsState extends State<MenuItems> {
           child: Row(
             children: [
               MenuBar(
-                style: MenuStyle(
+                style: const MenuStyle(
                   surfaceTintColor:
                       MaterialStatePropertyAll<Color>(Color(0xFF29324e)),
                   backgroundColor:

@@ -1,6 +1,8 @@
 import 'package:project/all_imports.dart';
 
 class CarouselBanner extends StatefulWidget {
+  const CarouselBanner({super.key});
+
   @override
   State<CarouselBanner> createState() => _CarouselBannerState();
 }
@@ -20,8 +22,8 @@ class _CarouselBannerState extends State<CarouselBanner> {
               initialPage: 0,
               enableInfiniteScroll: true,
               autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 900),
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 900),
               onPageChanged: (index, reason) {
                 setState(() {
                   _current = index;
@@ -34,7 +36,7 @@ class _CarouselBannerState extends State<CarouselBanner> {
                 builder: (BuildContext context) {
                   return Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
+                      margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
                       child: Image(
                         image: AssetImage('img/banner$i.jpg'),
                         fit: BoxFit.cover,
@@ -54,7 +56,7 @@ class _CarouselBannerState extends State<CarouselBanner> {
                       child: Container(
                         width: 12.0,
                         height: 12.0,
-                        margin: EdgeInsets.symmetric(
+                        margin: const EdgeInsets.symmetric(
                             vertical: 8.0, horizontal: 4.0),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,

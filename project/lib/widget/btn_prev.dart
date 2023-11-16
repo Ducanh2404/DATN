@@ -17,11 +17,11 @@ class ButtonPrev extends StatelessWidget {
         style: ButtonStyle(overlayColor: TransparentButton()),
         onPressed: () {
           buttonCarouselController.previousPage(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.linear);
         },
-        icon: Icon(Icons.arrow_back, size: 30),
-        label: Text(""),
+        icon: const Icon(Icons.arrow_back, size: 30),
+        label: const Text(""),
       ),
     ));
   }

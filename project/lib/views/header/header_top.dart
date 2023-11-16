@@ -1,7 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class HeaderTop extends StatefulWidget {
-  const HeaderTop({ Key? key }) : super(key: key);
+  const HeaderTop({ super.key });
 
   @override
   _HeaderTopState createState() => _HeaderTopState();
@@ -20,7 +20,7 @@ class _HeaderTopState extends State<HeaderTop> {
       scheme: 'mailto',
       path: email,
       query: encodeQueryParameters(<String, String>{
-        'subject': 'Gửi mail tới ${email}',
+        'subject': 'Gửi mail tới $email',
       }),
     );
     await launchUrl(emaillaunchUri);
