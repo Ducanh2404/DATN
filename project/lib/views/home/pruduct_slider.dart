@@ -74,39 +74,39 @@ class _PruductSliderState extends State<PruductSlider> {
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                         const EdgeInsets.symmetric(horizontal: 0.0))),
                 child: const Image(image: AssetImage('img/category1.jpg'))),
-            Stack(
-              children: [
-                CarouselSlider(
-                  carouselController: buttonCarouselController,
-                  items:[Container(
+            // Stack(
+            //   children: [
+            //     CarouselSlider(
+            //       carouselController: buttonCarouselController,
+            //       items:[Container(
 
-                  )]
-                  //: [1, 2, 3].map((i) {
-                  //   return Builder(
-                  //     builder: (BuildContext context) {
-                  //       return Container(
-                  //         height: 100,
-                  //         width: 100,
-                  //         decoration:BoxDecoration(
-                  //             color: Colors.amber
-                  //           ),
-                  //           child: Text('$i'),
-                  //       );
-                  //     },
-                  //   );
-                  // })
-                  .toList(),
-                  options: CarouselOptions(
-                    height: 100,
-                    padEnds: false,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                  ),
-                ),
-                ButtonNext(buttonCarouselController: buttonCarouselController),
-                ButtonPrev(buttonCarouselController: buttonCarouselController),
-              ],
-            )
+            //       )]
+            //       //: [1, 2, 3].map((i) {
+            //       //   return Builder(
+            //       //     builder: (BuildContext context) {
+            //       //       return Container(
+            //       //         height: 100,
+            //       //         width: 100,
+            //       //         decoration:BoxDecoration(
+            //       //             color: Colors.amber
+            //       //           ),
+            //       //           child: Text('$i'),
+            //       //       );
+            //       //     },
+            //       //   );
+            //       // })
+            //       .toList(),
+            //       options: CarouselOptions(
+            //         height: 100,
+            //         padEnds: false,
+            //         initialPage: 0,
+            //         enableInfiniteScroll: true,
+            //       ),
+            //     ),
+            //     ButtonNext(buttonCarouselController: buttonCarouselController),
+            //     ButtonPrev(buttonCarouselController: buttonCarouselController),
+            //   ],
+            // )
           ],
         ),
       ]),
