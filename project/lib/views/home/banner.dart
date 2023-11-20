@@ -38,7 +38,7 @@ class _CarouselBannerState extends State<CarouselBanner> {
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
                       child: Image(
-                        image: AssetImage('img/banner$i.jpg'),
+                        image: AssetImage('img/banner/banner$i.jpg'),
                         fit: BoxFit.cover,
                       ));
                 },

@@ -10,12 +10,12 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   CarouselController buttonCarouselController = CarouselController();
   final List<String> imageUrls = [
-    'img/cate1.png',
-    'img/cate2.jpg',
-    'img/cate3.png',
-    'img/cate4.png',
-    'img/cate5.png',
-    'img/cate6.png',
+    'img/categories/cate1.png',
+    'img/categories/cate2.jpg',
+    'img/categories/cate3.png',
+    'img/categories/cate4.png',
+    'img/categories/cate5.png',
+    'img/categories/cate6.png',
     // Add more image URLs as needed
   ];
   @override
@@ -29,16 +29,19 @@ class _CategoriesState extends State<Categories> {
               items: imageUrls.map((imageUrl) {
                 return Builder(
                   builder: (BuildContext context) {
-                    return SizedBox(
-                      width: MediaQuery.sizeOf(context).width,
+                    return Container(
+                      margin:EdgeInsets.only(right: 5),
                       child: TextButton(
                         style: ButtonStyle(
                           overlayColor: TransparentButton(),
                           padding: MaterialStateProperty.all<EdgeInsets>(
                               const EdgeInsets.all(0)),
-                          
                         ),
-                        child: Image(image: AssetImage(imageUrl),width: MediaQuery.sizeOf(context).width,),
+                        child: Image(
+                          image: AssetImage(imageUrl),
+                          width: 588,
+                          height: 320,
+                        ),
                         onPressed: () {},
                       ),
                     );
@@ -46,7 +49,7 @@ class _CategoriesState extends State<Categories> {
                 );
               }).toList(),
               options: CarouselOptions(
-                aspectRatio: 7.4,
+                height: 250,
                 padEnds: false,
                 viewportFraction: 1.0 / 4.0,
                 initialPage: 0,

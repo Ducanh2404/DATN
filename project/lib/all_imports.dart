@@ -17,3 +17,4 @@ export 'package:project/widget/btn_next.dart';
 export 'package:project/widget/btn_prev.dart';
 export 'package:project/views/home/categories.dart';
 export 'package:project/views/home/pruduct_slider.dart';
+export 'package:project/widget/prod_details.dart';
