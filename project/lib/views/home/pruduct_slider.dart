@@ -71,23 +71,32 @@ class _PruductSliderState extends State<PruductSlider> {
                     overlayColor: TransparentButton(),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                         const EdgeInsets.symmetric(horizontal: 0.0))),
-                child: const Image(image: AssetImage('img/product-thumbnail/category1.jpg'))),
+                child: const Image(
+                    image: AssetImage('img/product-thumbnail/category1.jpg'))),
             Expanded(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 405,
-                  padEnds: false,
-                  viewportFraction: 1.0 / 5.0,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                ),
-                items: [1, 2, 3, 4, 5].map((i) {
-                  return ProductDetails();
-                }).toList(),
+              child: Stack(
+                children: [
+                  CarouselSlider(
+                    carouselController: buttonCarouselController,
+                    options: CarouselOptions(
+                      height: 405,
+                      padEnds: false,
+                      viewportFraction: 1.0 / 5.0,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                    ),
+                    items: [1, 2, 3, 4, 5].map((i) {
+                      return ProductDetails();
+                    }).toList(),
+                  ),
+                  ButtonPrev(
+                      buttonCarouselController: buttonCarouselController),
+                  ButtonNext(
+                      buttonCarouselController: buttonCarouselController),
+                ],
               ),
             )
           ]),
         ]));
   }
 }
-
