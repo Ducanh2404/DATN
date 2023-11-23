@@ -91,7 +91,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             },
                             child: Text('PC Đỗ Đại Học 2023',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                     color: _textColor))),
                       ),
@@ -115,12 +115,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                       SizedBox(
                         height: 8,
                       ),
-                      Text('19.990.000 đ'),
+                      Text('19.990.000 đ',style: TextStyle(color: Color(0xFF8d94ac),fontWeight: FontWeight.w700, fontSize: 14,decoration: TextDecoration.lineThrough,decorationColor: Color(0xFF8d94ac),),),
                       Row(
                         children: [
-                          Text('17.690.000 đ'),
+                          Text('17.690.000 đ',style: TextStyle(color: Color(0xFFfb4e4e),fontSize: 20,fontWeight: FontWeight.w800,height: 1.25),),
                           Container(
-                            child: Text('-12%'),
+                            decoration: BoxDecoration(border: Border.all(color: Color(0xFFfb4e4e),width: 2)),
+                            padding:EdgeInsets.symmetric(horizontal: 3),
+                            margin: EdgeInsets.only(left: 8),
+                            child: Text('-12%',style: TextStyle(color: Color(0xFFfb4e4e),fontSize: 12,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),
