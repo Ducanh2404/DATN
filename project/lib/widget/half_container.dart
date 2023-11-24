@@ -1,10 +1,10 @@
 import 'package:project/all_imports.dart';
 
-class CustomContainer extends StatelessWidget {
+class HalfContainer extends StatelessWidget {
   final String title;
   final Widget content;
   final bool morebtn;
-  CustomContainer({
+  HalfContainer({
     required this.title,
     required this.content,
     required this.morebtn,
@@ -15,7 +15,6 @@ class CustomContainer extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         margin: const EdgeInsets.only(top: 32),
         color: Colors.white,
-        width: 1600,
         child: Column(children: [
           Container(
             margin: const EdgeInsets.only(bottom: 24),
