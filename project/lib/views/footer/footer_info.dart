@@ -1,5 +1,4 @@
 import 'package:project/all_imports.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FooterInfo extends StatelessWidget {
   const FooterInfo({super.key});
@@ -18,19 +17,45 @@ class FooterInfo extends StatelessWidget {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Theo dõi chúng tôi tại',
                 style: TextStyle(
-                  height: 1,
+                    height: 1,
                     fontSize: 21,
                     fontWeight: FontWeight.w700,
                     color: Colors.white),
-                
               ),
-              SizedBox(height: 20,),
-              IconButton(onPressed: (), icon: null,
-              label: ico)
+              SizedBox(
+                height: 20,
+              ),
+              Row(children: [  IconButton(
+                  style: ButtonStyle(overlayColor: TransparentButton()),
+                  onPressed: () {},
+                  icon: FaIcon(FontAwesomeIcons.squareFacebook,
+                      size: 24, color: Colors.white)),
+              IconButton(
+                  style: ButtonStyle(
+                      overlayColor: TransparentButton(),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                        horizontal: 0.0,
+                      ))),
+                  onPressed: () {},
+                  icon: FaIcon(FontAwesomeIcons.instagram,
+                      size: 24, color: Colors.white)),
+              IconButton(
+                  style: ButtonStyle(
+                      overlayColor: TransparentButton(),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(
+                        horizontal: 0.0,
+                      ))),
+                  onPressed: () {},
+                  icon: FaIcon(FontAwesomeIcons.youtube,
+                      size: 24, color: Colors.white)),],)
+            
             ],
           ),
           Container(),
