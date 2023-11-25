@@ -35,6 +35,7 @@ class _WebLayoutState extends State {
           PruductSlider(),
           Sales(),
           News(),
+          Brand(),
         ]),
       ),
     );

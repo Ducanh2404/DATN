@@ -2,11 +2,7 @@ import 'package:project/all_imports.dart';
 
 class BannerSale extends StatefulWidget {
   final String image_url;
-
-  BannerSale({
-    required this.image_url,
-  });
-
+  const BannerSale({super.key, required this.image_url});
   @override
   State<BannerSale> createState() => _BannerSaleState();
 }
