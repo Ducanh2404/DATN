@@ -36,6 +36,7 @@ class _WebLayoutState extends State {
           Sales(),
           News(),
           Brand(),
+          FooterInfo(),
         ]),
       ),
     );
