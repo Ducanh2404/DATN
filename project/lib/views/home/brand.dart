@@ -1,9 +1,15 @@
 import 'package:project/all_imports.dart';
 
-class Brand extends StatelessWidget {
-    CarouselController buttonCarouselController = CarouselController();
+class Brand extends StatefulWidget {
 
   Brand({ Key? key }) : super(key: key);
+
+  @override
+  State<Brand> createState() => _BrandState();
+}
+
+class _BrandState extends State<Brand> {
+    CarouselController buttonCarouselController = CarouselController();
 
   @override
   Widget build(BuildContext context) {

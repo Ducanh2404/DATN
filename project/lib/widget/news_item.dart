@@ -1,16 +1,23 @@
 import 'package:project/all_imports.dart';
 
-class NewsItem extends StatelessWidget {
+class NewsItem extends StatefulWidget {
   final String title;
   final String image_url;
   final DateTime publish_date;
-  DateTime currentDate = DateTime.now();
+
   NewsItem(
       {Key? key,
       required this.title,
       required this.image_url,
       required this.publish_date})
       : super(key: key);
+
+  @override
+  State<NewsItem> createState() => _NewsItemState();
+}
+
+class _NewsItemState extends State<NewsItem> {
+  DateTime currentDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class NewsItem extends StatelessWidget {
               ))),
               onPressed: () {},
               child: Image(
-                image: AssetImage(image_url),
+                image: AssetImage(widget.image_url),
                 width: 160,
                 height: 90,
               )),
@@ -46,7 +53,7 @@ class NewsItem extends StatelessWidget {
                           horizontal: 0.0,
                         ))),
                     onPressed: () {},
-                    child: Text(title,
+                    child: Text(widget.title,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             fontSize: 18,

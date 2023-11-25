@@ -13,7 +13,6 @@ class BannerSale extends StatefulWidget {
 
 class _BannerSaleState extends State<BannerSale> {
   double scale = 1;
-  late AnimationController _controller;
 
   @override
   Widget build(BuildContext context) {
