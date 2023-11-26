@@ -22,7 +22,6 @@ class FooterInfo extends StatelessWidget {
               Text(
                 'Theo dõi chúng tôi tại',
                 style: TextStyle(
-                    height: 1,
                     fontSize: 21,
                     fontWeight: FontWeight.w700,
                     color: Colors.white),
@@ -63,8 +62,56 @@ class FooterInfo extends StatelessWidget {
               )
             ],
           ),
-          Container(),
+          Column(
+            children: [
+              Text(
+                'Đăng ký email để nhận tin khuyến mãi',
+                style: TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Subcriber(),
+            ],
+          ),
         ]),
+      ),
+    );
+  }
+}
+
+class Subcriber extends StatefulWidget {
+  Subcriber({
+    super.key,
+  });
+
+  @override
+  State<Subcriber> createState() => _SubcriberState();
+}
+
+class _SubcriberState extends State<Subcriber> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Widget build(BuildContext context) {
+    return Center(
+      child: TextField(
+        controller: _controller,
+        onSubmitted: (String value) {},
       ),
     );
   }

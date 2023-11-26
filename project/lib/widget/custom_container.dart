@@ -29,7 +29,7 @@ class CustomContainer extends StatelessWidget {
                               BorderSide(width: 3, color: Color(0xFF3278f6)))),
                   child: Text(title.toUpperCase(),
                       style: const TextStyle(
-                          fontWeight: FontWeight.w900, fontSize: 21,height: 1)),
+                          fontWeight: FontWeight.w900, fontSize: 21)),
                 ),
                 Visibility(
                   visible: morebtn,
