@@ -19,19 +19,18 @@ class News extends StatelessWidget {
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
                           publish_date: DateTime.now()),
-                          NewsItem(
+                      NewsItem(
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
                           publish_date: DateTime.now()),
-                          NewsItem(
+                      NewsItem(
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
                           publish_date: DateTime.now()),
-                          NewsItem(
+                      NewsItem(
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
                           publish_date: DateTime.now()),
-                          
                     ],
                   ),
                   morebtn: true)),
@@ -42,22 +41,24 @@ class News extends StatelessWidget {
               child: HalfContainer(
                   title: 'tin tức',
                   content: Column(
-                    children: [NewsItem(
+                    children: [
+                      NewsItem(
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
                           publish_date: DateTime.now()),
-                          NewsItem(
+                      NewsItem(
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
                           publish_date: DateTime.now()),
-                          NewsItem(
+                      NewsItem(
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
                           publish_date: DateTime.now()),
-                          NewsItem(
+                      NewsItem(
                           title: 'So sánh RTX 3070Ti 8GB vs RTX 4060Ti 16GB',
                           image_url: 'img/channel/channel1.jpg',
-                          publish_date: DateTime.now()),],
+                          publish_date: DateTime.now()),
+                    ],
                   ),
                   morebtn: true)),
         ],

@@ -11,15 +11,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Website Technologies',
       theme: ThemeData(
         fontFamily: GoogleFonts.chakraPetch().fontFamily,
         colorSchemeSeed: Colors.blueAccent,
         useMaterial3: true,
       ),
-      home: const Scaffold(
-        body: WebLayout()
-        ),
+      home: const Scaffold(body: WebLayout()),
     );
   }
 }

@@ -30,32 +30,37 @@ class FooterInfo extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Row(children: [  IconButton(
-                  style: ButtonStyle(overlayColor: TransparentButton()),
-                  onPressed: () {},
-                  icon: FaIcon(FontAwesomeIcons.squareFacebook,
-                      size: 24, color: Colors.white)),
-              IconButton(
-                  style: ButtonStyle(
-                      overlayColor: TransparentButton(),
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          const EdgeInsets.symmetric(
-                        horizontal: 0.0,
-                      ))),
-                  onPressed: () {},
-                  icon: FaIcon(FontAwesomeIcons.instagram,
-                      size: 24, color: Colors.white)),
-              IconButton(
-                  style: ButtonStyle(
-                      overlayColor: TransparentButton(),
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          const EdgeInsets.symmetric(
-                        horizontal: 0.0,
-                      ))),
-                  onPressed: () {},
-                  icon: FaIcon(FontAwesomeIcons.youtube,
-                      size: 24, color: Colors.white)),],)
-            
+              Row(
+                children: [
+                  IconButton(
+                      style: ButtonStyle(overlayColor: TransparentButton()),
+                      onPressed: () {},
+                      icon: FaIcon(FontAwesomeIcons.squareFacebook,
+                          size: 24, color: Colors.white)),
+                  IconButton(
+                      style: ButtonStyle(
+                          overlayColor: TransparentButton(),
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                  const EdgeInsets.symmetric(
+                            horizontal: 0.0,
+                          ))),
+                      onPressed: () {},
+                      icon: FaIcon(FontAwesomeIcons.instagram,
+                          size: 24, color: Colors.white)),
+                  IconButton(
+                      style: ButtonStyle(
+                          overlayColor: TransparentButton(),
+                          padding:
+                              MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                  const EdgeInsets.symmetric(
+                            horizontal: 0.0,
+                          ))),
+                      onPressed: () {},
+                      icon: FaIcon(FontAwesomeIcons.youtube,
+                          size: 24, color: Colors.white)),
+                ],
+              )
             ],
           ),
           Container(),
