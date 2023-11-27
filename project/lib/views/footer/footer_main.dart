@@ -1,6 +1,4 @@
 import 'package:project/all_imports.dart';
-import 'dart:ui' as ui;
-import 'dart:html' as html;
 
 class FooterMain extends StatelessWidget {
   const FooterMain({Key? key}) : super(key: key);
@@ -47,6 +45,7 @@ class FooterMain extends StatelessWidget {
             height: 32,
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 350,
@@ -54,8 +53,21 @@ class FooterMain extends StatelessWidget {
                 child: const HtmlWidget(
                     '''<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.767559905542!2d105.84159807591003!3d21.001952588697478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac70cf94287f%3A0x7362ea6005b5ac6e!2sTNC%20Store!5e0!3m2!1svi!2s!4v1701075821731!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'''),
               ),
-              SizedBox(width: 32,),
-              Column(children: [],)
+              SizedBox(
+                width: 32,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Công ty TNHH Thương mại & Tin học Tú Nguyệt',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                  ),
+                  SizedBox(height: 7,),
+                  Text('Showroom: 172 Lê Thanh Nghị, Phường Đồng Tâm, Quận Hai Bà Trưng, Hà Nội'),
+                  RichText(text: TextSpan(text: "Tel: ",children:[TextSpan(text: '(024) 36288790 / (086) 830.2123')] ))  
+                ],
+              )
             ],
           ),
         ]));
