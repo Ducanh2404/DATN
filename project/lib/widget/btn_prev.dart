@@ -13,7 +13,7 @@ class ButtonPrev extends StatelessWidget {
     return Positioned.fill(
         child: Align(
       alignment: Alignment.centerLeft,
-      child: TextButton.icon(
+      child: IconButton(
         style: ButtonStyle(
             shape: MaterialStateProperty.all<OutlinedBorder>(
               RoundedRectangleBorder(
@@ -42,7 +42,6 @@ class ButtonPrev extends StatelessWidget {
               curve: Curves.linear);
         },
         icon: const Icon(Icons.chevron_left, size: 30),
-        label: const Text(""),
       ),
     ));
   }

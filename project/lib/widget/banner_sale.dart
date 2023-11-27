@@ -22,12 +22,10 @@ class _BannerSaleState extends State<BannerSale> {
                     const EdgeInsets.symmetric(
                   horizontal: 0.0,
                 )),
-                side: MaterialStateProperty.resolveWith<BorderSide>(
-                  (Set<MaterialState> states) {
-                    return BorderSide(
+                side: MaterialStateProperty.all<BorderSide>(
+                    BorderSide(
                         color: Colors.grey,
-                        width: 1.0); // Set border color and width
-                  },
+                        width: 1.0), // Set border color and width
                 ),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(

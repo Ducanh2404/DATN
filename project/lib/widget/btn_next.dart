@@ -13,7 +13,7 @@ class ButtonNext extends StatelessWidget {
     return Positioned.fill(
         child: Align(
       alignment: Alignment.centerRight,
-      child: TextButton.icon(
+      child: IconButton(
         style: ButtonStyle(
             shape: MaterialStateProperty.all<OutlinedBorder>(
               RoundedRectangleBorder(
@@ -42,7 +42,6 @@ class ButtonNext extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               curve: Curves.linear);
         },
-        label: const Text(""),
       ),
     ));
   }

@@ -9,6 +9,7 @@ class FooterInfo extends StatelessWidget {
       alignment: Alignment.center,
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
+      margin: const EdgeInsets.symmetric(vertical:32 ),
       decoration: const BoxDecoration(
         color: Color(0xFF29324e),
       ),
@@ -63,6 +64,7 @@ class FooterInfo extends StatelessWidget {
             ],
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Đăng ký email để nhận tin khuyến mãi',
@@ -94,7 +96,7 @@ class Subcriber extends StatefulWidget {
 
 class _SubcriberState extends State<Subcriber> {
   late TextEditingController _controller;
-
+  String text = "";
   @override
   void initState() {
     super.initState();
@@ -108,11 +110,49 @@ class _SubcriberState extends State<Subcriber> {
   }
 
   Widget build(BuildContext context) {
-    return Center(
-      child: TextField(
-        controller: _controller,
-        onSubmitted: (String value) {},
-      ),
+    return Row(
+      children: [
+        Container(
+          width: 350,
+          height: 40,
+          child: TextField(
+            textAlignVertical: TextAlignVertical.center,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "Nhập email của bạn",
+              hintStyle: TextStyle(color: Colors.grey,fontSize: 14),
+               contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+              focusColor: Color(0xFF3278f6),
+               
+            ),
+            controller: _controller,
+            onSubmitted: (String value) {
+              setState(() {
+                text = _controller.text;
+              });
+            },
+          ),
+        ),
+        SizedBox(
+          height: 40,
+          child: TextButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xFF3278f6)),
+                overlayColor: TransparentButton(),
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                    const EdgeInsets.symmetric(horizontal: 16)),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+              ),
+              onPressed: () {},
+              child: Text("Đăng ký", style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w700))),
+        )
+      ],
     );
   }
 }
