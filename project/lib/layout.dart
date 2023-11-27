@@ -20,15 +20,8 @@ class _WebLayoutState extends State {
           color: Color(0xFFf3f3f3),
         ),
         child: const Column(children: [
-          //Header top
-          HeaderTop(),
-          //header Bottom
-          HeaderBottom(),
-          //Menu bar
-          MenuItems(),
-          //Banner
+          Header(),
           CarouselBanner(),
-          //Categories
           Categories(),
           PruductSlider(),
           PruductSlider(),
@@ -36,10 +29,42 @@ class _WebLayoutState extends State {
           Sales(),
           News(),
           Brand(),
-          FooterInfo(),
-          FooterMain(),
+          Footer(),
         ]),
       ),
+    );
+  }
+}
+
+class Footer extends StatelessWidget {
+  const Footer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        FooterInfo(),
+        FooterMain(),
+      ],
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  const Header({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        HeaderTop(),
+        HeaderBottom(),
+        MenuItems(),
+      ],
     );
   }
 }

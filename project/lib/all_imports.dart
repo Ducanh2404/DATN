@@ -29,3 +29,5 @@ export 'package:project/widget/prod_details.dart';
 export 'package:project/widget/custom_container.dart';
 export 'package:project/widget/half_container.dart';
 export 'package:project/widget/banner_sale.dart';
+export 'package:project/views/collection/banner_collection.dart';
+export 'package:project/views/collection/content_collection.dart';

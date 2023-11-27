@@ -9,15 +9,19 @@ class CarouselBanner extends StatefulWidget {
 
 class _CarouselBannerState extends State<CarouselBanner> {
   CarouselController buttonCarouselController = CarouselController();
-  final List<int> imageIndex = [0, 1, 2];
+  final List<String> image = [
+    'img/banner/banner1.jpg',
+    'img/banner/banner2.jpg',
+    'img/banner/banner3.jpg',
+  ];
   int _current = 0;
   @override
   Widget build(BuildContext context) => SizedBox(
         width: 1600,
-        child: Stack( children: <Widget>[
+        child: Stack(children: <Widget>[
           CarouselSlider(
             options: CarouselOptions(
-              aspectRatio: 3.0,
+              height: 580,
               viewportFraction: 1,
               initialPage: 0,
               enableInfiniteScroll: true,
@@ -31,14 +35,14 @@ class _CarouselBannerState extends State<CarouselBanner> {
               },
             ),
             carouselController: buttonCarouselController,
-            items: [1, 2, 3].map((i) {
+            items: image.map((url) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
                       child: Image(
-                        image: AssetImage('img/banner/banner$i.jpg'),
+                        image: AssetImage(url),
                         fit: BoxFit.cover,
                       ));
                 },
@@ -50,7 +54,7 @@ class _CarouselBannerState extends State<CarouselBanner> {
               alignment: Alignment.bottomCenter,
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                for (var i in imageIndex)
+                for (var i = 0; i < image.length; i++)
                   GestureDetector(
                       onTap: () => buttonCarouselController.animateToPage(i),
                       child: Container(
@@ -71,6 +75,3 @@ class _CarouselBannerState extends State<CarouselBanner> {
         ]),
       );
 }
-
-
-

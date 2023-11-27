@@ -57,19 +57,109 @@ class FooterMain extends StatelessWidget {
                 width: 32,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     'Công ty TNHH Thương mại & Tin học Tú Nguyệt',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
                   ),
-                  SizedBox(height: 7,),
-                  Text('Showroom: 172 Lê Thanh Nghị, Phường Đồng Tâm, Quận Hai Bà Trưng, Hà Nội'),
-                  RichText(text: TextSpan(text: "Tel: ",children:[TextSpan(text: '(024) 36288790 / (086) 830.2123')] ))  
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Text(
+                    'Showroom: 172 Lê Thanh Nghị, Phường Đồng Tâm, Quận Hai Bà Trưng, Hà Nội',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  RichText(
+                      text: TextSpan(text: "Tel: ", children: [
+                    TextSpan(
+                        text: '(024) 36288790 / (086) 830.2123',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontFamily: GoogleFonts.chakraPetch().fontFamily,
+                            fontSize: 16))
+                  ])),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Text(
+                    'Trung tâm bảo hành: 172 Lê Thanh Nghị, Phường Đồng Tâm, Quận Hai Bà Trưng, Hà Nội',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  RichText(
+                      text: TextSpan(text: "Tel: ", children: [
+                    TextSpan(
+                        text: '(098) 978 1468',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontFamily: GoogleFonts.chakraPetch().fontFamily,
+                            fontSize: 16))
+                  ])),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Text(
+                    'Trụ sở (Không bán hàng): 11 Vũ Thạnh - Cát Linh - Đống Đa - Hà Nội',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  RichText(
+                      text: TextSpan(text: "Tel: ", children: [
+                    TextSpan(
+                        text: '(086) 8302123',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontFamily: GoogleFonts.chakraPetch().fontFamily,
+                            fontSize: 16))
+                  ])),
+                  RichText(
+                      text: TextSpan(text: "Fax: ", children: [
+                    TextSpan(
+                        text: '(024) 36288790',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontFamily: GoogleFonts.chakraPetch().fontFamily,
+                            fontSize: 16))
+                  ])),
                 ],
               )
             ],
           ),
+          SizedBox(
+            height: 24,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hình thức thanh toán',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+              ),
+              Row(
+                children: [
+                  Image(image: AssetImage('img/payment/payment_1.png')),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Image(image: AssetImage('img/payment/payment_2.png')),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Image(image: AssetImage('img/payment/payment_3.png')),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Image(image: AssetImage('img/payment/payment_4.png')),
+                  SizedBox(
+                    width: 8,
+                  ),
+                ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 50,
+          )
         ]));
   }
 }

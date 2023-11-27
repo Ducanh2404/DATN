@@ -1,6 +1,7 @@
 import 'package:project/all_imports.dart';
+import 'package:project/views/collection/collection.dart';
 
-class CustomContainer extends StatelessWidget {
+class CustomContainer extends StatefulWidget {
   final String title;
   final Widget content;
   final bool morebtn;
@@ -9,6 +10,12 @@ class CustomContainer extends StatelessWidget {
     required this.content,
     required this.morebtn,
   });
+
+  @override
+  State<CustomContainer> createState() => _CustomContainerState();
+}
+
+class _CustomContainerState extends State<CustomContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,12 +34,12 @@ class CustomContainer extends StatelessWidget {
                       border: Border(
                           bottom:
                               BorderSide(width: 3, color: Color(0xFF3278f6)))),
-                  child: Text(title.toUpperCase(),
+                  child: Text(widget.title.toUpperCase(),
                       style: const TextStyle(
                           fontWeight: FontWeight.w900, fontSize: 21)),
                 ),
                 Visibility(
-                  visible: morebtn,
+                  visible: widget.morebtn,
                   child: Container(
                     child: TextButton(
                       style: ButtonStyle(
@@ -42,7 +49,15 @@ class CustomContainer extends StatelessWidget {
                                   const EdgeInsets.symmetric(
                             horizontal: 0.0,
                           ))),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Collection()),
+                          );
+                        });
+                      },
                       child: const Row(
                         children: [
                           Text(
@@ -61,7 +76,7 @@ class CustomContainer extends StatelessWidget {
               ],
             ),
           ),
-          content,
+          widget.content,
         ]));
   }
 }
