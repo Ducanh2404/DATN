@@ -31,3 +31,5 @@ export 'package:project/widget/half_container.dart';
 export 'package:project/widget/banner_sale.dart';
 export 'package:project/views/collection/banner_collection.dart';
 export 'package:project/views/collection/content_collection.dart';
+export 'package:project/views/collection/filter_sidebar.dart';
+export 'package:project/views/collection/collection_products.dart';

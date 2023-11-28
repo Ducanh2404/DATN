@@ -8,7 +8,7 @@ class Sales extends StatelessWidget {
     return CustomContainer(
         title: 'chuyên trang khuyến mãi',
         morebtn: false,
-        content: Column(
+        content: const Column(
           children: [
             Row(
               children: [

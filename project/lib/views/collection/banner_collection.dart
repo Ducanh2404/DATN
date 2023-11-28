@@ -18,7 +18,7 @@ class _BannerCollectionState extends State<BannerCollection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 32),
+      margin: const EdgeInsets.symmetric(vertical: 32),
       width: 1600,
       child: Stack(children: <Widget>[
         CarouselSlider(

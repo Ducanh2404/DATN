@@ -30,7 +30,7 @@ class _CategoriesState extends State<Categories> {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
-                      margin:EdgeInsets.only(right: 5),
+                      margin:const EdgeInsets.only(right: 5),
                       child: TextButton(
                         style: ButtonStyle(
                           overlayColor: TransparentButton(),

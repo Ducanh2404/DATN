@@ -37,7 +37,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: MaterialStateProperty.all<EdgeInsets>(
                     const EdgeInsets.all(3)),
               ),
-              child: Align(
+              child: const Align(
                 alignment: Alignment.topCenter,
                 child: Image(
                   image: AssetImage('img/product/product1.jpg'),
@@ -48,9 +48,9 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           ),
           Container(
-              decoration: BoxDecoration(color: Color(0xFF8FFF00)),
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              child: Text(
+              decoration: const BoxDecoration(color: Color(0xFF8FFF00)),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              child: const Text(
                 "Best choice",
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
               )),
@@ -63,8 +63,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               children: [
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(12),
+                  decoration: const BoxDecoration(
                       border: BorderDirectional(
                           top: BorderSide(
                               width: 1,
@@ -75,7 +75,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(bottom: 8),
+                        margin: const EdgeInsets.only(bottom: 8),
                         height: 38,
                         child: TextButton(
                             style: ButtonStyle(
@@ -95,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     fontSize: 16,
                                     color: _textColor))),
                       ),
-                      Row(
+                      const Row(
                         children: [
                           Icon(Icons.star, size: 12, color: Color(0xFF8d94ac)),
                           Icon(Icons.star, size: 12, color: Color(0xFF8d94ac)),
@@ -112,18 +112,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
-                      Text('19.990.000 đ',style: TextStyle(color: Color(0xFF8d94ac),fontWeight: FontWeight.w700, fontSize: 14,decoration: TextDecoration.lineThrough,decorationColor: Color(0xFF8d94ac),),),
+                      const Text('19.990.000 đ',style: TextStyle(color: Color(0xFF8d94ac),fontWeight: FontWeight.w700, fontSize: 14,decoration: TextDecoration.lineThrough,decorationColor: Color(0xFF8d94ac),),),
                       Row(
                         children: [
-                          Text('17.690.000 đ',style: TextStyle(color: Color(0xFFfb4e4e),fontSize: 20,fontWeight: FontWeight.w800,height: 1.25),),
+                          const Text('17.690.000 đ',style: TextStyle(color: Color(0xFFfb4e4e),fontSize: 20,fontWeight: FontWeight.w800,height: 1.25),),
                           Container(
-                            decoration: BoxDecoration(border: Border.all(color: Color(0xFFfb4e4e),width: 2)),
-                            padding:EdgeInsets.symmetric(horizontal: 3),
-                            margin: EdgeInsets.only(left: 8),
-                            child: Text('-12%',style: TextStyle(color: Color(0xFFfb4e4e),fontSize: 12,fontWeight: FontWeight.w600),),
+                            decoration: BoxDecoration(border: Border.all(color: const Color(0xFFfb4e4e),width: 2)),
+                            padding:const EdgeInsets.symmetric(horizontal: 3),
+                            margin: const EdgeInsets.only(left: 8),
+                            child: const Text('-12%',style: TextStyle(color: Color(0xFFfb4e4e),fontSize: 12,fontWeight: FontWeight.w600),),
                           )
                         ],
                       ),
@@ -138,28 +138,28 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Container(
                 width: double.infinity,
                 height: _isHovered ? 3.0 : 1.0,
-                color: _isHovered ? Color(0xFF3278f6) : Color(0xFFededed),
+                color: _isHovered ? const Color(0xFF3278f6) : const Color(0xFFededed),
               )),
           Align(
               alignment: Alignment.centerLeft,
               child: Container(
                 width: _isHovered ? 3.0 : 1.0,
                 height: double.infinity,
-                color: _isHovered ? Color(0xFF3278f6) : Color(0xFFededed),
+                color: _isHovered ? const Color(0xFF3278f6) : const Color(0xFFededed),
               )),
           Align(
               alignment: Alignment.centerRight,
               child: Container(
                 width: _isHovered ? 3.0 : 1.0,
                 height: double.infinity,
-                color: _isHovered ? Color(0xFF3278f6) : Color(0xFFededed),
+                color: _isHovered ? const Color(0xFF3278f6) : const Color(0xFFededed),
               )),
           Align(
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
                 height: _isHovered ? 3.0 : 1.0,
-                color: _isHovered ? Color(0xFF3278f6) : Color(0xFFededed),
+                color: _isHovered ? const Color(0xFF3278f6) : const Color(0xFFededed),
               )),
         ],
       ),

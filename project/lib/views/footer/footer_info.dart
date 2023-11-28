@@ -20,14 +20,14 @@ class FooterInfo extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Theo dõi chúng tôi tại',
                 style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.w700,
                     color: Colors.white),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
@@ -35,7 +35,7 @@ class FooterInfo extends StatelessWidget {
                   IconButton(
                       style: ButtonStyle(overlayColor: TransparentButton()),
                       onPressed: () {},
-                      icon: FaIcon(FontAwesomeIcons.squareFacebook,
+                      icon: const FaIcon(FontAwesomeIcons.squareFacebook,
                           size: 24, color: Colors.white)),
                   IconButton(
                       style: ButtonStyle(
@@ -46,7 +46,7 @@ class FooterInfo extends StatelessWidget {
                             horizontal: 0.0,
                           ))),
                       onPressed: () {},
-                      icon: FaIcon(FontAwesomeIcons.instagram,
+                      icon: const FaIcon(FontAwesomeIcons.instagram,
                           size: 24, color: Colors.white)),
                   IconButton(
                       style: ButtonStyle(
@@ -57,7 +57,7 @@ class FooterInfo extends StatelessWidget {
                             horizontal: 0.0,
                           ))),
                       onPressed: () {},
-                      icon: FaIcon(FontAwesomeIcons.youtube,
+                      icon: const FaIcon(FontAwesomeIcons.youtube,
                           size: 24, color: Colors.white)),
                 ],
               )
@@ -66,14 +66,14 @@ class FooterInfo extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Đăng ký email để nhận tin khuyến mãi',
                 style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.w700,
                     color: Colors.white),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Subcriber(),
@@ -117,7 +117,7 @@ class _SubcriberState extends State<Subcriber> {
           height: 40,
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               filled: true,
               fillColor: Colors.white,
               hintText: "Nhập email của bạn",
@@ -139,18 +139,18 @@ class _SubcriberState extends State<Subcriber> {
           child: TextButton(
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Color(0xFF3278f6)),
+                    MaterialStateProperty.all<Color>(const Color(0xFF3278f6)),
                 overlayColor: TransparentButton(),
                 padding: MaterialStateProperty.all<EdgeInsets>(
                     const EdgeInsets.symmetric(horizontal: 16)),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
+                  const RoundedRectangleBorder(
                     borderRadius: BorderRadius.zero,
                   ),
                 ),
               ),
               onPressed: () {},
-              child: Text("Đăng ký", style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w700))),
+              child: const Text("Đăng ký", style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w700))),
         )
       ],
     );

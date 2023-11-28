@@ -34,7 +34,7 @@ class News extends StatelessWidget {
                     ],
                   ),
                   morebtn: true)),
-          SizedBox(
+          const SizedBox(
             width: 32,
           ),
           Expanded(

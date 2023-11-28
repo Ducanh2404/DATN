@@ -7,7 +7,7 @@ class FooterMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 1600,
-        padding: EdgeInsets.symmetric(vertical: 24),
+        padding: const EdgeInsets.symmetric(vertical: 24),
         child: Column(children: [
           const Row(
             children: [
@@ -41,7 +41,7 @@ class FooterMain extends StatelessWidget {
                   item5: 'Chính Sách Cho Doanh Nghiệp'),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           Row(
@@ -53,21 +53,21 @@ class FooterMain extends StatelessWidget {
                 child: const HtmlWidget(
                     '''<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.767559905542!2d105.84159807591003!3d21.001952588697478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac70cf94287f%3A0x7362ea6005b5ac6e!2sTNC%20Store!5e0!3m2!1svi!2s!4v1701075821731!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'''),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 32,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Công ty TNHH Thương mại & Tin học Tú Nguyệt',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7,
                   ),
-                  Text(
+                  const Text(
                     'Showroom: 172 Lê Thanh Nghị, Phường Đồng Tâm, Quận Hai Bà Trưng, Hà Nội',
                     style: TextStyle(fontSize: 16),
                   ),
@@ -80,10 +80,10 @@ class FooterMain extends StatelessWidget {
                             fontFamily: GoogleFonts.chakraPetch().fontFamily,
                             fontSize: 16))
                   ])),
-                  SizedBox(
+                  const SizedBox(
                     height: 7,
                   ),
-                  Text(
+                  const Text(
                     'Trung tâm bảo hành: 172 Lê Thanh Nghị, Phường Đồng Tâm, Quận Hai Bà Trưng, Hà Nội',
                     style: TextStyle(fontSize: 16),
                   ),
@@ -96,10 +96,10 @@ class FooterMain extends StatelessWidget {
                             fontFamily: GoogleFonts.chakraPetch().fontFamily,
                             fontSize: 16))
                   ])),
-                  SizedBox(
+                  const SizedBox(
                     height: 7,
                   ),
-                  Text(
+                  const Text(
                     'Trụ sở (Không bán hàng): 11 Vũ Thạnh - Cát Linh - Đống Đa - Hà Nội',
                     style: TextStyle(fontSize: 16),
                   ),
@@ -125,10 +125,10 @@ class FooterMain extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -157,7 +157,7 @@ class FooterMain extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           )
         ]));
@@ -191,9 +191,9 @@ class FooterItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Links(cnt: item1),
@@ -222,7 +222,7 @@ class _LinksState extends State<Links> {
       underline = underline == TextDecoration.none
           ? TextDecoration.underline
           : TextDecoration.none;
-      textColor = textColor == Colors.black ? Color(0xFF3278f6) : Colors.black;
+      textColor = textColor == Colors.black ? const Color(0xFF3278f6) : Colors.black;
     });
   }
 
@@ -245,7 +245,7 @@ class _LinksState extends State<Links> {
           style: TextStyle(
               color: textColor,
               decoration: underline,
-              decorationColor: Color(0xFF3278f6),
+              decorationColor: const Color(0xFF3278f6),
               fontSize: 16,
               height: 1.25),
         ));

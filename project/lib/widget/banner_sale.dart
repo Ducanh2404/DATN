@@ -15,7 +15,7 @@ class _BannerSaleState extends State<BannerSale> {
     return Expanded(
         child: AnimatedScale(
           scale: scale,
-          duration: Duration(milliseconds: 400),
+          duration: const Duration(milliseconds: 400),
           child: TextButton(
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -23,12 +23,12 @@ class _BannerSaleState extends State<BannerSale> {
                   horizontal: 0.0,
                 )),
                 side: MaterialStateProperty.all<BorderSide>(
-                    BorderSide(
+                    const BorderSide(
                         color: Colors.grey,
                         width: 1.0), // Set border color and width
                 ),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
+                  const RoundedRectangleBorder(
                     borderRadius: BorderRadius.zero, // Set border radius to zero
                   ),
                 ),
@@ -43,7 +43,7 @@ class _BannerSaleState extends State<BannerSale> {
                 });
               },
               onPressed: () {},
-              child: Image(
+              child: const Image(
                 image: AssetImage('img/sales/sale1.jpg'),
                 fit: BoxFit.contain,
               )),

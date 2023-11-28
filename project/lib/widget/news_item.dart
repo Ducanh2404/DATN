@@ -22,7 +22,7 @@ class _NewsItemState extends State<NewsItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 24),
+      margin: const EdgeInsets.only(bottom: 24),
       child: Row(
         children: [
           TextButton(
@@ -39,7 +39,7 @@ class _NewsItemState extends State<NewsItem> {
               )),
           Container(
             height: 90,
-            margin: EdgeInsets.only(left: 16),
+            margin: const EdgeInsets.only(left: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,21 +55,21 @@ class _NewsItemState extends State<NewsItem> {
                     onPressed: () {},
                     child: Text(widget.title,
                         textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
                             color: Colors.black))),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.schedule,
                       size: 12,
                       color: Color(0xFF8d94ac),
                     ),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     Text(
                       '$currentDate',
-                      style: TextStyle(color: Color(0xFF8d94ac), fontSize: 12),
+                      style: const TextStyle(color: Color(0xFF8d94ac), fontSize: 12),
                     )
                   ],
                 )

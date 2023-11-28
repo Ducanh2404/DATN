@@ -16,12 +16,12 @@ class ButtonNext extends StatelessWidget {
       child: IconButton(
         style: ButtonStyle(
             shape: MaterialStateProperty.all<OutlinedBorder>(
-              RoundedRectangleBorder(
+              const RoundedRectangleBorder(
                 borderRadius: BorderRadius.zero, // Set border radius to zero
               ),
             ),
             foregroundColor:MaterialStateProperty.all<Color>(Colors.white.withOpacity(0.6)),
-            backgroundColor:  MaterialStateProperty.all<Color>(Color(0xFF869791).withOpacity(0.6)),
+            backgroundColor:  MaterialStateProperty.all<Color>(const Color(0xFF869791).withOpacity(0.6)),
             overlayColor: MaterialStateProperty.resolveWith(
                 <Color>(Set<MaterialState> states) {
               if (states.contains(MaterialState.hovered)) {
@@ -35,7 +35,7 @@ class ButtonNext extends StatelessWidget {
             }),
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                 const EdgeInsets.symmetric(horizontal: 0.0)),
-            minimumSize: MaterialStatePropertyAll(Size(0, 0))),
+            minimumSize: const MaterialStatePropertyAll(Size(0, 0))),
         icon: const Icon(Icons.chevron_right, size: 30,),
         onPressed: () {
           buttonCarouselController.nextPage(

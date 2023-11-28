@@ -11,7 +11,7 @@ class Collection extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Color(0xFFf3f3f3),
           ),
-          child: Column(children: [
+          child: const Column(children: [
             Header(),
             BannerCollection(),
             ContentCollection(),
