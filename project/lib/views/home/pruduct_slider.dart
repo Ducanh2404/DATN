@@ -38,7 +38,7 @@ class _PruductSliderState extends State<PruductSlider> {
                       enableInfiniteScroll: true,
                     ),
                     items: [1, 2, 3, 4, 5].map((i) {
-                      return ProductDetails();
+                      return ProductDetails(new_price: '17.690.000 đ', old_price: '19.990.000', product_name: 'PC Đỗ Đại Học 2023', sale: "-12%", status: 'new');
                     }).toList(),
                   ),
                   ButtonPrev(

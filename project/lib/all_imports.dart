@@ -33,3 +33,6 @@ export 'package:project/views/collection/banner_collection.dart';
 export 'package:project/views/collection/content_collection.dart';
 export 'package:project/views/collection/filter_sidebar.dart';
 export 'package:project/views/collection/collection_products.dart';
+export 'package:project/views/single_product/single_product.dart';
+export 'package:project/views/single_product/main_details.dart';
+
