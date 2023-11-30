@@ -32,8 +32,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     var titleBanner;
     var bannerColor;
-    var colorTitleBanner = (widget.status == "new") ? Colors.black : Colors.white;
-    
+    var colorTitleBanner =
+        (widget.status == "new") ? Colors.black : Colors.white;
+
     if (widget.status == "none") {
       banner = false;
       titleBanner = "";
@@ -82,7 +83,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   fit: BoxFit.contain,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SingleProduct()));
+              },
             ),
           ),
           Visibility(
@@ -92,7 +98,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                 child: Text(
                   titleBanner,
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600,color:colorTitleBanner),
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: colorTitleBanner),
                 )),
           ),
           Align(

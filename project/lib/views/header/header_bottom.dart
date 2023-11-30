@@ -2,7 +2,7 @@ import 'package:project/all_imports.dart';
 import 'package:project/main.dart';
 
 class HeaderBottom extends StatefulWidget {
-const HeaderBottom({ super.key });
+  const HeaderBottom({super.key});
 
   @override
   State<HeaderBottom> createState() => _HeaderBottomState();
@@ -10,83 +10,85 @@ const HeaderBottom({ super.key });
 
 class _HeaderBottomState extends State<HeaderBottom> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-          decoration: const BoxDecoration(
-            color: Color(0xFF29324e),
-          ),
-          child: SizedBox(
-            width: 1600,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      alignment: Alignment.center,
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      decoration: const BoxDecoration(
+        color: Color(0xFF29324e),
+      ),
+      child: SizedBox(
+        width: 1600,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+                onTap: () {
+                  setState(() {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const MyApp()));
+                  });
+                },
+                child:
+                    const Image(image: AssetImage('img/logo.png'), width: 160)),
+            const SearchBarApp(),
+            Row(
               children: [
-                InkWell(
-                    onTap: () {setState(() {
-                      Navigator.push(context,   MaterialPageRoute(
-                                builder: (context) =>const MyApp()));
-                    });},
-                    child: const Image(
-                        image: AssetImage('img/logo.png'), width: 160)),
-                const SearchBarApp(),
-                Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 20.0),
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              right: BorderSide(
+                Container(
+                  margin: const EdgeInsets.only(right: 20.0),
+                  decoration: const BoxDecoration(
+                      border: Border(
+                          right: BorderSide(
+                    color: Colors.white,
+                    width: 1.0,
+                  ))),
+                  child: TextButton.icon(
+                      onPressed: () {
+                        setState(() {});
+                      },
+                      icon: const Icon(
+                        Icons.person_outline,
                         color: Colors.white,
-                        width: 1.0,
-                      ))),
-                      child: TextButton.icon(
-                          onPressed: () {
-                            setState(() {});
-                          },
-                          icon: const Icon(
-                            Icons.person_outline,
-                            color: Colors.white,
-                            size: 20.0,
-                          ),
-                          label: const Text('Tài khoản',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold))),
+                        size: 20.0,
+                      ),
+                      label: const Text('Tài khoản',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold))),
+                ),
+                TextButton.icon(
+                    style: TextButton.styleFrom(
+                        backgroundColor: const Color(0xFF3E4B75),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.zero))),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                      size: 20.0,
                     ),
-                    TextButton.icon(
-                        style: TextButton.styleFrom(
-                            backgroundColor: const Color(0xFF3E4B75),
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.zero))),
-                        onPressed: () {
-                          setState(() {});
-                        },
-                        icon: const Icon(
-                          Icons.shopping_cart,
-                          color: Colors.white,
-                          size: 20.0,
-                        ),
-                        label: Container(
-                          width: 24,
-                          height: 24,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(color: Color(0xFFfb4e4e)),
-                          child: const Text('1',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        )),
-                  ],
-                )
+                    label: Container(
+                      width: 24,
+                      height: 24,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(color: Color(0xFFfb4e4e)),
+                      child: const Text('1',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    )),
               ],
-            ),
-          ),
-        );
-
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
+
 class SearchBarApp extends StatefulWidget {
   const SearchBarApp({super.key});
 

@@ -1,4 +1,6 @@
 //package
+library flutter_quill;
+
 export 'package:flutter/material.dart';
 export 'dart:async';
 export 'dart:ui_web';
@@ -29,10 +31,10 @@ export 'package:project/widget/prod_details.dart';
 export 'package:project/widget/custom_container.dart';
 export 'package:project/widget/half_container.dart';
 export 'package:project/widget/banner_sale.dart';
+export 'package:project/views/collection/collection.dart';
 export 'package:project/views/collection/banner_collection.dart';
 export 'package:project/views/collection/content_collection.dart';
 export 'package:project/views/collection/filter_sidebar.dart';
 export 'package:project/views/collection/collection_products.dart';
 export 'package:project/views/single_product/single_product.dart';
 export 'package:project/views/single_product/main_details.dart';
-

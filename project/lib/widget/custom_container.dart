@@ -1,5 +1,4 @@
 import 'package:project/all_imports.dart';
-import 'package:project/views/collection/collection.dart';
 
 class CustomContainer extends StatefulWidget {
   final String title;
