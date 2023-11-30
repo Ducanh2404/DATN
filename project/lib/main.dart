@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide(width: 2, color: Color(0xFF3278f6)),borderRadius: BorderRadius.zero,
             ),
           )),
-      home: const Scaffold(body: WebLayout()),
+      home: const Scaffold(body: Home()),
     );
   }
 }

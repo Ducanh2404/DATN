@@ -1,16 +1,16 @@
 import 'package:project/all_imports.dart';
 
 /// a. creating StatefulWidget
-class WebLayout extends StatefulWidget {
-  const WebLayout({super.key});
+class Home extends StatefulWidget {
+  const Home({super.key});
   @override
   State createState() {
-    return _WebLayoutState();
+    return _HomeState();
   }
 }
 
 /// b. Creating state for stateful widget
-class _WebLayoutState extends State {
+class _HomeState extends State {
   @override
   Widget build(BuildContext context) {
     /// returning a container widget

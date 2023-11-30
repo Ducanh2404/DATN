@@ -1,4 +1,5 @@
 import 'package:project/all_imports.dart';
+import 'package:project/main.dart';
 
 class HeaderBottom extends StatefulWidget {
 const HeaderBottom({ super.key });
@@ -23,7 +24,10 @@ class _HeaderBottomState extends State<HeaderBottom> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                    onTap: () {},
+                    onTap: () {setState(() {
+                      Navigator.push(context,   MaterialPageRoute(
+                                builder: (context) =>const MyApp()));
+                    });},
                     child: const Image(
                         image: AssetImage('img/logo.png'), width: 160)),
                 const SearchBarApp(),
