@@ -1,30 +1,22 @@
 import 'package:project/all_imports.dart';
 
-class PruductSlider extends StatefulWidget {
-  const PruductSlider({super.key});
+class ViewedProduct extends StatefulWidget {
+  const ViewedProduct({Key? key}) : super(key: key);
 
   @override
-  _PruductSliderState createState() => _PruductSliderState();
+  _ViewedProductState createState() => _ViewedProductState();
 }
 
-class _PruductSliderState extends State<PruductSlider> {
+class _ViewedProductState extends State<ViewedProduct> {
   CarouselController buttonCarouselController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-        title: 'pc đồ họa nổi bật',
+        title: 'sản phẩm đã xem',
         morebtn: true,
         content: Row(
           children: [
-            TextButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    overlayColor: TransparentButton(),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                        const EdgeInsets.symmetric(horizontal: 0.0))),
-                child: const Image(
-                    image: AssetImage('img/product-thumbnail/category1.jpg'))),
             Expanded(
               child: Stack(
                 children: [
@@ -33,11 +25,11 @@ class _PruductSliderState extends State<PruductSlider> {
                     options: CarouselOptions(
                       height: 405,
                       padEnds: false,
-                      viewportFraction: 1.0 / 5.0,
+                      viewportFraction: 1.0 / 6.0,
                       initialPage: 0,
                       enableInfiniteScroll: true,
                     ),
-                    items: [1, 2, 3, 4, 5].map((i) {
+                    items: [1, 2, 3, 4, 5, 6].map((i) {
                       return ProductDetails(
                           new_price: '17.690.000đ',
                           old_price: '19.990.000đ',

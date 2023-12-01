@@ -1,6 +1,4 @@
 //package
-library flutter_quill;
-
 export 'package:flutter/material.dart';
 export 'dart:async';
 export 'dart:ui_web';
@@ -38,3 +36,6 @@ export 'package:project/views/collection/filter_sidebar.dart';
 export 'package:project/views/collection/collection_products.dart';
 export 'package:project/views/single_product/single_product.dart';
 export 'package:project/views/single_product/main_details.dart';
+export 'package:project/views/single_product/product_content.dart';
+export 'package:project/views/single_product/related_product.dart';
+export 'package:project/views/single_product/viewed_product.dart';

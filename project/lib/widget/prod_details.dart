@@ -87,7 +87,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SingleProduct()));
+                        builder: (context) => SingleProduct(
+                            new_price: widget.new_price,
+                            old_price: widget.old_price,
+                            product_name: widget.product_name,
+                            sale: widget.sale,
+                            status: widget.status)));
               },
             ),
           ),
