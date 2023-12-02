@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:project/all_imports.dart';
-import 'package:flutter_quill/flutter_quill.dart';
 
 class MainDetails extends StatefulWidget {
   final String new_price;
