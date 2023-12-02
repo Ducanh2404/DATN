@@ -17,11 +17,13 @@ class ButtonPrev extends StatelessWidget {
         style: ButtonStyle(
             shape: MaterialStateProperty.all<OutlinedBorder>(
               const RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero, // Set border radius to zero
+                borderRadius: BorderRadius.zero,
               ),
             ),
-            foregroundColor:MaterialStateProperty.all<Color>(Colors.white.withOpacity(0.6)),
-            backgroundColor:  MaterialStateProperty.all<Color>(const Color(0xFF869791).withOpacity(0.6)),
+            foregroundColor:
+                MaterialStateProperty.all<Color>(Colors.white.withOpacity(0.6)),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                const Color(0xFF869791).withOpacity(0.6)),
             overlayColor: MaterialStateProperty.resolveWith(
                 <Color>(Set<MaterialState> states) {
               if (states.contains(MaterialState.hovered)) {

@@ -16,6 +16,7 @@ export 'package:project/views/header/menu_bar.dart';
 export 'package:project/views/footer/footer_info.dart';
 export 'package:project/views/footer/footer_main.dart';
 export 'package:project/layout.dart';
+export 'package:project/main.dart';
 export 'package:project/views/home/banner.dart';
 export 'package:project/views/home/categories.dart';
 export 'package:project/views/home/pruduct_slider.dart';

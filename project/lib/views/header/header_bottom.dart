@@ -1,5 +1,4 @@
 import 'package:project/all_imports.dart';
-import 'package:project/main.dart';
 
 class HeaderBottom extends StatefulWidget {
   const HeaderBottom({super.key});
@@ -44,6 +43,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                     width: 1.0,
                   ))),
                   child: TextButton.icon(
+                      style: ButtonStyle(overlayColor: TransparentButton()),
                       onPressed: () {
                         setState(() {});
                       },
@@ -57,11 +57,25 @@ class _HeaderBottomState extends State<HeaderBottom> {
                               color: Colors.white,
                               fontWeight: FontWeight.bold))),
                 ),
+                Baseline(
+                  baseline: 0,
+                  baselineType: TextBaseline.alphabetic,
+                  child: FlutterLogo(
+                    size: 50,
+                  ),
+                ),
                 TextButton.icon(
-                    style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFF3E4B75),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.zero))),
+                    style: ButtonStyle(
+                      overlayColor: TransparentButton(),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFF3E4B75)),
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.zero, // Set border radius to zero
+                        ),
+                      ),
+                    ),
                     onPressed: () {
                       setState(() {});
                     },
