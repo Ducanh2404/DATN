@@ -64,7 +64,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                 },
                 child:
                     const Image(image: AssetImage('img/logo.png'), width: 160)),
-            const SearchBarApp(),
+            Expanded(child: const SearchBarApp()),
             Row(
               children: [
                 CompositedTransformTarget(

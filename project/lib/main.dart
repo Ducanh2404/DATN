@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.zero,
             ),
           )),
-      home: const Scaffold(body: Home()),
+      home: Scaffold(body: Home()),
     );
   }
 }
