@@ -8,39 +8,6 @@ class HeaderBottom extends StatefulWidget {
 }
 
 class _HeaderBottomState extends State<HeaderBottom> {
-  final layerLink = LayerLink();
-  Widget buildOverlay() =>
-      Container(height: 200, width: 200, color: Colors.red);
-  OverlayEntry? entry;
-  void hideOverlay() {
-    entry?.remove();
-    entry = null;
-  }
-
-  void showOverlay() {
-    final overlay = Overlay.of(context)!;
-
-    final renderBox = context.findRenderObject() as RenderBox;
-    final size = renderBox.size;
-    final offset = renderBox.localToGlobal(Offset.zero);
-    entry = OverlayEntry(
-      builder: (context) => Positioned(
-          width: size.width,
-          child: CompositedTransformFollower(
-            link: layerLink,
-            showWhenUnlinked: false,
-            offset: Offset(0, size.height + 8),
-            child: buildOverlay(),
-          )),
-    );
-    overlay.insert(entry!);
-  }
-
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => showOverlay());
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,34 +31,18 @@ class _HeaderBottomState extends State<HeaderBottom> {
                 },
                 child:
                     const Image(image: AssetImage('img/logo.png'), width: 160)),
-            Expanded(child: const SearchBarApp()),
+            const Expanded(child: SearchBarApp()),
             Row(
               children: [
-                CompositedTransformTarget(
-                  link: layerLink,
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 20.0),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                            right: BorderSide(
-                      color: Colors.white,
-                      width: 1.0,
-                    ))),
-                    child: TextButton.icon(
-                        style: ButtonStyle(overlayColor: TransparentButton()),
-                        onPressed: () {
-                          setState(() {});
-                        },
-                        icon: const Icon(
-                          Icons.person_outline,
-                          color: Colors.white,
-                          size: 20.0,
-                        ),
-                        label: const Text('Tài khoản',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold))),
-                  ),
+                Container(
+                  margin: const EdgeInsets.only(right: 20.0),
+                  decoration: const BoxDecoration(
+                      border: Border(
+                          right: BorderSide(
+                    color: Colors.white,
+                    width: 1.0,
+                  ))),
+                  child: Account(),
                 ),
                 TextButton.icon(
                     style: ButtonStyle(
@@ -172,6 +123,121 @@ class _SearchBarAppState extends State<SearchBarApp> {
           );
         });
       }),
+    );
+  }
+}
+
+class Account extends StatefulWidget {
+  const Account({Key? key}) : super(key: key);
+
+  @override
+  _AccountState createState() => _AccountState();
+}
+
+class _AccountState extends State<Account> {
+  late Widget form = Login(toRegister: toPage);
+
+  void toPage(String text) {
+    if (text == "register") {
+      setState(() {
+        form = Register(
+          toLogin: toPage,
+        );
+      });
+    }
+    if (text == "login") {
+      setState(() {
+        form = Login(toRegister: toPage);
+      });
+    }
+    if (text == "forgetPass") {
+      setState(() {
+        form = ForgetPass(toLogin: toPage);
+      });
+    }
+  }
+
+  final layerLink = LayerLink();
+  Widget buildOverlay() => Container(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 7,
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                  style: ButtonStyle(
+                    overlayColor: TransparentButton(),
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.all(0.0)),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      hideOverlay();
+                    });
+                  },
+                  icon: FaIcon(
+                    FontAwesomeIcons.xmark,
+                    size: 20,
+                  )),
+            ),
+            form,
+          ],
+        ),
+      );
+  OverlayEntry? entry;
+  void hideOverlay() {
+    entry?.remove();
+    entry = null;
+  }
+
+  void showOverlay() {
+    final overlay = Overlay.of(context);
+    final renderBox = context.findRenderObject() as RenderBox;
+    final size = renderBox.size;
+    entry = OverlayEntry(
+      builder: (context) => Positioned(
+          width: 340,
+          child: CompositedTransformFollower(
+            link: layerLink,
+            showWhenUnlinked: false,
+            offset: Offset(-size.width, size.height),
+            child: buildOverlay(),
+          )),
+    );
+    overlay.insert(entry!);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CompositedTransformTarget(
+      link: layerLink,
+      child: TextButton.icon(
+          style: ButtonStyle(overlayColor: TransparentButton()),
+          onPressed: () {
+            setState(() {
+              if (entry == null) {
+                showOverlay();
+              }
+            });
+          },
+          icon: const Icon(
+            Icons.person_outline,
+            color: Colors.white,
+            size: 20.0,
+          ),
+          label: const Text('Tài khoản',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
     );
   }
 }

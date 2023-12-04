@@ -13,6 +13,10 @@ export 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 export 'package:project/views/header/header_bottom.dart';
 export 'package:project/views/header/header_top.dart';
 export 'package:project/views/header/menu_bar.dart';
+export 'package:project/views/header/login.dart';
+export 'package:project/views/header/register.dart';
+export 'package:project/views/header/forget_pass.dart';
+
 export 'package:project/views/footer/footer_info.dart';
 export 'package:project/views/footer/footer_main.dart';
 export 'package:project/layout.dart';
