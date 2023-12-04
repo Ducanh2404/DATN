@@ -23,6 +23,9 @@ class CartMain extends StatelessWidget {
                               fontWeight: FontWeight.w900, fontSize: 18)),
                     ],
                   ))),
+          SizedBox(
+            width: 24,
+          ),
           Expanded(
               flex: 3,
               child: Container(
