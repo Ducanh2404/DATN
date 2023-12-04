@@ -8,6 +8,39 @@ class HeaderBottom extends StatefulWidget {
 }
 
 class _HeaderBottomState extends State<HeaderBottom> {
+  final layerLink = LayerLink();
+  Widget buildOverlay() =>
+      Container(height: 200, width: 200, color: Colors.red);
+  OverlayEntry? entry;
+  void hideOverlay() {
+    entry?.remove();
+    entry = null;
+  }
+
+  void showOverlay() {
+    final overlay = Overlay.of(context)!;
+
+    final renderBox = context.findRenderObject() as RenderBox;
+    final size = renderBox.size;
+    final offset = renderBox.localToGlobal(Offset.zero);
+    entry = OverlayEntry(
+      builder: (context) => Positioned(
+          width: size.width,
+          child: CompositedTransformFollower(
+            link: layerLink,
+            showWhenUnlinked: false,
+            offset: Offset(0, size.height + 8),
+            child: buildOverlay(),
+          )),
+    );
+    overlay.insert(entry!);
+  }
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => showOverlay());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,34 +67,30 @@ class _HeaderBottomState extends State<HeaderBottom> {
             const SearchBarApp(),
             Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 20.0),
-                  decoration: const BoxDecoration(
-                      border: Border(
-                          right: BorderSide(
-                    color: Colors.white,
-                    width: 1.0,
-                  ))),
-                  child: TextButton.icon(
-                      style: ButtonStyle(overlayColor: TransparentButton()),
-                      onPressed: () {
-                        setState(() {});
-                      },
-                      icon: const Icon(
-                        Icons.person_outline,
-                        color: Colors.white,
-                        size: 20.0,
-                      ),
-                      label: const Text('Tài khoản',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold))),
-                ),
-                Baseline(
-                  baseline: 0,
-                  baselineType: TextBaseline.alphabetic,
-                  child: FlutterLogo(
-                    size: 50,
+                CompositedTransformTarget(
+                  link: layerLink,
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 20.0),
+                    decoration: const BoxDecoration(
+                        border: Border(
+                            right: BorderSide(
+                      color: Colors.white,
+                      width: 1.0,
+                    ))),
+                    child: TextButton.icon(
+                        style: ButtonStyle(overlayColor: TransparentButton()),
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        icon: const Icon(
+                          Icons.person_outline,
+                          color: Colors.white,
+                          size: 20.0,
+                        ),
+                        label: const Text('Tài khoản',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))),
                   ),
                 ),
                 TextButton.icon(
