@@ -57,7 +57,13 @@ class _HeaderBottomState extends State<HeaderBottom> {
                       ),
                     ),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Cart(),
+                            ));
+                      });
                     },
                     icon: const Icon(
                       Icons.shopping_cart,
@@ -136,28 +142,33 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   late Widget form = Login(toRegister: toPage);
-
-  void toPage(String text) {
+  final layerLink = LayerLink();
+  toPage(String text) {
     if (text == "register") {
       setState(() {
         form = Register(
           toLogin: toPage,
         );
+        hideOverlay();
+        showOverlay();
       });
     }
     if (text == "login") {
       setState(() {
         form = Login(toRegister: toPage);
+        hideOverlay();
+        showOverlay();
       });
     }
     if (text == "forgetPass") {
       setState(() {
         form = ForgetPass(toLogin: toPage);
+        hideOverlay();
+        showOverlay();
       });
     }
   }
 
-  final layerLink = LayerLink();
   Widget buildOverlay() => Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
         decoration: BoxDecoration(
@@ -210,7 +221,7 @@ class _AccountState extends State<Account> {
           child: CompositedTransformFollower(
             link: layerLink,
             showWhenUnlinked: false,
-            offset: Offset(-size.width, size.height),
+            offset: Offset(-size.width, size.height * 2),
             child: buildOverlay(),
           )),
     );
