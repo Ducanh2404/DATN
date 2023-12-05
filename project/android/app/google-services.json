@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "168943977278",
+    "project_id": "datn-cdbee",
+    "storage_bucket": "datn-cdbee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168943977278:android:2e6d6842f591895fdea26f",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVWyEyNUKNgTu3M5db1RFLuFpY2kBFToE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
