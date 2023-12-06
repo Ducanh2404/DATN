@@ -49,3 +49,4 @@ export 'package:project/views/single_product/viewed_product.dart';
 //firebase package
 export 'package:firebase_core/firebase_core.dart';
 export 'firebase_options.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';
