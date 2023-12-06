@@ -8,6 +8,7 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:card_swiper/card_swiper.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+export 'package:go_router/go_router.dart';
 
 //widget
 export 'package:project/views/header/header_bottom.dart';
@@ -46,7 +47,9 @@ export 'package:project/views/single_product/product_content.dart';
 export 'package:project/views/single_product/related_product.dart';
 export 'package:project/views/single_product/viewed_product.dart';
 
-//firebase package
+//firebase
 export 'package:firebase_core/firebase_core.dart';
 export 'firebase_options.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:firebase_ui_auth/firebase_ui_auth.dart';
+export 'package:provider/provider.dart';
