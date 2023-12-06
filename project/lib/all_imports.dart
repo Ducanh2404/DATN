@@ -53,3 +53,4 @@ export 'firebase_options.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_ui_auth/firebase_ui_auth.dart';
 export 'package:provider/provider.dart';
+export 'package:flutter/foundation.dart';
