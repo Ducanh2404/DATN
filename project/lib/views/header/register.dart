@@ -13,9 +13,6 @@ class _RegisterState extends State<Register> {
   late TextEditingController _controllerPass;
   late TextEditingController _controllerName;
 
-  String email = "";
-  String name = "";
-  String password = "";
   @override
   void initState() {
     super.initState();
@@ -34,6 +31,19 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    Future<void> addUser() {
+      // Call the user's CollectionReference to add a new user
+      return users
+          .add({
+            'name': _controllerName.text,
+            'email': _controllerEmail.text,
+            'password': _controllerPass.text
+          })
+          .then((value) => print("Đăng Ký Tài Khoản Thành Công"))
+          .catchError((error) => print("Đã xảy ra lỗi $error"));
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -73,11 +83,6 @@ class _RegisterState extends State<Register> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerName,
-            onSubmitted: (String value) {
-              setState(() {
-                name = _controllerName.text;
-              });
-            },
           ),
         ),
         SizedBox(
@@ -108,11 +113,6 @@ class _RegisterState extends State<Register> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerEmail,
-            onSubmitted: (String value) {
-              setState(() {
-                email = _controllerEmail.text;
-              });
-            },
           ),
         ),
         SizedBox(
@@ -144,11 +144,6 @@ class _RegisterState extends State<Register> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerPass,
-            onSubmitted: (String value) {
-              setState(() {
-                password = _controllerPass.text;
-              });
-            },
           ),
         ),
         SizedBox(
@@ -168,7 +163,10 @@ class _RegisterState extends State<Register> {
                       ),
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
-                  onPressed: () {},
+                  onPressed: () {
+                    addUser();
+                    widget.toLogin('login');
+                  },
                   child: Text('Tạo tài khoản',
                       style: TextStyle(
                           color: Colors.white,
