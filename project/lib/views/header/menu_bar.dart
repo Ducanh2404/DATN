@@ -8,43 +8,20 @@ class MenuItems extends StatefulWidget {
 }
 
 class _MenuItemsState extends State<MenuItems> {
-  late List<String> categories = [];
-  // CollectionReference<Map<String, dynamic>> _productCategories =
-  //     FirebaseFirestore.instance.collection('categories');
-  // late Stream<QuerySnapshot> _streamCategoriesItems;
-  void initState() {
-    super.initState();
-    // _streamCategoriesItems = _productCategories.snapshots();
-    fetchDropdownData();
+  Future<List<QueryDocumentSnapshot>> fetchCollectionData() async {
+    QuerySnapshot collectionSnapshot =
+        await FirebaseFirestore.instance.collection('categories').get();
+    return collectionSnapshot.docs;
   }
 
-  Future<void> fetchDropdownData() async {
-    try {
-      CollectionReference collectionRef =
-          FirebaseFirestore.instance.collection('categories');
-      QuerySnapshot querySnapshot = await collectionRef.get();
-      querySnapshot.docs.forEach((doc) {
-        Object? data = doc.data();
-        print(doc);
-      });
-
-      QuerySnapshot cate =
-          await FirebaseFirestore.instance.collection('categories').get();
-      DocumentReference doc1 = FirebaseFirestore.instance
-          .collection('categories')
-          .doc('categories1');
-      QuerySnapshot subCate1 = await doc1.collection('sub-categories1').get();
-      List<String> items =
-          cate.docs.map((doc) => doc['name'] as String).toList();
-      List<String> subCateItem1 =
-          subCate1.docs.map((doc) => doc['name'] as String).toList();
-      print(querySnapshot);
-      setState(() {
-        categories = items;
-      });
-    } catch (e) {
-      print('Error fetching dropdown data: $e');
-    }
+  Future<List<QueryDocumentSnapshot>> fetchSubcollectionData(
+      String documentId) async {
+    QuerySnapshot subcollectionSnapshot = await FirebaseFirestore.instance
+        .collection('categories')
+        .doc(documentId)
+        .collection('subCate')
+        .get();
+    return subcollectionSnapshot.docs;
   }
 
   @override
@@ -71,96 +48,134 @@ class _MenuItemsState extends State<MenuItems> {
                         MaterialStatePropertyAll<Color>(Colors.transparent),
                   ),
                   children: [
-                    SubmenuButton(
-                      style: ButtonStyle(overlayColor: TransparentButton()),
-                      menuStyle: MenuStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.all(0)),
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                            BeveledRectangleBorder(
-                                borderRadius: BorderRadius.zero)),
-                      ),
-                      menuChildren: categories.map((cat) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xff3e4b75),
-                              border: BorderDirectional(
-                                  bottom: BorderSide(
-                                      width: 1,
-                                      color: Colors.grey,
-                                      style: BorderStyle.solid))),
-                          width: 300,
-                          height: 50,
-                          child: MenuItemButton(
-                            onPressed: () {},
-                            child: Text(
-                              cat,
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
+                    FutureBuilder<List<QueryDocumentSnapshot>>(
+                      future: fetchCollectionData(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<QueryDocumentSnapshot>>
+                              collectionSnapshot) {
+                        if (collectionSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (collectionSnapshot.hasError) {
+                          return Text('Error: ${collectionSnapshot.error}');
+                        } else {
+                          List<QueryDocumentSnapshot> collectionDocuments =
+                              collectionSnapshot.data!;
+                          List<Widget> documentWidgets = [];
+                          for (var document in collectionDocuments) {
+                            documentWidgets.add(
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 78, 80, 87),
+                                    border: BorderDirectional(
+                                        bottom: BorderSide(
+                                            width: 1,
+                                            color: Colors.grey,
+                                            style: BorderStyle.solid))),
+                                width: 300,
+                                height: 50,
+                                child: SubmenuButton(
+                                  menuChildren: [
+                                    MenuItemButton(
+                                      onPressed: () {},
+                                      child: FutureBuilder<
+                                          List<QueryDocumentSnapshot>>(
+                                        future:
+                                            fetchSubcollectionData(document.id),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<
+                                                    List<QueryDocumentSnapshot>>
+                                                subcollectionSnapshot) {
+                                          if (subcollectionSnapshot
+                                                  .connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          } else if (subcollectionSnapshot
+                                              .hasError) {
+                                            return Text(
+                                                'Error: ${subcollectionSnapshot.error}');
+                                          } else {
+                                            List<QueryDocumentSnapshot>
+                                                subcollectionDocuments =
+                                                subcollectionSnapshot.data!;
+                                            List<Widget> subdocumentWidgets =
+                                                [];
+
+                                            for (var subDoc
+                                                in subcollectionDocuments) {
+                                              subdocumentWidgets.add(
+                                                Text(subDoc['name']),
+                                              );
+                                            }
+
+                                            return SizedBox(
+                                              width: 900,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: subdocumentWidgets,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                  child: Text(
+                                    document['name'],
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+
+                          return SubmenuButton(
+                            style:
+                                ButtonStyle(overlayColor: TransparentButton()),
+                            menuStyle: MenuStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  EdgeInsets.all(0)),
+                              shape: MaterialStateProperty.all<OutlinedBorder>(
+                                  BeveledRectangleBorder(
+                                      borderRadius: BorderRadius.zero)),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      child: Row(
-                        children: [
-                          FaIcon(
-                            FontAwesomeIcons.bars,
-                            size: 16,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('danh mục sản phẩm'.toUpperCase(),
-                              style: GoogleFonts.chakraPetch(
-                                textStyle: TextStyle(
-                                  fontWeight: FontWeight.w700,
+                            menuChildren: documentWidgets,
+                            child: Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.bars,
+                                  size: 16,
                                   color: Colors.white,
                                 ),
-                              )),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          FaIcon(
-                            FontAwesomeIcons.chevronDown,
-                            size: 14,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    )
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text('danh mục sản phẩm'.toUpperCase(),
+                                    style: GoogleFonts.chakraPetch(
+                                      textStyle: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                    )),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                FaIcon(
+                                  FontAwesomeIcons.chevronDown,
+                                  size: 14,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ])
             ],
           )),
     );
   }
 }
-//  StreamBuilder<QuerySnapshot>(
-//                       stream: _streamCategoriesItems,
-//                       builder:
-//                           (BuildContext context, AsyncSnapshot snapshot) {
-//                         if (snapshot.hasError) {
-//                           return Text(snapshot.error.toString());
-//                         }
-//                         if (snapshot.connectionState ==
-//                             ConnectionState.active) {
-//                           QuerySnapshot querySnapshot = snapshot.data!;
-//                           List<QueryDocumentSnapshot> listCategories =
-//                               querySnapshot.docs;
-//                           return SizedBox(
-//                             height: MediaQuery.of(context).size.height,
-//                             child: ListView.builder(
-//                                 itemCount: listCategories.length,
-//                                 itemBuilder: (context, index) {
-//                                   QueryDocumentSnapshot data =
-//                                       listCategories[index];
-//                                   return ListTile(
-//                                     title: Text(data['name']),
-//                                   );
-//                                 }),
-//                           );
-//                         }
-//                         return Center(
-//                           child: CircularProgressIndicator(),
-//                         );
-//                       }),
