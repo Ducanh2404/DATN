@@ -13,6 +13,10 @@ class _LoginState extends State<Login> {
   late TextEditingController _controllerPass;
   String email = "";
   String password = "";
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
 
   @override
   void initState() {

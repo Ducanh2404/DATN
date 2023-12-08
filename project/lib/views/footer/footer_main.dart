@@ -22,9 +22,9 @@ class FooterMain extends StatelessWidget {
                   title: 'Thông Tin Chung',
                   item1: 'Giới Thiệu',
                   item2: 'Tuyển Dụng',
-                  item3: 'VGA NVidia Rtx 4070',
-                  item4: 'Tin Tức',
-                  item5: 'Ý Kiến Khách Hàng'),
+                  item3: 'Tin Tức',
+                  item4: 'Ý Kiến Khách Hàng',
+                  item5: 'Liên Hệ Hợp Tác'),
               FooterItem(
                   title: 'Chính Sách',
                   item1: 'Quy Định Chung',
@@ -222,7 +222,8 @@ class _LinksState extends State<Links> {
       underline = underline == TextDecoration.none
           ? TextDecoration.underline
           : TextDecoration.none;
-      textColor = textColor == Colors.black ? const Color(0xFF3278f6) : Colors.black;
+      textColor =
+          textColor == Colors.black ? const Color(0xFF3278f6) : Colors.black;
     });
   }
 

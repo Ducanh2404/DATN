@@ -75,56 +75,80 @@ class _MenuItemsState extends State<MenuItems> {
                                 width: 300,
                                 height: 50,
                                 child: SubmenuButton(
+                                  alignmentOffset: Offset(0, 8),
+                                  menuStyle: MenuStyle(
+                                    shape: MaterialStateProperty.all<
+                                            OutlinedBorder>(
+                                        BeveledRectangleBorder(
+                                            borderRadius: BorderRadius.zero)),
+                                  ),
+                                  style: ButtonStyle(
+                                      iconColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.white)),
                                   menuChildren: [
-                                    MenuItemButton(
-                                      onPressed: () {},
-                                      child: FutureBuilder<
-                                          List<QueryDocumentSnapshot>>(
-                                        future:
-                                            fetchSubcollectionData(document.id),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<
-                                                    List<QueryDocumentSnapshot>>
-                                                subcollectionSnapshot) {
-                                          if (subcollectionSnapshot
-                                                  .connectionState ==
-                                              ConnectionState.waiting) {
-                                            return CircularProgressIndicator();
-                                          } else if (subcollectionSnapshot
-                                              .hasError) {
-                                            return Text(
-                                                'Error: ${subcollectionSnapshot.error}');
-                                          } else {
-                                            List<QueryDocumentSnapshot>
-                                                subcollectionDocuments =
-                                                subcollectionSnapshot.data!;
-                                            List<Widget> subdocumentWidgets =
-                                                [];
+                                    FutureBuilder<List<QueryDocumentSnapshot>>(
+                                      future:
+                                          fetchSubcollectionData(document.id),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<
+                                                  List<QueryDocumentSnapshot>>
+                                              subcollectionSnapshot) {
+                                        if (subcollectionSnapshot
+                                                .connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator();
+                                        } else if (subcollectionSnapshot
+                                            .hasError) {
+                                          return Text(
+                                              'Error: ${subcollectionSnapshot.error}');
+                                        } else {
+                                          List<QueryDocumentSnapshot>
+                                              subcollectionDocuments =
+                                              subcollectionSnapshot.data!;
+                                          List<Widget> subdocumentWidgets = [];
 
-                                            for (var subDoc
-                                                in subcollectionDocuments) {
-                                              subdocumentWidgets.add(
-                                                Text(subDoc['name']),
-                                              );
-                                            }
-
-                                            return SizedBox(
-                                              width: 900,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: subdocumentWidgets,
+                                          for (var subDoc
+                                              in subcollectionDocuments) {
+                                            subdocumentWidgets.add(Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 78, 80, 87),
+                                                  border: BorderDirectional(
+                                                      bottom: BorderSide(
+                                                          width: 1,
+                                                          color: Colors.grey,
+                                                          style: BorderStyle
+                                                              .solid))),
+                                              width: 300,
+                                              height: 50,
+                                              child: MenuItemButton(
+                                                style: ButtonStyle(
+                                                    overlayColor:
+                                                        TransparentButton()),
+                                                onPressed: () {},
+                                                child: Text(
+                                                  subDoc['name'],
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
                                               ),
-                                            );
+                                            ));
                                           }
-                                        },
-                                      ),
+
+                                          return Column(
+                                            children: subdocumentWidgets,
+                                          );
+                                        }
+                                      },
                                     ),
                                   ],
                                   child: Text(
                                     document['name'],
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.white),
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
