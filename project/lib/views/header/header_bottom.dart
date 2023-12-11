@@ -8,6 +8,8 @@ class HeaderBottom extends StatefulWidget {
 }
 
 class _HeaderBottomState extends State<HeaderBottom> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -141,8 +143,17 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  late Widget form = Login(toRegister: toPage);
+  late Widget form =
+      Login(toRegister: toPage, updateLoginStatus: updateLoginState);
   final layerLink = LayerLink();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  late String userName = '';
+  void updateLoginState(String name) {
+    setState(() {
+      userName = name;
+    });
+  }
+
   toPage(String text) {
     if (text == "register") {
       setState(() {
@@ -155,7 +166,10 @@ class _AccountState extends State<Account> {
     }
     if (text == "login") {
       setState(() {
-        form = Login(toRegister: toPage);
+        form = Login(
+          toRegister: toPage,
+          updateLoginStatus: updateLoginState,
+        );
         hideOverlay();
         showOverlay();
       });
@@ -246,7 +260,7 @@ class _AccountState extends State<Account> {
             color: Colors.white,
             size: 20.0,
           ),
-          label: const Text('Tài khoản',
+          label: Text(userName.isNotEmpty ? userName : "Tài Khoản",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
     );

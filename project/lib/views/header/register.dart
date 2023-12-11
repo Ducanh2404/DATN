@@ -12,6 +12,7 @@ class _RegisterState extends State<Register> {
   late TextEditingController _controllerEmail;
   late TextEditingController _controllerPass;
   late TextEditingController _controllerName;
+  late StreamSubscription _firebaseStreamEvents;
 
   @override
   void initState() {
@@ -19,6 +20,8 @@ class _RegisterState extends State<Register> {
     _controllerEmail = TextEditingController();
     _controllerPass = TextEditingController();
     _controllerName = TextEditingController();
+    _firebaseStreamEvents =
+        FirebaseAuth.instance.authStateChanges().listen((user) {});
   }
 
   @override
@@ -26,24 +29,35 @@ class _RegisterState extends State<Register> {
     _controllerEmail.dispose();
     _controllerPass.dispose();
     _controllerName.dispose();
+    _firebaseStreamEvents.cancel();
     super.dispose();
+  }
+
+  void createUserWithEmailAndPassword() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _controllerEmail.text.trim(),
+          password: _controllerPass.text.trim());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "weak-password") {
+        print('Mật khẩu quá yếu');
+      } else if (e.code == "email-already-in-use") {
+        print('Email đã được sử dụng');
+      }
+    } catch (e) {
+      print(e);
+    }
+    _firebaseStreamEvents =
+        FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null) {
+        user.updateProfile(displayName: _controllerName.text.trim());
+        user.sendEmailVerification();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-    Future<void> addUser() {
-      // Call the user's CollectionReference to add a new user
-      return users
-          .add({
-            'name': _controllerName.text,
-            'email': _controllerEmail.text,
-            'password': _controllerPass.text
-          })
-          .then((value) => print("Đăng Ký Tài Khoản Thành Công"))
-          .catchError((error) => print("Đã xảy ra lỗi $error"));
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -164,7 +178,7 @@ class _RegisterState extends State<Register> {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
                   onPressed: () {
-                    addUser();
+                    createUserWithEmailAndPassword();
                     widget.toLogin('login');
                   },
                   child: Text('Tạo tài khoản',
