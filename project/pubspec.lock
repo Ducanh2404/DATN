@@ -185,14 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.10"
-  delta_markdown_converter:
-    dependency: transitive
-    description:
-      name: delta_markdown_converter
-      sha256: "2c28237d31d856f66d86fac2cbb25b7fb99757b5b0ed640c7ba7631d4ba9218e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   desktop_webview_auth:
     dependency: transitive
     description:
@@ -398,14 +390,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_animate:
-    dependency: transitive
-    description:
-      name: flutter_animate
-      sha256: "1dbc1aabfb8ec1e9d9feed2b675c21fb6b0a11f99be53ec3bc0f1901af6a8eb7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.3.0"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -503,18 +487,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "9028fdec46e80ff513418ef151ffc236f4adfd306028476161b0909e36631104"
+      sha256: "98cb0f2d5b2b3ed0bb8931f5652b2b63d6a4ef9a9e021c2c3731d5fe8d721d97"
       url: "https://pub.dev"
     source: hosted
-    version: "8.6.4"
+    version: "9.0.0-dev-9"
   flutter_quill_extensions:
     dependency: "direct main"
     description:
       name: flutter_quill_extensions
-      sha256: "5b13226df5a376873792169918163eff61dbe4005c659da5fba94c8145890032"
+      sha256: "4d7767fec51158675289e554546972415c5283fb2eda405872ef70a6280a5a4b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.2"
+    version: "9.0.1"
   flutter_svg:
     dependency: transitive
     description:
@@ -613,6 +597,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  gal_linux:
+    dependency: transitive
+    description:
+      name: gal_linux
+      sha256: "7b3e5fa2d3d410f9c1aca5e5ad46efac3d214fe0a89a050be623af241ccdfcb8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   get:
     dependency: "direct main"
     description:
@@ -749,6 +741,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.18.1"
+  irondash_engine_context:
+    dependency: transitive
+    description:
+      name: irondash_engine_context
+      sha256: f66a1af95756d5fece5034d357853d0127e09b9e4ef58be1f022ca47e11c6f7e
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
+  irondash_message_channel:
+    dependency: transitive
+    description:
+      name: irondash_message_channel
+      sha256: "500daa1fbe679f7d28a5258df3ff47dab6de352e680dc93c1ca9eae1555d8db5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   js:
     dependency: transitive
     description:
@@ -797,6 +805,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  markdown:
+    dependency: transitive
+    description:
+      name: markdown
+      sha256: acf35edccc0463a9d7384e437c015a3535772e09714cf60e07eeef3a15870dcd
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.1.1"
   matcher:
     dependency: transitive
     description:
@@ -861,14 +877,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  pasteboard:
-    dependency: transitive
-    description:
-      name: pasteboard
-      sha256: "1c8b6a8b3f1d12e55d4e9404433cda1b4abe66db6b17bc2d2fb5965772c04674"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   path:
     dependency: transitive
     description:
@@ -949,6 +957,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.14.0"
+  pixel_snap:
+    dependency: transitive
+    description:
+      name: pixel_snap
+      sha256: d31591a4f4aa8ed5dc6fc00b8d027338a5614dfbf5ca658b69d1faa7aba80af7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.4"
   platform:
     dependency: transitive
     description:
@@ -977,10 +993,10 @@ packages:
     dependency: "direct main"
     description:
       name: quill_html_converter
-      sha256: a034c03ecda30206912076635ddd7464ea3fe25423a44487cafffda94471412d
+      sha256: "7009b4a54015a75da8338b4019c119a8fca7fd267048ae58a3b7f9255e4d90db"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1-experimental.1"
+    version: "9.0.0-dev-9"
   quiver:
     dependency: transitive
     description:
@@ -1058,6 +1074,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  super_clipboard:
+    dependency: transitive
+    description:
+      name: super_clipboard
+      sha256: "1031873af66c796177eff073d1453c9f19a75e6f9b308ca0b950928d0a20aedd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.3"
+  super_native_extensions:
+    dependency: transitive
+    description:
+      name: super_native_extensions
+      sha256: fd658e096e99ed7555c0727a8201dbe3b8afc0059742ac14bdcff115e08f589c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.3"
   synchronized:
     dependency: transitive
     description:
@@ -1355,5 +1387,5 @@ packages:
     source: hosted
     version: "8.1.2"
 sdks:
-  dart: ">=3.2.1 <4.0.0"
+  dart: ">=3.2.2 <4.0.0"
   flutter: ">=3.16.0"
