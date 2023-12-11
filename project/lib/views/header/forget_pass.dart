@@ -24,6 +24,48 @@ class _ForgetPassState extends State<ForgetPass> {
     super.dispose();
   }
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _resetPassword() async {
+    String email = _controllerEmail.text.trim();
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Email đặt lại mật khẩu'),
+            content: Text('Một email đặt lại mật khẩu đã được gửi đến $email.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Lỗi'),
+            content: Text('Email bạn nhập không tồn tại.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      print('Password reset error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -66,9 +108,7 @@ class _ForgetPassState extends State<ForgetPass> {
             ),
             controller: _controllerEmail,
             onSubmitted: (String value) {
-              setState(() {
-                email = _controllerEmail.text;
-              });
+              _resetPassword();
             },
           ),
         ),
@@ -89,7 +129,9 @@ class _ForgetPassState extends State<ForgetPass> {
                       ),
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
-                  onPressed: () {},
+                  onPressed: () {
+                    _resetPassword();
+                  },
                   child: Text('Lấy lại mật khẩu',
                       style: TextStyle(
                           color: Colors.white,

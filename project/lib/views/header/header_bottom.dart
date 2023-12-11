@@ -143,8 +143,11 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  late Widget form =
-      Login(toRegister: toPage, updateLoginStatus: updateLoginState);
+  late Widget form = Login(
+    toRegister: toPage,
+    updateLoginStatus: updateLoginState,
+    toProfile: toPage,
+  );
   final layerLink = LayerLink();
   final FirebaseAuth auth = FirebaseAuth.instance;
   late String userName = '';
@@ -155,6 +158,13 @@ class _AccountState extends State<Account> {
   }
 
   toPage(String text) {
+    if (text == "profile") {
+      setState(() {
+        form = UserProfile();
+        hideOverlay();
+        showOverlay();
+      });
+    }
     if (text == "register") {
       setState(() {
         form = Register(
@@ -168,6 +178,7 @@ class _AccountState extends State<Account> {
       setState(() {
         form = Login(
           toRegister: toPage,
+          toProfile: toPage,
           updateLoginStatus: updateLoginState,
         );
         hideOverlay();

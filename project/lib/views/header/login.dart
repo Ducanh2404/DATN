@@ -3,7 +3,12 @@ import 'package:project/all_imports.dart';
 class Login extends StatefulWidget {
   final Function(String) updateLoginStatus;
   final void Function(String) toRegister;
-  Login({super.key, required this.toRegister, required this.updateLoginStatus});
+  final void Function(String) toProfile;
+  Login(
+      {super.key,
+      required this.toRegister,
+      required this.updateLoginStatus,
+      required this.toProfile});
 
   @override
   _LoginState createState() => _LoginState();
@@ -12,6 +17,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late TextEditingController _controllerEmail;
   late TextEditingController _controllerPass;
+  bool passwordVisible = true;
+  String _errorText = '';
+
   String? userName;
   Future<User?> loginUsingEmailPassword({
     required String email,
@@ -24,10 +32,11 @@ class _LoginState extends State<Login> {
           email: email, password: password);
       user = userCredential.user;
       userName = user!.displayName;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        print("Tài khoản không tồn tại");
-      }
+    } catch (e) {
+      setState(() {
+        _errorText = 'Sai tài khoản hoặc mật khẩu.';
+      });
+      print("Tài khoản không tồn tại");
     }
     return user;
   }
@@ -74,9 +83,13 @@ class _LoginState extends State<Login> {
         Material(
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.zero),
+              errorText: _errorText.isNotEmpty ? _errorText : null,
+              errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
                   borderRadius: BorderRadius.zero),
               filled: true,
               fillColor: Colors.white,
@@ -104,12 +117,28 @@ class _LoginState extends State<Login> {
         ),
         Material(
           child: TextField(
-            obscureText: true,
+            obscureText: passwordVisible,
             textAlignVertical: TextAlignVertical.center,
-            decoration: const InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.grey),
+            decoration: InputDecoration(
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Colors.grey),
+                borderRadius: BorderRadius.zero,
+              ),
+              errorText: _errorText.isNotEmpty ? _errorText : null,
+              errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
                   borderRadius: BorderRadius.zero),
+              suffixIcon: IconButton(
+                icon: Icon(
+                    passwordVisible ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  setState(
+                    () {
+                      passwordVisible = !passwordVisible;
+                    },
+                  );
+                },
+              ),
               filled: true,
               fillColor: Colors.white,
               hintText: "Nhập mật khẩu của bạn",
@@ -148,6 +177,21 @@ class _LoginState extends State<Login> {
                     print(user);
                     if (user != null) {
                       setState(() {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Đăng nhập thành công'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        widget.toProfile('profile');
                         widget.updateLoginStatus(userName!);
                       });
                     }

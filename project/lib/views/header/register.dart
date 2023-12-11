@@ -13,7 +13,10 @@ class _RegisterState extends State<Register> {
   late TextEditingController _controllerPass;
   late TextEditingController _controllerName;
   late StreamSubscription _firebaseStreamEvents;
-
+  String _errorEmail = '';
+  String _errorName = '';
+  String _errorPass = '';
+  bool success = false;
   @override
   void initState() {
     super.initState();
@@ -34,26 +37,58 @@ class _RegisterState extends State<Register> {
   }
 
   void createUserWithEmailAndPassword() async {
+    if (_controllerName.text.isEmpty) {
+      setState(() {
+        _errorName = 'Vui lòng nhập họ và tên.';
+      });
+    } else {
+      _errorName = '';
+    }
+    if (_controllerEmail.text.isEmpty) {
+      setState(() {
+        _errorEmail = 'Vui lòng nhập email.';
+      });
+    } else {
+      _errorEmail = '';
+    }
+    if (_controllerPass.text.isEmpty) {
+      setState(() {
+        _errorPass = 'Vui lòng nhập mật khẩu.';
+      });
+      return;
+    } else {
+      _errorPass = '';
+    }
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _controllerEmail.text.trim(),
           password: _controllerPass.text.trim());
+      _firebaseStreamEvents =
+          FirebaseAuth.instance.authStateChanges().listen((user) {
+        if (user != null) {
+          user.updateProfile(displayName: _controllerName.text.trim());
+          user.sendEmailVerification();
+        }
+      });
     } on FirebaseAuthException catch (e) {
-      if (e.code == "weak-password") {
-        print('Mật khẩu quá yếu');
-      } else if (e.code == "email-already-in-use") {
-        print('Email đã được sử dụng');
+      if (mounted) {
+        if (e.code == "weak-password") {
+          setState(() {
+            _errorPass = 'Mật khẩu phải chứa ít nhất 6 kí tự';
+          });
+        }
+        if (e.code == "invalid-email") {
+          setState(() {
+            _errorEmail = 'Vui lòng nhập đúng định dạng email';
+          });
+        }
+        if (e.code == "email-already-in-use") {
+          setState(() {
+            _errorEmail = 'Email đã được sử dụng';
+          });
+        }
       }
-    } catch (e) {
-      print(e);
     }
-    _firebaseStreamEvents =
-        FirebaseAuth.instance.authStateChanges().listen((user) {
-      if (user != null) {
-        user.updateProfile(displayName: _controllerName.text.trim());
-        user.sendEmailVerification();
-      }
-    });
   }
 
   @override
@@ -84,9 +119,13 @@ class _RegisterState extends State<Register> {
         Material(
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.zero),
+              errorText: _errorName.isNotEmpty ? _errorName : null,
+              errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
                   borderRadius: BorderRadius.zero),
               filled: true,
               fillColor: Colors.white,
@@ -114,9 +153,13 @@ class _RegisterState extends State<Register> {
         Material(
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.zero),
+              errorText: _errorEmail.isNotEmpty ? _errorEmail : null,
+              errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
                   borderRadius: BorderRadius.zero),
               filled: true,
               fillColor: Colors.white,
@@ -145,9 +188,13 @@ class _RegisterState extends State<Register> {
           child: TextField(
             obscureText: true,
             textAlignVertical: TextAlignVertical.center,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.zero),
+              errorText: _errorPass.isNotEmpty ? _errorPass : null,
+              errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
                   borderRadius: BorderRadius.zero),
               filled: true,
               fillColor: Colors.white,
@@ -179,7 +226,27 @@ class _RegisterState extends State<Register> {
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
                   onPressed: () {
                     createUserWithEmailAndPassword();
-                    widget.toLogin('login');
+                    _firebaseStreamEvents =
+                        FirebaseAuth.instance.authStateChanges().listen((user) {
+                      if (user != null) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Đăng ký tài khoản thành công'),
+                              content: Text("Vui lòng xác thực email của bạn"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        widget.toLogin('login');
+                      }
+                    });
                   },
                   child: Text('Tạo tài khoản',
                       style: TextStyle(
