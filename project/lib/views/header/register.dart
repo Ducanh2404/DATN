@@ -36,6 +36,18 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  Future<void> addUser() {
+    return users
+        .add({
+          'name': _controllerName.text,
+          'email': _controllerEmail.text,
+        })
+        .then((value) => print("Thêm user thành công"))
+        .catchError((error) => print("Đã xảy ra lỗi $error"));
+  }
+
   void createUserWithEmailAndPassword() async {
     if (_controllerName.text.isEmpty) {
       setState(() {
@@ -242,6 +254,7 @@ class _RegisterState extends State<Register> {
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
                   onPressed: () {
                     createUserWithEmailAndPassword();
+                    addUser();
                   },
                   child: Text('Tạo tài khoản',
                       style: TextStyle(

@@ -144,7 +144,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                               });
                             },
                             child: Text(widget.product_name,
+                                maxLines: 2,
                                 style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                     color: _textColor))),

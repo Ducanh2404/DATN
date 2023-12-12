@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
   String _errorText = '';
 
   String? userName;
-  Future<User?> loginUsingEmailPassword({
+  void loginUsingEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -33,6 +33,12 @@ class _LoginState extends State<Login> {
       user = userCredential.user;
       userName = user!.displayName;
       print(user);
+      if (user.emailVerified == false) {
+        setState(() {
+          _errorText = 'Vui lòng xác thực email.';
+        });
+        return;
+      }
       setState(() {
         showDialog(
           context: context,
@@ -56,7 +62,6 @@ class _LoginState extends State<Login> {
         _errorText = 'Sai tài khoản hoặc mật khẩu.';
       });
     }
-    return user;
   }
 
   @override

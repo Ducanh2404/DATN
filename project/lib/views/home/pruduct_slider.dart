@@ -1,4 +1,5 @@
 import 'package:project/all_imports.dart';
+import 'package:intl/intl.dart';
 
 class PruductSlider extends StatefulWidget {
   const PruductSlider({super.key});
@@ -8,27 +9,50 @@ class PruductSlider extends StatefulWidget {
 }
 
 class _PruductSliderState extends State<PruductSlider> {
+  String formatAsCurrency(double value) {
+    final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+    final roundedValue = (value > 1000000)
+        ? (value / 1000000).round() * 1000000
+        : (value / 1000).round() * 1000; // Round to the nearest million
+    return numberFormat.format(roundedValue);
+  }
+
+  List<Widget> listProducts = [];
+  var newprice;
+  Future<List<Widget>> fetchDocuments() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('products').get();
+
+      querySnapshot.docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        String name = data['name'].toString();
+        String price = formatAsCurrency(data['money']).toString();
+        String sale = data['sale'].toString();
+        newprice = data['money'] - (data['money'] * (data['sale'] / 100));
+        Widget product = ProductDetails(
+            new_price: price,
+            old_price: formatAsCurrency(newprice).toString(),
+            product_name: name,
+            sale: sale,
+            status: 'new');
+        setState(() {
+          listProducts.add(product);
+        });
+      });
+    } catch (e) {
+      print('Failed to fetch documents: $e');
+    }
+    return listProducts;
+  }
+
+  @override
+  void initState() {
+    fetchDocuments();
+    super.initState();
+  }
+
   CarouselController buttonCarouselController = CarouselController();
-  // Future<List<ProductDetails>> fetchData() async {
-  //   List<ProductDetails> myClassList = [];
-
-  //   try {
-  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //         .collection('your_collection_name')
-  //         .get();
-
-  //     querySnapshot.docs.forEach((doc) {
-  //       ProductDetails myClass = ProductDetails.fromMap(doc.data());
-  //       myClassList.add(myClass);
-  //     });
-
-  //     return myClassList;
-  //   } catch (e) {
-  //     print('Failed to fetch data: $e');
-  //     return [];
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
@@ -56,14 +80,7 @@ class _PruductSliderState extends State<PruductSlider> {
                       initialPage: 0,
                       enableInfiniteScroll: true,
                     ),
-                    items: [1, 2, 3, 4, 5].map((i) {
-                      return ProductDetails(
-                          new_price: '17.690.000đ',
-                          old_price: '19.990.000đ',
-                          product_name: 'PC Đỗ Đại Học 2023',
-                          sale: "12",
-                          status: 'new');
-                    }).toList(),
+                    items: listProducts,
                   ),
                   ButtonPrev(
                       buttonCarouselController: buttonCarouselController),
