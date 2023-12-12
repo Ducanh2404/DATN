@@ -149,7 +149,6 @@ class _AccountState extends State<Account> {
     toProfile: toPage,
   );
   final layerLink = LayerLink();
-  final FirebaseAuth auth = FirebaseAuth.instance;
   late String userName = '';
   void updateLoginState(String name) {
     setState(() {
@@ -160,7 +159,10 @@ class _AccountState extends State<Account> {
   toPage(String text) {
     if (text == "profile") {
       setState(() {
-        form = UserProfile();
+        form = UserProfile(
+          updateLoginStatus: updateLoginState,
+          toLogin: toPage,
+        );
         hideOverlay();
         showOverlay();
       });

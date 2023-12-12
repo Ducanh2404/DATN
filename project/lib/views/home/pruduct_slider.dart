@@ -9,6 +9,25 @@ class PruductSlider extends StatefulWidget {
 
 class _PruductSliderState extends State<PruductSlider> {
   CarouselController buttonCarouselController = CarouselController();
+  // Future<List<ProductDetails>> fetchData() async {
+  //   List<ProductDetails> myClassList = [];
+
+  //   try {
+  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //         .collection('your_collection_name')
+  //         .get();
+
+  //     querySnapshot.docs.forEach((doc) {
+  //       ProductDetails myClass = ProductDetails.fromMap(doc.data());
+  //       myClassList.add(myClass);
+  //     });
+
+  //     return myClassList;
+  //   } catch (e) {
+  //     print('Failed to fetch data: $e');
+  //     return [];
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

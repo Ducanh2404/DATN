@@ -1,7 +1,11 @@
 import 'package:project/all_imports.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+  final Function(String) updateLoginStatus;
+  final Function(String) toLogin;
+
+  const UserProfile(
+      {super.key, required this.updateLoginStatus, required this.toLogin});
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -9,18 +13,95 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   late TextEditingController _controllerName;
-  late TextEditingController _controllerPass;
+  late TextEditingController _controllerEmail;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  Future<void> updateUserInformation(String newName) async {
+    try {
+      User? user = auth.currentUser;
+      if (user != null) {
+        await user.updateDisplayName(newName);
+        user = auth.currentUser;
+        setState(() {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Cập nhật thông tin thành công'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+          widget.updateLoginStatus(newName);
+        });
+      }
+    } catch (e) {
+      print('Failed to update user information: $e');
+    }
+  }
+
+  Future<void> fetchUserInfo() async {
+    try {
+      User? user = auth.currentUser;
+      if (user != null) {
+        await user.reload();
+        user = auth.currentUser;
+        setState(() {
+          _controllerName.text = user!.displayName ?? '';
+          _controllerEmail.text = user.email ?? '';
+        });
+      }
+    } catch (e) {
+      print('Failed to fetch user information: $e');
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await auth.signOut();
+      if (mounted) {
+        auth.authStateChanges().listen((User? user) {
+          if (user == null) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Đăng xuất thành công'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+            widget.updateLoginStatus('');
+            widget.toLogin('login');
+          }
+        });
+      }
+    } catch (e) {
+      print('Sign out error: $e');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchUserInfo();
     _controllerName = TextEditingController();
-    _controllerPass = TextEditingController();
+    _controllerEmail = TextEditingController();
   }
 
   @override
   void dispose() {
     _controllerName.dispose();
-    _controllerPass.dispose();
+    _controllerEmail.dispose();
     super.dispose();
   }
 
@@ -72,7 +153,7 @@ class _UserProfileState extends State<UserProfile> {
           height: 12,
         ),
         Text(
-          'Mật khẩu',
+          'Email',
           style: GoogleFonts.chakraPetch(
               textStyle: TextStyle(
                   color: Color(0xFF8d94ac),
@@ -82,7 +163,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
         Material(
           child: TextField(
-            obscureText: true,
+            readOnly: true,
             textAlignVertical: TextAlignVertical.center,
             decoration: const InputDecoration(
               enabledBorder: OutlineInputBorder(
@@ -96,7 +177,7 @@ class _UserProfileState extends State<UserProfile> {
                   EdgeInsets.symmetric(vertical: 0, horizontal: 8.0),
               focusColor: Color(0xFF3278f6),
             ),
-            controller: _controllerPass,
+            controller: _controllerEmail,
             onSubmitted: (String value) {},
           ),
         ),
@@ -117,8 +198,38 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
-                  onPressed: () {},
+                  onPressed: () {
+                    updateUserInformation(_controllerName.text);
+                  },
                   child: Text('Cập nhật',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16))),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 24,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: TextButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.symmetric(vertical: 20)),
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red)),
+                  onPressed: () {
+                    signOut();
+                  },
+                  child: Text('Đăng Xuất',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

@@ -68,6 +68,22 @@ class _RegisterState extends State<Register> {
         if (user != null) {
           user.updateProfile(displayName: _controllerName.text.trim());
           user.sendEmailVerification();
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Đăng ký tài khoản thành công'),
+                content: Text("Vui lòng xác thực email của bạn"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+          widget.toLogin('login');
         }
       });
     } on FirebaseAuthException catch (e) {
@@ -226,27 +242,6 @@ class _RegisterState extends State<Register> {
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
                   onPressed: () {
                     createUserWithEmailAndPassword();
-                    _firebaseStreamEvents =
-                        FirebaseAuth.instance.authStateChanges().listen((user) {
-                      if (user != null) {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Đăng ký tài khoản thành công'),
-                              content: Text("Vui lòng xác thực email của bạn"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        widget.toLogin('login');
-                      }
-                    });
                   },
                   child: Text('Tạo tài khoản',
                       style: TextStyle(

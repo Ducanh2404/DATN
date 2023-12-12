@@ -32,11 +32,29 @@ class _LoginState extends State<Login> {
           email: email, password: password);
       user = userCredential.user;
       userName = user!.displayName;
+      print(user);
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Đăng nhập thành công'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        widget.toProfile('profile');
+        widget.updateLoginStatus(userName!);
+      });
     } catch (e) {
       setState(() {
         _errorText = 'Sai tài khoản hoặc mật khẩu.';
       });
-      print("Tài khoản không tồn tại");
     }
     return user;
   }
@@ -100,7 +118,12 @@ class _LoginState extends State<Login> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerEmail,
-            onSubmitted: (String value) {},
+            onSubmitted: (String value) {
+              loginUsingEmailPassword(
+                email: _controllerEmail.text,
+                password: _controllerPass.text,
+              );
+            },
           ),
         ),
         SizedBox(
@@ -148,7 +171,12 @@ class _LoginState extends State<Login> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerPass,
-            onSubmitted: (String value) {},
+            onSubmitted: (String value) {
+              loginUsingEmailPassword(
+                email: _controllerEmail.text,
+                password: _controllerPass.text,
+              );
+            },
           ),
         ),
         SizedBox(
@@ -168,33 +196,11 @@ class _LoginState extends State<Login> {
                       ),
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
-                  onPressed: () async {
-                    User? user = await loginUsingEmailPassword(
+                  onPressed: () {
+                    loginUsingEmailPassword(
                       email: _controllerEmail.text,
                       password: _controllerPass.text,
                     );
-
-                    print(user);
-                    if (user != null) {
-                      setState(() {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Đăng nhập thành công'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        widget.toProfile('profile');
-                        widget.updateLoginStatus(userName!);
-                      });
-                    }
                   },
                   child: Text('Đăng nhập',
                       style: TextStyle(
