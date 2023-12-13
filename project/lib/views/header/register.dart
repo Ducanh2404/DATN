@@ -43,6 +43,7 @@ class _RegisterState extends State<Register> {
         .add({
           'name': _controllerName.text,
           'email': _controllerEmail.text,
+          'status': '1',
         })
         .then((value) => print("Thêm user thành công"))
         .catchError((error) => print("Đã xảy ra lỗi $error"));
@@ -53,6 +54,7 @@ class _RegisterState extends State<Register> {
       setState(() {
         _errorName = 'Vui lòng nhập họ và tên.';
       });
+      return;
     } else {
       _errorName = '';
     }
@@ -79,6 +81,7 @@ class _RegisterState extends State<Register> {
           FirebaseAuth.instance.authStateChanges().listen((user) {
         if (user != null) {
           user.updateProfile(displayName: _controllerName.text.trim());
+          addUser();
           user.sendEmailVerification();
           showDialog(
             context: context,
@@ -164,6 +167,9 @@ class _RegisterState extends State<Register> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerName,
+            onSubmitted: (String value) {
+              createUserWithEmailAndPassword();
+            },
           ),
         ),
         SizedBox(
@@ -198,6 +204,9 @@ class _RegisterState extends State<Register> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerEmail,
+            onSubmitted: (String value) {
+              createUserWithEmailAndPassword();
+            },
           ),
         ),
         SizedBox(
@@ -233,6 +242,9 @@ class _RegisterState extends State<Register> {
               focusColor: Color(0xFF3278f6),
             ),
             controller: _controllerPass,
+            onSubmitted: (String value) {
+              createUserWithEmailAndPassword();
+            },
           ),
         ),
         SizedBox(
@@ -254,7 +266,6 @@ class _RegisterState extends State<Register> {
                           MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
                   onPressed: () {
                     createUserWithEmailAndPassword();
-                    addUser();
                   },
                   child: Text('Tạo tài khoản',
                       style: TextStyle(

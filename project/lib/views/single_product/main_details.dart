@@ -1,6 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class MainDetails extends StatefulWidget {
+  final String productId;
   final String price;
   final String sale_price;
   final String product_name;
@@ -12,7 +13,8 @@ class MainDetails extends StatefulWidget {
       required this.sale_price,
       required this.product_name,
       required this.sale,
-      required this.short_des})
+      required this.short_des,
+      required this.productId})
       : super(key: key);
 
   @override
@@ -20,11 +22,21 @@ class MainDetails extends StatefulWidget {
 }
 
 class _MainDetailsState extends State<MainDetails> {
+  String separateItems(String text) {
+    List<String> items = text.split('- ');
+    String separatedText = items.join('\n- ');
+    return separatedText;
+  }
+
   int num = 1;
   Color color1 = Colors.white;
   Color color2 = Color(0xFF3278f6);
   Color color3 = Colors.white;
   Color color4 = Color(0xFF3278f6);
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void add() {
     setState(() {
@@ -36,6 +48,88 @@ class _MainDetailsState extends State<MainDetails> {
     setState(() {
       num = (num == 1) ? 1 : num - 1;
     });
+  }
+
+  CollectionReference cart = FirebaseFirestore.instance.collection('cart');
+
+  void addToCart(String productId, int quantity) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String userEmail = user.email!;
+      CollectionReference cart = FirebaseFirestore.instance.collection('cart');
+      cart.doc(userEmail).get().then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          Map<String, dynamic>? cartData =
+              documentSnapshot.data() as Map<String, dynamic>?;
+          Map<String, dynamic>? products =
+              cartData?['products'] as Map<String, dynamic>?;
+          int updatedQuantity = quantity;
+          if (products != null && products.containsKey(productId)) {
+            updatedQuantity += products[productId] as int;
+          }
+          cart.doc(userEmail).set({
+            'products': {productId: updatedQuantity},
+          }, SetOptions(merge: true)).then((value) {
+            print('Product added to cart successfully');
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Thêm vào giỏ hàng thành công'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }).catchError((error) {
+            print('Error adding product to cart: $error');
+          });
+        } else {
+          cart.doc(userEmail).set({
+            'products': {productId: quantity},
+          }, SetOptions(merge: true)).then((value) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Thêm vào giỏ hàng thành công'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }).catchError((error) {
+            print(' $error');
+          });
+        }
+      }).catchError((error) {
+        print(' $error');
+      });
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Lỗi'),
+            content: Text('Vui lòng đăng nhập để sử dụng tính năng này'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -77,7 +171,10 @@ class _MainDetailsState extends State<MainDetails> {
                               bottom: BorderSide(
                                   width: 1, color: Color(0xffededed)))),
                     ),
-                    Text(widget.short_des),
+                    Text(
+                      separateItems(widget.short_des),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    ),
                     Row(
                       children: [
                         Text(widget.sale_price,
@@ -202,7 +299,9 @@ class _MainDetailsState extends State<MainDetails> {
                                       side: BorderSide(
                                           color: Color(0xFF3278f6), width: 1),
                                     ))),
-                                onPressed: () {},
+                                onPressed: () {
+                                  addToCart(widget.productId, num);
+                                },
                                 onHover: (a) {
                                   setState(() {
                                     color1 = color1 == Colors.white

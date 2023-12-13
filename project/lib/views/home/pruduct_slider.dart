@@ -32,10 +32,12 @@ class _PruductSliderState extends State<PruductSlider> {
         String name = data['name'];
         String price = formatAsCurrency(data['money']).toString();
         String sale = data['sale'].toString();
-        String short_des = data['short-des'];
+        String shortDes = data['short-des'];
+        String productId = doc.id;
         newprice = data['money'] - (data['money'] * (data['sale'] / 100));
         Widget product = ProductDetails(
-            short_des: short_des,
+            productId: productId,
+            short_des: shortDes,
             new_price: price,
             old_price: formatAsCurrency(newprice).toString(),
             product_name: name,

@@ -210,7 +210,7 @@ class _UserProfileState extends State<UserProfile> {
           ],
         ),
         SizedBox(
-          height: 24,
+          height: 12,
         ),
         Row(
           children: [

@@ -1,6 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class SingleProduct extends StatefulWidget {
+  final String productId;
   final String new_price;
   final String old_price;
   final String product_name;
@@ -14,7 +15,8 @@ class SingleProduct extends StatefulWidget {
       required this.product_name,
       required this.sale,
       required this.status,
-      required this.short_des})
+      required this.short_des,
+      required this.productId})
       : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class _SingleProductState extends State<SingleProduct> {
           child: Column(children: [
             Header(),
             MainDetails(
+                productId: widget.productId,
                 short_des: widget.short_des,
                 price: widget.new_price,
                 sale_price: widget.old_price,

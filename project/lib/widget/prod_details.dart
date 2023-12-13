@@ -1,6 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class ProductDetails extends StatefulWidget {
+  final String productId;
   final String new_price;
   final String old_price;
   final String product_name;
@@ -14,7 +15,8 @@ class ProductDetails extends StatefulWidget {
       required this.product_name,
       required this.sale,
       required this.status,
-      required this.short_des});
+      required this.short_des,
+      required this.productId});
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
@@ -89,6 +91,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SingleProduct(
+                            productId: widget.productId,
                             short_des: widget.short_des,
                             new_price: widget.new_price,
                             old_price: widget.old_price,

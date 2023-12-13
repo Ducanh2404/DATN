@@ -47,6 +47,7 @@ class CollectionProducts extends StatelessWidget {
                       width: childWidth,
                       height: 405,
                       child: ProductDetails(
+                          productId: '1',
                           short_des: '123',
                           new_price: 'new_price',
                           old_price: 'old_price',

@@ -9,7 +9,7 @@ class HeaderBottom extends StatefulWidget {
 
 class _HeaderBottomState extends State<HeaderBottom> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-
+  int numberProduct = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,42 +46,32 @@ class _HeaderBottomState extends State<HeaderBottom> {
                   ))),
                   child: Account(),
                 ),
-                TextButton.icon(
-                    style: ButtonStyle(
-                      overlayColor: TransparentButton(),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF3E4B75)),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.zero, // Set border radius to zero
-                        ),
+                IconButton(
+                  style: ButtonStyle(
+                    overlayColor: TransparentButton(),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFF3E4B75)),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
                       ),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Cart(),
-                            ));
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.shopping_cart,
-                      color: Colors.white,
-                      size: 20.0,
-                    ),
-                    label: Container(
-                      width: 24,
-                      height: 24,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(color: Color(0xFFfb4e4e)),
-                      child: const Text('1',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    )),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Cart(),
+                          ));
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
+                )
               ],
             )
           ],
