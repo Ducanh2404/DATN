@@ -31,11 +31,13 @@ class _ViewedProductState extends State<ViewedProduct> {
                     ),
                     items: [1, 2, 3, 4, 5, 6].map((i) {
                       return ProductDetails(
-                          new_price: '17.690.000đ',
-                          old_price: '19.990.000đ',
-                          product_name: 'PC Đỗ Đại Học 2023',
-                          sale: "12",
-                          status: 'new');
+                        new_price: '17.690.000đ',
+                        old_price: '19.990.000đ',
+                        product_name: 'PC Đỗ Đại Học 2023',
+                        sale: "12",
+                        status: 'new',
+                        short_des: '',
+                      );
                     }).toList(),
                   ),
                   ButtonPrev(

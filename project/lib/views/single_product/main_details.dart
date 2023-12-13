@@ -1,16 +1,18 @@
 import 'package:project/all_imports.dart';
 
 class MainDetails extends StatefulWidget {
-  final String new_price;
-  final String old_price;
+  final String price;
+  final String sale_price;
   final String product_name;
   final String sale;
+  final String short_des;
   const MainDetails(
       {Key? key,
-      required this.new_price,
-      required this.old_price,
+      required this.price,
+      required this.sale_price,
       required this.product_name,
-      required this.sale})
+      required this.sale,
+      required this.short_des})
       : super(key: key);
 
   @override
@@ -68,13 +70,6 @@ class _MainDetailsState extends State<MainDetails> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
                     ),
-                    Text(
-                      'MSP: ',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xFF8d94ac)),
-                    ),
                     Container(
                       height: 16,
                       decoration: BoxDecoration(
@@ -82,9 +77,10 @@ class _MainDetailsState extends State<MainDetails> {
                               bottom: BorderSide(
                                   width: 1, color: Color(0xffededed)))),
                     ),
+                    Text(widget.short_des),
                     Row(
                       children: [
-                        Text(widget.new_price,
+                        Text(widget.sale_price,
                             style: TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.w800,
@@ -92,7 +88,7 @@ class _MainDetailsState extends State<MainDetails> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
-                            widget.old_price,
+                            widget.price,
                             style: TextStyle(
                               color: Color(0xFF8d94ac),
                               fontSize: 18,

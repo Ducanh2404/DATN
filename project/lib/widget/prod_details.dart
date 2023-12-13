@@ -6,14 +6,15 @@ class ProductDetails extends StatefulWidget {
   final String product_name;
   final String sale;
   final String status;
-
+  final String short_des;
   ProductDetails(
       {super.key,
       required this.new_price,
       required this.old_price,
       required this.product_name,
       required this.sale,
-      required this.status});
+      required this.status,
+      required this.short_des});
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
@@ -88,6 +89,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SingleProduct(
+                            short_des: widget.short_des,
                             new_price: widget.new_price,
                             old_price: widget.old_price,
                             product_name: widget.product_name,

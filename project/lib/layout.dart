@@ -23,9 +23,15 @@ class _HomeState extends State {
           Header(),
           CarouselBanner(),
           Categories(),
-          PruductSlider(),
-          PruductSlider(),
-          PruductSlider(),
+          PruductSlider(
+            category: 'laptop-dell',
+          ),
+          PruductSlider(
+            category: 'laptop-dell',
+          ),
+          PruductSlider(
+            category: 'laptop-dell',
+          ),
           Sales(),
           News(),
           Brand(),

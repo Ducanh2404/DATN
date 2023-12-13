@@ -30,7 +30,9 @@ class CollectionProducts extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 24,),
+          SizedBox(
+            height: 24,
+          ),
           Column(
             children: [
               LayoutBuilder(
@@ -40,22 +42,22 @@ class CollectionProducts extends StatelessWidget {
                       containWidth / 5; // Calculate one-fifth width
 
                   return Wrap(
-                      children: [1, 2, 3, 4, 5,6,7,8,9].map((i) {
+                      children: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) {
                     return SizedBox(
-                    width: childWidth,
-                    height: 405,
-                    child: ProductDetails(
-                        new_price: 'new_price',
-                        old_price: 'old_price',
-                        product_name:
-                            'PC xịn nhất quả đất 2023 luôn các bạn ơi!',
-                        sale: '10',
-                        status: 'sell'),
-                  );
+                      width: childWidth,
+                      height: 405,
+                      child: ProductDetails(
+                          short_des: '123',
+                          new_price: 'new_price',
+                          old_price: 'old_price',
+                          product_name:
+                              'PC xịn nhất quả đất 2023 luôn các bạn ơi!',
+                          sale: '10',
+                          status: 'sell'),
+                    );
                   }).toList());
                 },
               ),
-
             ],
           )
         ],

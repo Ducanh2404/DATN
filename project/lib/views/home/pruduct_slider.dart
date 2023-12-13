@@ -2,7 +2,8 @@ import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
 class PruductSlider extends StatefulWidget {
-  const PruductSlider({super.key});
+  final String category;
+  const PruductSlider({super.key, required this.category});
 
   @override
   _PruductSliderState createState() => _PruductSliderState();
@@ -18,19 +19,23 @@ class _PruductSliderState extends State<PruductSlider> {
   }
 
   List<Widget> listProducts = [];
-  var newprice;
+  late double newprice;
+
   Future<List<Widget>> fetchDocuments() async {
     try {
-      QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('products').get();
-
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("products")
+          .where("category", arrayContains: widget.category)
+          .get();
       querySnapshot.docs.forEach((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        String name = data['name'].toString();
+        String name = data['name'];
         String price = formatAsCurrency(data['money']).toString();
         String sale = data['sale'].toString();
+        String short_des = data['short-des'];
         newprice = data['money'] - (data['money'] * (data['sale'] / 100));
         Widget product = ProductDetails(
+            short_des: short_des,
             new_price: price,
             old_price: formatAsCurrency(newprice).toString(),
             product_name: name,
