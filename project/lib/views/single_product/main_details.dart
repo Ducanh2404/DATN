@@ -51,7 +51,6 @@ class _MainDetailsState extends State<MainDetails> {
   }
 
   CollectionReference cart = FirebaseFirestore.instance.collection('cart');
-
   void addToCart(String productId, int quantity) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {

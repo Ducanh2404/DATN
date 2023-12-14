@@ -21,6 +21,8 @@ export 'package:project/views/header/forget_pass.dart';
 export 'package:project/views/header/user_profile.dart';
 export 'package:project/views/cart/cart.dart';
 export 'package:project/views/cart/cart_main.dart';
+export 'package:project/views/cart/info_cart.dart';
+export 'package:project/views/cart/product_cart.dart';
 export 'package:project/views/footer/footer_info.dart';
 export 'package:project/views/footer/footer_main.dart';
 export 'package:project/layout.dart';

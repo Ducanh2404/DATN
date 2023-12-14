@@ -9,7 +9,6 @@ class HeaderBottom extends StatefulWidget {
 
 class _HeaderBottomState extends State<HeaderBottom> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  int numberProduct = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -133,6 +132,24 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  @override
+  void initState() {
+    getCurrentUser();
+    super.initState();
+  }
+
+  void getCurrentUser() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String? username = user.displayName;
+      updateLoginState(username!);
+      form = UserProfile(
+        updateLoginStatus: updateLoginState,
+        toLogin: toPage,
+      );
+    }
+  }
+
   late Widget form = Login(
     toRegister: toPage,
     updateLoginStatus: updateLoginState,

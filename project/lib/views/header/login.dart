@@ -19,7 +19,6 @@ class _LoginState extends State<Login> {
   late TextEditingController _controllerPass;
   bool passwordVisible = true;
   String _errorText = '';
-
   String? userName;
   void loginUsingEmailPassword({
     required String email,
