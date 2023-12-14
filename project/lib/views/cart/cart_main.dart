@@ -85,6 +85,9 @@ class _CartMainState extends State<CartMain> {
     return listCart;
   }
 
+  final cartVisible = false;
+  final shipVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -101,47 +104,61 @@ class _CartMainState extends State<CartMain> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Thông tin sản phẩm",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 18)),
-                    SizedBox(
-                      height: 24,
+                    Visibility(
+                      visible: cartVisible,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Thông tin sản phẩm",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 18)),
+                          SizedBox(
+                            height: 24,
+                          ),
+                          Column(
+                            children: listCart,
+                          ),
+                          Center(
+                            child: TextButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Color(0xFF3278f6)),
+                                    padding: MaterialStateProperty.all<
+                                            EdgeInsetsGeometry>(
+                                        const EdgeInsets.symmetric(
+                                            vertical: 20, horizontal: 20)),
+                                    overlayColor: TransparentButton(),
+                                    shape: MaterialStateProperty.all<
+                                            OutlinedBorder>(
+                                        const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      side: BorderSide(
+                                          color: Color(0xFF3278f6), width: 1),
+                                    ))),
+                                onPressed: () {
+                                  setState(() {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Cart(),
+                                        ));
+                                  });
+                                },
+                                child: Text(
+                                  'Cập nhật giỏ hàng',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white),
+                                )),
+                          ),
+                        ],
+                      ),
                     ),
-                    Column(
-                      children: listCart,
-                    ),
-                    Center(
-                      child: TextButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xFF3278f6)),
-                              padding:
-                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                      const EdgeInsets.symmetric(
-                                          vertical: 20, horizontal: 20)),
-                              overlayColor: TransparentButton(),
-                              shape: MaterialStateProperty.all<OutlinedBorder>(
-                                  const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,
-                                side: BorderSide(
-                                    color: Color(0xFF3278f6), width: 1),
-                              ))),
-                          onPressed: () {
-                            setState(() {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Cart(),
-                                  ));
-                            });
-                          },
-                          child: Text(
-                            'Cập nhật giỏ hàng',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white),
-                          )),
-                    ),
+                    Visibility(
+                      visible: shipVisible,
+                      child: ShipInfo(),
+                    )
                   ],
                 ),
               )),
@@ -233,7 +250,48 @@ class _CartMainState extends State<CartMain> {
                                 )),
                           ),
                         ],
-                      )
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 12),
+                        padding: EdgeInsets.symmetric(vertical: 22),
+                        decoration: BoxDecoration(
+                            border: BorderDirectional(
+                                bottom:
+                                    BorderSide(width: 1, color: Colors.grey))),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Image(
+                                    image:
+                                        AssetImage('img/payment/pay_cart.png')))
+                          ],
+                        ),
+                      ),
+                      CustomIcon(
+                          titleColor: Colors.black,
+                          title: '  Hỗ trợ trả góp 0%, trả trước 0 đ',
+                          icon: FontAwesomeIcons.creditCard,
+                          color: Color(0xFF29324e)),
+                      CustomIcon(
+                          titleColor: Colors.black,
+                          title: '  Hoàn tiền 200% nếu có hàng giả',
+                          icon: FontAwesomeIcons.moneyBill,
+                          color: Color(0xFF29324e)),
+                      CustomIcon(
+                          titleColor: Colors.black,
+                          title: '  Giao hàng nhanh trên toàn quốc',
+                          icon: FontAwesomeIcons.truckFast,
+                          color: Color(0xFF29324e)),
+                      CustomIcon(
+                          titleColor: Colors.black,
+                          title: '  Hỗ trợ kĩ thuật online 24/7',
+                          icon: FontAwesomeIcons.headphones,
+                          color: Color(0xFF29324e)),
+                      CustomIcon(
+                          titleColor: Colors.black,
+                          title: '  Vệ sinh miễn phí PC, Laptop trọn đời',
+                          icon: FontAwesomeIcons.wrench,
+                          color: Color(0xFF29324e)),
                     ],
                   ))),
         ],

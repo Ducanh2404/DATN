@@ -147,6 +147,8 @@ class _AccountState extends State<Account> {
         updateLoginStatus: updateLoginState,
         toLogin: toPage,
       );
+    } else if (user == null) {
+      updateLoginState('');
     }
   }
 

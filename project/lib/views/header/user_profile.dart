@@ -15,6 +15,21 @@ class _UserProfileState extends State<UserProfile> {
   late TextEditingController _controllerName;
   late TextEditingController _controllerEmail;
   FirebaseAuth auth = FirebaseAuth.instance;
+  @override
+  void initState() {
+    super.initState();
+    fetchUserInfo();
+    _controllerName = TextEditingController();
+    _controllerEmail = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controllerName.dispose();
+    _controllerEmail.dispose();
+    super.dispose();
+  }
+
   Future<void> updateUserInformation(String newName) async {
     try {
       User? user = auth.currentUser;
@@ -63,46 +78,27 @@ class _UserProfileState extends State<UserProfile> {
   Future<void> signOut() async {
     try {
       await auth.signOut();
-      if (mounted) {
-        auth.authStateChanges().listen((User? user) {
-          if (user == null) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Đăng xuất thành công'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('OK'),
-                    ),
-                  ],
-                );
-              },
-            );
-            widget.updateLoginStatus('');
-            widget.toLogin('login');
-          }
-        });
-      }
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Đăng xuất thành công'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      widget.updateLoginStatus('');
+      widget.toLogin('login');
+
+      ;
     } catch (e) {
       print('Sign out error: $e');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchUserInfo();
-    _controllerName = TextEditingController();
-    _controllerEmail = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _controllerName.dispose();
-    _controllerEmail.dispose();
-    super.dispose();
   }
 
   @override
