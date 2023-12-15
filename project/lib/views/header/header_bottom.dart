@@ -8,7 +8,6 @@ class HeaderBottom extends StatefulWidget {
 }
 
 class _HeaderBottomState extends State<HeaderBottom> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,11 +57,30 @@ class _HeaderBottomState extends State<HeaderBottom> {
                   ),
                   onPressed: () {
                     setState(() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Cart(),
-                          ));
+                      User? user = FirebaseAuth.instance.currentUser;
+                      if (user != null) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Cart(),
+                            ));
+                      } else if (user == null) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Vui lòng đăng nhập để xem giỏ hàng'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                      ;
                     });
                   },
                   icon: const Icon(

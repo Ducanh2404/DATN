@@ -337,7 +337,19 @@ class _MainDetailsState extends State<MainDetails> {
                                     side: BorderSide(
                                         color: Color(0xFF3278f6), width: 1),
                                   ))),
-                              onPressed: () {},
+                              onPressed: () {
+                                addToCart(widget.productId, num);
+                                Future<void> _delayedFunction() async {
+                                  await Future.delayed(Duration(seconds: 1));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Cart(),
+                                      ));
+                                }
+
+                                _delayedFunction();
+                              },
                               onHover: (b) {
                                 setState(() {
                                   color3 = color3 == Colors.white

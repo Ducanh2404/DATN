@@ -12,7 +12,9 @@ class _BrandState extends State<Brand> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(title: 'thương hiệu đồng hành',morebtn: false,
+    return CustomContainer(
+      title: 'thương hiệu đồng hành',
+      morebtn: false,
       content: Stack(
         children: [
           CarouselSlider(
@@ -25,12 +27,19 @@ class _BrandState extends State<Brand> {
               enableInfiniteScroll: true,
             ),
             items: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) {
-              return const Align(alignment: Alignment.topLeft,child: Image(image: AssetImage('img/brand/brand1.jpg'),width: 80,height: 80,fit: BoxFit.contain,));
+              return const Align(
+                  alignment: Alignment.topLeft,
+                  child: Image(
+                    image: AssetImage('img/brand/brand1.jpg'),
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.contain,
+                  ));
             }).toList(),
           ),
-
         ],
       ),
+      category: '',
     );
   }
 }

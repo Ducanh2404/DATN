@@ -23,6 +23,7 @@ class _ContentCollectionState extends State<ContentCollection> {
             flex: 8,
             child: CollectionProducts(
               title: 'pc gaming',
+              category: 'laptop-dell',
             ),
           )
         ],

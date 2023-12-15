@@ -1,8 +1,26 @@
 import 'package:project/all_imports.dart';
 
 class ShipInfo extends StatefulWidget {
+  final Function(String) method;
+  final TextEditingController cityController;
+  final TextEditingController nameController;
+  final TextEditingController phoneController;
+  final TextEditingController addressController;
+  final String fieldCityError;
+  final String fieldNameError;
+  final String fieldPhoneError;
+  final String fieldAddressError;
   const ShipInfo({
     super.key,
+    required this.cityController,
+    required this.nameController,
+    required this.phoneController,
+    required this.addressController,
+    required this.fieldCityError,
+    required this.fieldNameError,
+    required this.fieldPhoneError,
+    required this.fieldAddressError,
+    required this.method,
   });
 
   @override
@@ -23,13 +41,16 @@ class _ShipInfoState extends State<ShipInfo> {
     'Nam Định',
     'Thanh Hóa',
   ];
-  final TextEditingController cityController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-
   String? selectedCity;
   PayMethod? method = PayMethod.banking;
+  @override
+  void dispose() {
+    widget.cityController.dispose();
+    widget.nameController.dispose();
+    widget.phoneController.dispose();
+    widget.addressController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +67,16 @@ class _ShipInfoState extends State<ShipInfo> {
             Expanded(
               flex: 5,
               child: TextField(
-                controller: nameController,
+                controller: widget.nameController,
                 decoration: InputDecoration(
+                  errorText: widget.fieldNameError.isNotEmpty
+                      ? widget.fieldNameError
+                      : null,
+                  errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: Colors.red,
+                          style: BorderStyle.solid)),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
@@ -63,8 +92,16 @@ class _ShipInfoState extends State<ShipInfo> {
             Expanded(
               flex: 5,
               child: TextField(
-                controller: phoneController,
+                controller: widget.phoneController,
                 decoration: InputDecoration(
+                  errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: Colors.red,
+                          style: BorderStyle.solid)),
+                  errorText: widget.fieldPhoneError.isNotEmpty
+                      ? widget.fieldPhoneError
+                      : null,
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
@@ -84,14 +121,22 @@ class _ShipInfoState extends State<ShipInfo> {
             Expanded(
               flex: 5,
               child: DropdownMenu(
+                errorText: widget.fieldCityError.isNotEmpty
+                    ? widget.fieldCityError
+                    : null,
                 inputDecorationTheme: InputDecorationTheme(
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1,
+                            color: Colors.red,
+                            style: BorderStyle.solid)),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 1,
                             color: Colors.grey,
                             style: BorderStyle.solid))),
                 expandedInsets: EdgeInsets.all(0),
-                controller: cityController,
+                controller: widget.cityController,
                 requestFocusOnTap: true,
                 label: Text('Chọn tỉnh/thành phố'),
                 onSelected: (String? city) {
@@ -122,8 +167,16 @@ class _ShipInfoState extends State<ShipInfo> {
                         bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: TextField(
                   maxLines: 3,
-                  controller: addressController,
+                  controller: widget.addressController,
                   decoration: InputDecoration(
+                    errorText: widget.fieldAddressError.isNotEmpty
+                        ? widget.fieldAddressError
+                        : null,
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1,
+                            color: Colors.red,
+                            style: BorderStyle.solid)),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 1,
@@ -152,18 +205,21 @@ class _ShipInfoState extends State<ShipInfo> {
                 groupValue: method,
                 onChanged: (PayMethod? value) {
                   setState(() {
+                    widget.method('cash');
                     method = value;
                   });
                 },
               ),
             ),
             ListTile(
+              contentPadding: EdgeInsets.all(0),
               title: const Text('Thanh toán chuyển khoản'),
               leading: Radio<PayMethod>(
                 value: PayMethod.money,
                 groupValue: method,
                 onChanged: (PayMethod? value) {
                   setState(() {
+                    widget.method('banking');
                     method = value;
                   });
                 },

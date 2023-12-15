@@ -63,6 +63,7 @@ class _PruductSliderState extends State<PruductSlider> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+        category: 'laptop-dell',
         title: 'pc đồ họa nổi bật',
         morebtn: true,
         content: Row(

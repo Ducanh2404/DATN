@@ -9,6 +9,121 @@ class CartMain extends StatefulWidget {
 }
 
 class _CartMainState extends State<CartMain> {
+  TextEditingController cityController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  String fieldCityError = '';
+  String fieldNameError = '';
+  String fieldPhoneError = '';
+  String fieldAddressError = '';
+  String method = "";
+  void getPayMethod(String method) {
+    if (method == "banking") {
+      setState(() {
+        method = "banking";
+      });
+    }
+    if (method == "cash") {
+      setState(() {
+        method = "cash";
+      });
+    }
+  }
+
+  Future<void> clearCart(String documentId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('cart')
+          .doc(documentId)
+          .delete();
+      print(
+          'Document with ID "$documentId" successfully deleted from collection .');
+    } catch (error) {
+      print(
+          'Error deleting document with ID "$documentId" from collection: $error');
+    }
+  }
+
+  Future<void> addOrder() {
+    CollectionReference orders = FirebaseFirestore.instance.collection('order');
+    User? user = FirebaseAuth.instance.currentUser;
+    String? email;
+
+    if (user != null) {
+      email = user.email;
+    }
+    return orders.add({
+      'receiver': nameController.text,
+      'email': email,
+      'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
+      'total': sumPrice,
+      'method': method,
+      'city': cityController.text,
+      'phone': phoneController.text,
+      'address': addressController.text,
+      'status': '1',
+      'items': itemscart,
+    }).then((value) => {
+          clearCart(email!),
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Đơn hàng đã đặt thành công'),
+                actions: [
+                  TextButton(
+                    onPressed: () => {
+                      Navigator.of(context).pop(),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyApp(),
+                          ))
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          ),
+        });
+  }
+
+  void checkingInfo() {
+    fieldCityError = '';
+    fieldNameError = '';
+    fieldPhoneError = '';
+    fieldAddressError = '';
+    if (cityController.text.isEmpty) {
+      setState(() {
+        fieldCityError = 'Vui lòng cung cấp đầy đủ thông tin';
+      });
+    }
+    if (nameController.text.isEmpty) {
+      setState(() {
+        fieldNameError = 'Vui lòng cung cấp đầy đủ thông tin';
+      });
+    }
+    if (phoneController.text.isEmpty) {
+      setState(() {
+        fieldPhoneError = 'Vui lòng cung cấp đầy đủ thông tin';
+      });
+    }
+    if (addressController.text.isEmpty) {
+      setState(() {
+        fieldAddressError = 'Vui lòng cung cấp đầy đủ thông tin';
+      });
+    }
+    if (cityController.text.isNotEmpty &&
+        nameController.text.isNotEmpty &&
+        phoneController.text.isNotEmpty &&
+        addressController.text.isNotEmpty) {
+      addOrder();
+      itemscart = {};
+    }
+  }
+
   @override
   void initState() {
     fetchProducts();
@@ -19,7 +134,7 @@ class _CartMainState extends State<CartMain> {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     final roundedValue = (value > 1000000)
         ? (value / 1000000).round() * 1000000
-        : (value / 1000).round() * 1000; // Round to the nearest million
+        : (value / 1000).round() * 1000;
     return numberFormat.format(roundedValue);
   }
 
@@ -27,21 +142,23 @@ class _CartMainState extends State<CartMain> {
   double sumQuantity = 0;
   List<Widget> listInfoCart = [];
   List<Widget> listCart = [];
+  Map<String, int> itemscart = {};
+
   Future<List<Widget>> fetchProducts() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       String userEmail = user.email!;
       try {
-        DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        DocumentSnapshot<Map<String, dynamic>> userCart =
             await FirebaseFirestore.instance
                 .collection('cart')
                 .doc(userEmail)
                 .get();
-        if (documentSnapshot.exists) {
-          Map<String, dynamic>? data = documentSnapshot.data();
+        if (userCart.exists) {
+          Map<String, dynamic>? data = userCart.data();
           if (data!.containsKey('products')) {
-            Map<String, dynamic> fieldValue = data['products'];
-            fieldValue.forEach((key, value) async {
+            Map<String, dynamic> items = data['products'];
+            items.forEach((key, value) async {
               DocumentSnapshot<Map<String, dynamic>> product =
                   await FirebaseFirestore.instance
                       .collection("products")
@@ -63,14 +180,10 @@ class _CartMainState extends State<CartMain> {
                   name: nameProd,
                   price: formatAsCurrency(newprice).toString(),
                 );
-                void updateCart() {
-                  sumPrice += (newprice * value);
-                  sumQuantity += value;
-                }
-
                 setState(() {
                   sumPrice += (newprice * value);
                   sumQuantity += value;
+                  itemscart[key] = value;
                   listCart.add(prod);
                   listInfoCart.add(prodInfo);
                 });
@@ -85,9 +198,9 @@ class _CartMainState extends State<CartMain> {
     return listCart;
   }
 
-  final cartVisible = false;
-  final shipVisible = true;
-
+  bool cartVisible = true;
+  bool shipVisible = false;
+  String confirm = 'Tiến hành thanh toán';
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -157,7 +270,17 @@ class _CartMainState extends State<CartMain> {
                     ),
                     Visibility(
                       visible: shipVisible,
-                      child: ShipInfo(),
+                      child: ShipInfo(
+                        cityController: cityController,
+                        nameController: nameController,
+                        phoneController: phoneController,
+                        addressController: addressController,
+                        fieldCityError: fieldCityError,
+                        fieldNameError: fieldNameError,
+                        fieldPhoneError: fieldPhoneError,
+                        fieldAddressError: fieldAddressError,
+                        method: getPayMethod,
+                      ),
                     )
                   ],
                 ),
@@ -241,9 +364,21 @@ class _CartMainState extends State<CartMain> {
                                       side: BorderSide(
                                           color: Color(0xFF3278f6), width: 1),
                                     ))),
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    cartVisible = false;
+                                    shipVisible = true;
+                                  });
+                                  if (confirm == 'Tiến hành thanh toán') {
+                                    setState(() {
+                                      confirm = 'Xác nhận mua hàng';
+                                    });
+                                  } else if (confirm == 'Xác nhận mua hàng') {
+                                    checkingInfo();
+                                  }
+                                },
                                 child: Text(
-                                  'Tiến hành thanh toán',
+                                  confirm,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       color: Colors.white),

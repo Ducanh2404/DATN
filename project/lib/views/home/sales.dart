@@ -6,34 +6,36 @@ class Sales extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-        title: 'chuyên trang khuyến mãi',
-        morebtn: false,
-        content: const Column(
-          children: [
-            Row(
-              children: [
-                BannerSale(
-                  image_url: 'img/sales/sale1.jpg',
-                ),
-                SizedBox(width: 16),
-                BannerSale(
-                  image_url: 'img/sales/sale1.jpg',
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                BannerSale(
-                  image_url: 'img/sales/sale1.jpg',
-                ),
-                SizedBox(width: 16),
-                BannerSale(
-                  image_url: 'img/sales/sale1.jpg',
-                ),
-              ],
-            ),
-          ],
-        ));
+      title: 'chuyên trang khuyến mãi',
+      morebtn: false,
+      content: const Column(
+        children: [
+          Row(
+            children: [
+              BannerSale(
+                image_url: 'img/sales/sale1.jpg',
+              ),
+              SizedBox(width: 16),
+              BannerSale(
+                image_url: 'img/sales/sale1.jpg',
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              BannerSale(
+                image_url: 'img/sales/sale1.jpg',
+              ),
+              SizedBox(width: 16),
+              BannerSale(
+                image_url: 'img/sales/sale1.jpg',
+              ),
+            ],
+          ),
+        ],
+      ),
+      category: '',
+    );
   }
 }

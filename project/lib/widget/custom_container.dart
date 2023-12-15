@@ -2,12 +2,14 @@ import 'package:project/all_imports.dart';
 
 class CustomContainer extends StatefulWidget {
   final String title;
+  final String category;
   final Widget content;
   final bool morebtn;
   CustomContainer({
     required this.title,
     required this.content,
     required this.morebtn,
+    required this.category,
   });
 
   @override
@@ -53,7 +55,9 @@ class _CustomContainerState extends State<CustomContainer> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Collection()),
+                                builder: (context) => const Collection(
+                                      category: 'laptop-dell',
+                                    )),
                           );
                         });
                       },

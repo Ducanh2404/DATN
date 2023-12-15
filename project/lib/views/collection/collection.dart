@@ -1,7 +1,8 @@
 import 'package:project/all_imports.dart';
 
 class Collection extends StatelessWidget {
-  const Collection({Key? key}) : super(key: key);
+  final String category;
+  const Collection({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
