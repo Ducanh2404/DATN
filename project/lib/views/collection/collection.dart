@@ -1,9 +1,14 @@
 import 'package:project/all_imports.dart';
 
-class Collection extends StatelessWidget {
+class Collection extends StatefulWidget {
   final String category;
   const Collection({Key? key, required this.category}) : super(key: key);
 
+  @override
+  State<Collection> createState() => _CollectionState();
+}
+
+class _CollectionState extends State<Collection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,10 +17,12 @@ class Collection extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Color(0xFFf3f3f3),
           ),
-          child: const Column(children: [
+          child: Column(children: [
             Header(),
             BannerCollection(),
-            ContentCollection(),
+            ContentCollection(
+              category: widget.category,
+            ),
             Footer(),
           ]),
         ),

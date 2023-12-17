@@ -1,7 +1,8 @@
 import 'package:project/all_imports.dart';
 
 class ContentCollection extends StatefulWidget {
-  const ContentCollection({Key? key}) : super(key: key);
+  final String category;
+  const ContentCollection({Key? key, required this.category}) : super(key: key);
 
   @override
   _ContentCollectionState createState() => _ContentCollectionState();
@@ -17,7 +18,9 @@ class _ContentCollectionState extends State<ContentCollection> {
         children: [
           Expanded(
             flex: 2,
-            child: FilterSideBar(),
+            child: FilterSideBar(
+              category: 'laptop-dell',
+            ),
           ),
           Expanded(
             flex: 8,
