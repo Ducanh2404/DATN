@@ -10,9 +10,16 @@ class ContentCollection extends StatefulWidget {
 
 class _ContentCollectionState extends State<ContentCollection> {
   List<Widget> listFiltedCollection = [];
+  @override
+  void initState() {
+    listFiltedCollection = [];
+    super.initState();
+  }
+
   void getListFiltedCollection(List<Widget> list) {
     setState(() {
       listFiltedCollection = list;
+      print(listFiltedCollection);
     });
   }
 
@@ -35,7 +42,7 @@ class _ContentCollectionState extends State<ContentCollection> {
             child: CollectionProducts(
               title: widget.category,
               category: widget.category,
-              filtedCollection: listFiltedCollection,
+              listCollection: listFiltedCollection,
             ),
           )
         ],

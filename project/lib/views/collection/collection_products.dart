@@ -2,14 +2,14 @@ import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
 class CollectionProducts extends StatefulWidget {
-  final List<Widget> filtedCollection;
+  final List<Widget> listCollection;
   final String category;
   final String title;
   const CollectionProducts({
     super.key,
     required this.title,
     required this.category,
-    required this.filtedCollection,
+    required this.listCollection,
   });
 
   @override
@@ -20,12 +20,9 @@ class _CollectionProductsState extends State<CollectionProducts> {
   @override
   void initState() {
     fetchDocuments();
-    listCollection = widget.filtedCollection;
-    print(listCollection);
     super.initState();
   }
 
-  Future<void> filtedCollection() async {}
   String formatAsCurrency(double value) {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     final roundedValue = (value > 1000000)
@@ -34,7 +31,6 @@ class _CollectionProductsState extends State<CollectionProducts> {
     return numberFormat.format(roundedValue);
   }
 
-  List<Widget> listCollection = [];
   late double newprice;
 
   Future<List<Widget>> fetchDocuments() async {
@@ -62,13 +58,13 @@ class _CollectionProductsState extends State<CollectionProducts> {
               status: 'new'),
         );
         setState(() {
-          listCollection.add(product);
+          widget.listCollection.add(product);
         });
       });
     } catch (e) {
       print('Failed to fetch documents: $e');
     }
-    return listCollection;
+    return widget.listCollection;
   }
 
   @override
@@ -106,7 +102,7 @@ class _CollectionProductsState extends State<CollectionProducts> {
 
                   return Wrap(
                     children: [
-                      for (var widget in listCollection)
+                      for (var widget in widget.listCollection)
                         SizedBox(
                           width: childWidth,
                           height: 405,

@@ -74,17 +74,20 @@ class _PruductSliderState extends State<PruductSlider> {
                       FirebaseFirestore.instance.collection('products');
                   Future<void> addProduct() {
                     return orders.add({
-                      'category': ['Màn Hình Máy Tính'],
+                      'category': ['Laptop Dell'],
                       'filter': {
-                        'Kích thước': '27 inch',
-                        'Tấm nền': 'Nano IPS',
-                        'Tần số quét': '180Hz',
+                        'Hãng sản xuất': 'Dell',
+                        'core': 'Intel i5',
+                        'ram': '16 GB',
+                        'VGA': 'MX570',
+                        'Màn hình': '15 inch',
                       },
-                      'money': '11990000',
-                      'name': 'Màn Hình Gaming LG 27GP850-B NanoIPS/ 2K/ 165Hz',
-                      'sale': 35,
+                      'money': '27990000',
+                      'name':
+                          'Laptop Dell Vostro 5620 VWXVW i5 1240P/ 16GB/ 512GB/ MX570/ 16 inch FHD/ Win 11',
+                      'sale': 11,
                       'short-des':
-                          '-Kích thước: 27 inch-Tấm nền: Nano IPS-Độ phân giải: QHD (2560 x 1440)-Tốc độ làm mới: 165Hz , 180Hz (Overclock)-Thời gian đáp ứng: 1ms (GtG at Faster)-Nổi bật : DCI-P3 98% Color Gamut with VESA DisplayHDR 400, AMD FreeSync™ , Vesa 100 x 100 mm , G-SYNC Compatible-Cổng kết nối: 2x HDMI, DisplayPort-Phụ kiện: Cáp nguồn, cáp DisplayPort',
+                          '- CPU: Intel® Core™ i5 1240P ( up to 4.40 GHz, 12 MB)- RAM: 16GB DDR4 3200 MHz- Ổ cứng: 512GB SSD M.2 NVMe PCIe- VGA: Nvidia GeForce MX570 2GB GDDR6- Màn hình: 16 inch FHD- Pin: 4-cell, 54 WHr- Cân nặng: 1.97 kg- Tính năng: Bảo mật vân tay- Màu sắc: Xám- OS: Windows 11 Home + Office Student',
                       // ignore: unnecessary_set_literal
                     }).then((value) => {print('ok')});
                   }

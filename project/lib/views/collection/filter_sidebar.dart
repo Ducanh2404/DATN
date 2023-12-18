@@ -18,9 +18,17 @@ class _FilterSideBarState extends State<FilterSideBar> {
   Map<String, Set<String>>? filterList = {};
   List<Widget> filterItems = [];
   List<Widget> filtedCollection = [];
+  Map<String, String> selectedFilter = {};
   void getFiltedCollection(List<Widget> list) {
     filtedCollection = list;
     widget.listFiltedCollection(filtedCollection);
+  }
+
+  void addSelectedFilter(String key, String value) {
+    setState(() {
+      selectedFilter[key] = value;
+    });
+    print(selectedFilter);
   }
 
   Future<List<Widget>> fetchFilters() async {
@@ -46,6 +54,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
             filterItems: value.toList(),
             title: key,
             listFiltedCollection: getFiltedCollection,
+            addToMap: addSelectedFilter,
           );
           setState(() {
             filterItems.add(item);
@@ -90,6 +99,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
 }
 
 class FilterContainer extends StatefulWidget {
+  final Function(String, String) addToMap;
   final Function(List<Widget>) listFiltedCollection;
   final String category;
   final List<String> filterItems;
@@ -100,6 +110,7 @@ class FilterContainer extends StatefulWidget {
     required this.filterItems,
     required this.category,
     required this.listFiltedCollection,
+    required this.addToMap,
   });
 
   @override
@@ -115,7 +126,6 @@ class _FilterContainerState extends State<FilterContainer> {
     return numberFormat.format(roundedValue);
   }
 
-  List<Widget> listFiltedCollection = [];
   String? selectedFilter;
   late double newprice;
 
@@ -123,10 +133,17 @@ class _FilterContainerState extends State<FilterContainer> {
     setState(() {
       selectedFilter = filter;
     });
-    fetchFiltedCollection();
+
+    if (selectedFilter!.isNotEmpty) {
+      fetchFiltedCollection();
+      widget.addToMap(widget.title, filter);
+    } else if (selectedFilter!.isEmpty) {
+      widget.listFiltedCollection([]);
+    }
   }
 
   Future<List<Widget>> fetchFiltedCollection() async {
+    List<Widget> listFiltedCollection = [];
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection("products")
@@ -208,7 +225,10 @@ class FilterItem extends StatefulWidget {
   final Function(String) selectedFilter;
   final String title;
 
-  FilterItem({required this.title, required this.selectedFilter});
+  FilterItem({
+    required this.title,
+    required this.selectedFilter,
+  });
 
   @override
   _FilterItemState createState() => _FilterItemState();
@@ -234,9 +254,14 @@ class _FilterItemState extends State<FilterItem> {
           setState(() {
             isChecked = value!;
           });
-          if (value == true) {
-            widget.selectedFilter(widget.title);
-            print(widget.title);
+          if (isChecked == true) {
+            setState(() {
+              widget.selectedFilter(widget.title);
+            });
+          } else if (isChecked == false) {
+            setState(() {
+              widget.selectedFilter('');
+            });
           }
         },
       ),
