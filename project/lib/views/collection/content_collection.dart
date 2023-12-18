@@ -9,9 +9,16 @@ class ContentCollection extends StatefulWidget {
 }
 
 class _ContentCollectionState extends State<ContentCollection> {
+  List<Widget> listFiltedCollection = [];
+  void getListFiltedCollection(List<Widget> list) {
+    setState(() {
+      listFiltedCollection = list;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       width: 1600,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,14 +26,16 @@ class _ContentCollectionState extends State<ContentCollection> {
           Expanded(
             flex: 2,
             child: FilterSideBar(
-              category: 'laptop-dell',
+              category: widget.category,
+              listFiltedCollection: getListFiltedCollection,
             ),
           ),
           Expanded(
             flex: 8,
             child: CollectionProducts(
-              title: 'pc gaming',
-              category: 'laptop-dell',
+              title: widget.category,
+              category: widget.category,
+              filtedCollection: listFiltedCollection,
             ),
           )
         ],

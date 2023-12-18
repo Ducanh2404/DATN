@@ -63,13 +63,34 @@ class _PruductSliderState extends State<PruductSlider> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-        category: 'laptop-dell',
-        title: 'pc đồ họa nổi bật',
+        category: widget.category,
+        title: widget.category,
         morebtn: true,
         content: Row(
           children: [
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  CollectionReference orders =
+                      FirebaseFirestore.instance.collection('products');
+                  Future<void> addProduct() {
+                    return orders.add({
+                      'category': ['Màn Hình Máy Tính'],
+                      'filter': {
+                        'Kích thước': '27 inch',
+                        'Tấm nền': 'Nano IPS',
+                        'Tần số quét': '180Hz',
+                      },
+                      'money': '11990000',
+                      'name': 'Màn Hình Gaming LG 27GP850-B NanoIPS/ 2K/ 165Hz',
+                      'sale': 35,
+                      'short-des':
+                          '-Kích thước: 27 inch-Tấm nền: Nano IPS-Độ phân giải: QHD (2560 x 1440)-Tốc độ làm mới: 165Hz , 180Hz (Overclock)-Thời gian đáp ứng: 1ms (GtG at Faster)-Nổi bật : DCI-P3 98% Color Gamut with VESA DisplayHDR 400, AMD FreeSync™ , Vesa 100 x 100 mm , G-SYNC Compatible-Cổng kết nối: 2x HDMI, DisplayPort-Phụ kiện: Cáp nguồn, cáp DisplayPort',
+                      // ignore: unnecessary_set_literal
+                    }).then((value) => {print('ok')});
+                  }
+
+                  addProduct();
+                },
                 style: ButtonStyle(
                     overlayColor: TransparentButton(),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

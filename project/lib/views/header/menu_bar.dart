@@ -127,10 +127,25 @@ class _MenuItemsState extends State<MenuItems> {
                                                     overlayColor:
                                                         TransparentButton()),
                                                 onPressed: () {},
-                                                child: Text(
-                                                  subDoc['name'],
-                                                  style: TextStyle(
-                                                      color: Colors.white),
+                                                child: TextButton(
+                                                  style: ButtonStyle(
+                                                      overlayColor:
+                                                          TransparentButton()),
+                                                  child: Text(
+                                                    subDoc['name'],
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                Collection(
+                                                                    category:
+                                                                        subDoc[
+                                                                            'name'])));
+                                                  },
                                                 ),
                                               ),
                                             ));
@@ -143,12 +158,23 @@ class _MenuItemsState extends State<MenuItems> {
                                       },
                                     ),
                                   ],
-                                  child: Text(
-                                    document['name'],
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
+                                  child: TextButton(
+                                    style: ButtonStyle(
+                                        overlayColor: TransparentButton()),
+                                    child: Text(
+                                      document['name'],
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
                                     ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Collection(
+                                                  category: document['name'])));
+                                    },
                                   ),
                                 ),
                               ),

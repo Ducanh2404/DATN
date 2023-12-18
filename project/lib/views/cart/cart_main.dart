@@ -37,11 +37,9 @@ class _CartMainState extends State<CartMain> {
           .collection('cart')
           .doc(documentId)
           .delete();
-      print(
-          'Document with ID "$documentId" successfully deleted from collection .');
+      print('xóa sản phẩm "$documentId" .');
     } catch (error) {
-      print(
-          'Error deleting document with ID "$documentId" from collection: $error');
+      print(' lỗi "$documentId"  $error');
     }
   }
 

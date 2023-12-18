@@ -2,10 +2,12 @@ import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
 class FilterSideBar extends StatefulWidget {
+  final Function(List<Widget>) listFiltedCollection;
   final String category;
   const FilterSideBar({
     super.key,
     required this.category,
+    required this.listFiltedCollection,
   });
 
   @override
@@ -15,10 +17,19 @@ class FilterSideBar extends StatefulWidget {
 class _FilterSideBarState extends State<FilterSideBar> {
   Map<String, Set<String>>? filterList = {};
   List<Widget> filterItems = [];
+  List<Widget> filtedCollection = [];
+  void getFiltedCollection(List<Widget> list) {
+    filtedCollection = list;
+    widget.listFiltedCollection(filtedCollection);
+  }
+
   Future<List<Widget>> fetchFilters() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> products =
-          await FirebaseFirestore.instance.collection('products').get();
+      QuerySnapshot<Map<String, dynamic>> products = await FirebaseFirestore
+          .instance
+          .collection('products')
+          .where("category", arrayContains: widget.category)
+          .get();
       if (products.size > 0) {
         for (var doc in products.docs) {
           Map<String, dynamic>? data = doc.data();
@@ -34,6 +45,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
             category: widget.category,
             filterItems: value.toList(),
             title: key,
+            listFiltedCollection: getFiltedCollection,
           );
           setState(() {
             filterItems.add(item);
@@ -78,6 +90,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
 }
 
 class FilterContainer extends StatefulWidget {
+  final Function(List<Widget>) listFiltedCollection;
   final String category;
   final List<String> filterItems;
   final String title;
@@ -86,6 +99,7 @@ class FilterContainer extends StatefulWidget {
     required this.title,
     required this.filterItems,
     required this.category,
+    required this.listFiltedCollection,
   });
 
   @override
@@ -101,15 +115,23 @@ class _FilterContainerState extends State<FilterContainer> {
     return numberFormat.format(roundedValue);
   }
 
-  List<Widget> listCollection = [];
-
+  List<Widget> listFiltedCollection = [];
+  String? selectedFilter;
   late double newprice;
 
-  Future<List<Widget>> fetchDocuments() async {
+  void getSelectedFilter(String filter) {
+    setState(() {
+      selectedFilter = filter;
+    });
+    fetchFiltedCollection();
+  }
+
+  Future<List<Widget>> fetchFiltedCollection() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection("products")
           .where("category", arrayContains: widget.category)
+          .where('filter.${widget.title}', isEqualTo: selectedFilter)
           .get();
       querySnapshot.docs.forEach((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -130,13 +152,14 @@ class _FilterContainerState extends State<FilterContainer> {
               status: 'new'),
         );
         setState(() {
-          listCollection.add(product);
+          listFiltedCollection.add(product);
         });
       });
+      widget.listFiltedCollection(listFiltedCollection);
     } catch (e) {
       print('Failed to fetch documents: $e');
     }
-    return listCollection;
+    return listFiltedCollection;
   }
 
   @override
@@ -167,6 +190,7 @@ class _FilterContainerState extends State<FilterContainer> {
               return Column(
                 children: List.generate(widget.filterItems.length, (index) {
                   return FilterItem(
+                    selectedFilter: getSelectedFilter,
                     title: widget.filterItems[index],
                   );
                 }),
@@ -179,10 +203,12 @@ class _FilterContainerState extends State<FilterContainer> {
   }
 }
 
+// ignore: must_be_immutable
 class FilterItem extends StatefulWidget {
+  final Function(String) selectedFilter;
   final String title;
 
-  const FilterItem({required this.title});
+  FilterItem({required this.title, required this.selectedFilter});
 
   @override
   _FilterItemState createState() => _FilterItemState();
@@ -208,6 +234,10 @@ class _FilterItemState extends State<FilterItem> {
           setState(() {
             isChecked = value!;
           });
+          if (value == true) {
+            widget.selectedFilter(widget.title);
+            print(widget.title);
+          }
         },
       ),
     );

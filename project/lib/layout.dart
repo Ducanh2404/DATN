@@ -24,13 +24,13 @@ class _HomeState extends State {
           CarouselBanner(),
           Categories(),
           PruductSlider(
-            category: 'laptop-dell',
+            category: 'Laptop Dell',
           ),
           PruductSlider(
-            category: 'laptop-dell',
+            category: 'Laptop Gaming',
           ),
           PruductSlider(
-            category: 'laptop-dell',
+            category: 'Laptop Acer',
           ),
           Sales(),
           News(),

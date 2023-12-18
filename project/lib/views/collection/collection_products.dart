@@ -2,12 +2,14 @@ import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
 class CollectionProducts extends StatefulWidget {
+  final List<Widget> filtedCollection;
   final String category;
   final String title;
   const CollectionProducts({
     super.key,
     required this.title,
     required this.category,
+    required this.filtedCollection,
   });
 
   @override
@@ -18,9 +20,12 @@ class _CollectionProductsState extends State<CollectionProducts> {
   @override
   void initState() {
     fetchDocuments();
+    listCollection = widget.filtedCollection;
+    print(listCollection);
     super.initState();
   }
 
+  Future<void> filtedCollection() async {}
   String formatAsCurrency(double value) {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     final roundedValue = (value > 1000000)
@@ -30,7 +35,6 @@ class _CollectionProductsState extends State<CollectionProducts> {
   }
 
   List<Widget> listCollection = [];
-
   late double newprice;
 
   Future<List<Widget>> fetchDocuments() async {

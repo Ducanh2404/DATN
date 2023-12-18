@@ -55,8 +55,8 @@ class _CustomContainerState extends State<CustomContainer> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Collection(
-                                      category: 'laptop-dell',
+                                builder: (context) => Collection(
+                                      category: widget.category,
                                     )),
                           );
                         });
