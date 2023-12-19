@@ -142,7 +142,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                               padding: MaterialStateProperty.all<EdgeInsets>(
                                   const EdgeInsets.all(0)),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SingleProduct(
+                                          productId: widget.productId,
+                                          short_des: widget.short_des,
+                                          new_price: widget.new_price,
+                                          old_price: widget.old_price,
+                                          product_name: widget.product_name,
+                                          sale: widget.sale,
+                                          status: widget.status)));
+                            },
                             onHover: (value) {
                               setState(() {
                                 _changeColor();

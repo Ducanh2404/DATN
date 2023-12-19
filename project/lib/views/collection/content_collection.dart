@@ -10,27 +10,15 @@ class ContentCollection extends StatefulWidget {
 
 class _ContentCollectionState extends State<ContentCollection> {
   List<Widget> listFiltedCollection = [];
-  List<Widget> defaultCollection = [];
   @override
   void initState() {
     listFiltedCollection = [];
     super.initState();
   }
 
-  void getDefaultCollection(List<Widget> defaultlist) {
-    setState(() {
-      defaultCollection = defaultlist;
-    });
-  }
-
   void getListFiltedCollection(List<Widget> list) {
     setState(() {
-      if (listFiltedCollection.isNotEmpty) {
-        listFiltedCollection = list;
-      }
-      if (listFiltedCollection.isEmpty) {
-        listFiltedCollection = defaultCollection;
-      }
+      listFiltedCollection = list;
     });
   }
 
@@ -54,7 +42,6 @@ class _ContentCollectionState extends State<ContentCollection> {
               title: widget.category,
               category: widget.category,
               listCollection: listFiltedCollection,
-              defaultCollection: getDefaultCollection,
             ),
           )
         ],

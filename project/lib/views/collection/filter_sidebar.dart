@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
@@ -16,14 +18,8 @@ class FilterSideBar extends StatefulWidget {
 
 class _FilterSideBarState extends State<FilterSideBar> {
   Map<String, Set<String>>? filterList = {};
-  List<Widget> filterItems = [];
-  List<Widget> filtedCollection = [];
+  List<Widget> filterWidget = [];
   Map<String, List<String>> selectedFilter = {};
-  void getFiltedCollection(List<Widget> list) {
-    filtedCollection = list;
-    widget.listFiltedCollection(filtedCollection);
-  }
-
   void addSelectedFilter(String key, List<String> values, bool selected) {
     if (selected == true) {
       setState(() {
@@ -40,102 +36,9 @@ class _FilterSideBarState extends State<FilterSideBar> {
         }
       });
     }
-    print(selectedFilter);
+    fetchFiltedCollection();
   }
 
-  Future<List<Widget>> fetchFilters() async {
-    try {
-      CollectionReference productsCollection =
-          FirebaseFirestore.instance.collection('products');
-      Query<Map<String, dynamic>> query =
-          productsCollection as Query<Map<String, dynamic>>;
-
-      selectedFilter.forEach((filter, valuelist) {
-        valuelist.forEach((value) {
-          query = query.where('filter.$filter', isEqualTo: value);
-        });
-      });
-      QuerySnapshot<Map<String, dynamic>> products = await query.get();
-      if (products.size > 0) {
-        for (var doc in products.docs) {
-          Map<String, dynamic>? data = doc.data();
-          if (data.isNotEmpty) {
-            Map<String, dynamic> filters = data['filter'];
-            filters.forEach((key, value) {
-              filterList?.putIfAbsent(key, () => {}).add(value.toString());
-            });
-          }
-        }
-        filterList!.forEach((key, value) {
-          Widget item = FilterContainer(
-            category: widget.category,
-            filterItems: value.toList(),
-            title: key,
-            listFiltedCollection: getFiltedCollection,
-            updateSelected: addSelectedFilter,
-          );
-          setState(() {
-            filterItems.add(item);
-          });
-        });
-        print(filterList);
-      }
-    } catch (e) {
-      print('Failed to fetch documents: $e');
-    }
-    return filterItems;
-  }
-
-  @override
-  void initState() {
-    fetchFilters();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Bộ lọc sản phẩm',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          Column(
-            children: filterItems,
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class FilterContainer extends StatefulWidget {
-  final Function(String, List<String>, bool) updateSelected;
-  final Function(List<Widget>) listFiltedCollection;
-  final String category;
-  final List<String> filterItems;
-  final String title;
-  const FilterContainer({
-    super.key,
-    required this.title,
-    required this.filterItems,
-    required this.category,
-    required this.listFiltedCollection,
-    required this.updateSelected,
-  });
-
-  @override
-  State<FilterContainer> createState() => _FilterContainerState();
-}
-
-class _FilterContainerState extends State<FilterContainer> {
   String formatAsCurrency(double value) {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     final roundedValue = (value > 1000000)
@@ -144,33 +47,34 @@ class _FilterContainerState extends State<FilterContainer> {
     return numberFormat.format(roundedValue);
   }
 
-  String? selectedFilter;
-  late double newprice;
-
-  void getSelectedFilter(String filter, bool selected) {
-    setState(() {
-      selectedFilter = filter;
-      selected = selected;
-    });
-
-    if (selectedFilter!.isNotEmpty) {
-      fetchFiltedCollection();
-      widget.updateSelected(widget.title, [filter], selected);
-    } else if (selectedFilter!.isEmpty) {
-      widget.listFiltedCollection([]);
-    }
-  }
-
   Future<List<Widget>> fetchFiltedCollection() async {
     List<Widget> listFiltedCollection = [];
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection("products")
-          .where("category", arrayContains: widget.category)
-          .where('filter.${widget.title}', isEqualTo: selectedFilter)
-          .get();
+      CollectionReference<Map<String, dynamic>> products =
+          FirebaseFirestore.instance.collection('products');
+      Query<Map<String, dynamic>> query = products;
+      selectedFilter.forEach((field, values) {
+        values.forEach((value) {
+          query = query.where('filter.$field', isEqualTo: value);
+        });
+      });
+
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await query.where('category', arrayContains: widget.category).get();
+      if (selectedFilter.values.every((value) => value.isEmpty) ||
+          selectedFilter.isEmpty) {
+        QuerySnapshot<Map<String, dynamic>> defaultQuerySnapshot =
+            await FirebaseFirestore.instance
+                .collection("products")
+                .where("category", arrayContains: widget.category)
+                .get();
+        setState(() {
+          querySnapshot = defaultQuerySnapshot;
+        });
+      }
       querySnapshot.docs.forEach((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        late double newprice;
+        Map<String, dynamic> data = doc.data();
         String name = data['name'];
         String price = formatAsCurrency(data['money']).toString();
         String sale = data['sale'].toString();
@@ -196,6 +100,116 @@ class _FilterContainerState extends State<FilterContainer> {
       print('Failed to fetch documents: $e');
     }
     return listFiltedCollection;
+  }
+
+  Future<List<Widget>> fetchFilters() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> products = await FirebaseFirestore
+          .instance
+          .collection('products')
+          .where("category", arrayContains: widget.category)
+          .get();
+      if (products.size > 0) {
+        for (var doc in products.docs) {
+          Map<String, dynamic>? data = doc.data();
+          if (data.isNotEmpty) {
+            Map<String, dynamic> filters = data['filter'];
+            filters.forEach((key, value) {
+              filterList?.putIfAbsent(key, () => {}).add(value.toString());
+            });
+          }
+        }
+        filterList!.forEach((key, value) {
+          Widget item = FilterContainer(
+            category: widget.category,
+            filterItems: value.toList(),
+            title: key,
+            updateSelected: addSelectedFilter,
+          );
+          setState(() {
+            filterWidget.add(item);
+          });
+        });
+        print(filterList);
+      }
+    } catch (e) {
+      print('Failed to fetch documents: $e');
+    }
+    return filterWidget;
+  }
+
+  @override
+  void initState() {
+    fetchFilters();
+    super.initState();
+  }
+
+  RangeValues range = RangeValues(40, 80);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Bộ lọc sản phẩm',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          Column(
+            children: filterWidget,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: RangeSlider(
+                    values: range,
+                    min: range.start,
+                    max: range.end,
+                    divisions: 10000,
+                    labels: RangeLabels(range.start.round().toString(),
+                        range.end.round().toString()),
+                    onChanged: (RangeValues newPrice) {
+                      setState(() {
+                        range = newPrice;
+                      });
+                    }),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class FilterContainer extends StatefulWidget {
+  final Function(String, List<String>, bool) updateSelected;
+  final String category;
+  final List<String> filterItems;
+  final String title;
+  const FilterContainer({
+    super.key,
+    required this.title,
+    required this.filterItems,
+    required this.category,
+    required this.updateSelected,
+  });
+
+  @override
+  State<FilterContainer> createState() => _FilterContainerState();
+}
+
+class _FilterContainerState extends State<FilterContainer> {
+  void getSelectedFilter(String filter, bool selected) {
+    setState(() {
+      widget.updateSelected(widget.title, [filter], selected);
+    });
   }
 
   @override

@@ -23,7 +23,7 @@ class MainDetails extends StatefulWidget {
 
 class _MainDetailsState extends State<MainDetails> {
   String separateItems(String text) {
-    List<String> items = text.split('- ');
+    List<String> items = text.split('*');
     String separatedText = items.join('\n- ');
     return separatedText;
   }
@@ -375,34 +375,6 @@ class _MainDetailsState extends State<MainDetails> {
               flex: 2,
               child: Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFFfb4e4e), width: 1)),
-                    child: Column(
-                      children: [
-                        Container(
-                            color: Color(0xFFfb4e4e),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 10),
-                            child: CustomIcon(
-                                titleColor: Colors.white,
-                                title: '  Khuyến mãi khi mua sản phẩm',
-                                icon: FontAwesomeIcons.gift,
-                                color: Colors.white)),
-                        Container(
-                          height: 200,
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 16),
-                    height: 16,
-                    decoration: BoxDecoration(
-                        border: BorderDirectional(
-                            bottom: BorderSide(
-                                width: 1, color: Color(0xffededed)))),
-                  ),
                   CustomIcon(
                       titleColor: Colors.black,
                       title: '  Hỗ trợ trả góp 0%, trả trước 0 đ',

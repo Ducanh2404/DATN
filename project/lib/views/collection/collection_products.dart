@@ -2,7 +2,6 @@ import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
 class CollectionProducts extends StatefulWidget {
-  final Function(List<Widget>) defaultCollection;
   final List<Widget> listCollection;
   final String category;
   final String title;
@@ -11,7 +10,6 @@ class CollectionProducts extends StatefulWidget {
     required this.title,
     required this.category,
     required this.listCollection,
-    required this.defaultCollection,
   });
 
   @override
@@ -66,7 +64,6 @@ class _CollectionProductsState extends State<CollectionProducts> {
     } catch (e) {
       print('Failed to fetch documents: $e');
     }
-    widget.defaultCollection(widget.listCollection);
 
     return widget.listCollection;
   }
@@ -82,6 +79,7 @@ class _CollectionProductsState extends State<CollectionProducts> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 decoration: const BoxDecoration(
@@ -92,6 +90,10 @@ class _CollectionProductsState extends State<CollectionProducts> {
                     style: const TextStyle(
                         fontWeight: FontWeight.w900, fontSize: 21)),
               ),
+              Text(
+                '${widget.listCollection.length} sản phẩm',
+                style: TextStyle(color: Color(0xFF8d94ac)),
+              )
             ],
           ),
           SizedBox(
