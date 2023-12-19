@@ -18,26 +18,44 @@ class _FilterSideBarState extends State<FilterSideBar> {
   Map<String, Set<String>>? filterList = {};
   List<Widget> filterItems = [];
   List<Widget> filtedCollection = [];
-  Map<String, String> selectedFilter = {};
+  Map<String, List<String>> selectedFilter = {};
   void getFiltedCollection(List<Widget> list) {
     filtedCollection = list;
     widget.listFiltedCollection(filtedCollection);
   }
 
-  void addSelectedFilter(String key, String value) {
-    setState(() {
-      selectedFilter[key] = value;
-    });
+  void addSelectedFilter(String key, List<String> values, bool selected) {
+    if (selected == true) {
+      setState(() {
+        if (selectedFilter.containsKey(key)) {
+          selectedFilter[key]!.addAll(values);
+        } else {
+          selectedFilter[key] = values;
+        }
+      });
+    } else if (selected == false) {
+      setState(() {
+        if (selectedFilter.containsKey(key)) {
+          selectedFilter[key]!.remove(values.join());
+        }
+      });
+    }
     print(selectedFilter);
   }
 
   Future<List<Widget>> fetchFilters() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> products = await FirebaseFirestore
-          .instance
-          .collection('products')
-          .where("category", arrayContains: widget.category)
-          .get();
+      CollectionReference productsCollection =
+          FirebaseFirestore.instance.collection('products');
+      Query<Map<String, dynamic>> query =
+          productsCollection as Query<Map<String, dynamic>>;
+
+      selectedFilter.forEach((filter, valuelist) {
+        valuelist.forEach((value) {
+          query = query.where('filter.$filter', isEqualTo: value);
+        });
+      });
+      QuerySnapshot<Map<String, dynamic>> products = await query.get();
       if (products.size > 0) {
         for (var doc in products.docs) {
           Map<String, dynamic>? data = doc.data();
@@ -54,7 +72,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
             filterItems: value.toList(),
             title: key,
             listFiltedCollection: getFiltedCollection,
-            addToMap: addSelectedFilter,
+            updateSelected: addSelectedFilter,
           );
           setState(() {
             filterItems.add(item);
@@ -99,7 +117,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
 }
 
 class FilterContainer extends StatefulWidget {
-  final Function(String, String) addToMap;
+  final Function(String, List<String>, bool) updateSelected;
   final Function(List<Widget>) listFiltedCollection;
   final String category;
   final List<String> filterItems;
@@ -110,7 +128,7 @@ class FilterContainer extends StatefulWidget {
     required this.filterItems,
     required this.category,
     required this.listFiltedCollection,
-    required this.addToMap,
+    required this.updateSelected,
   });
 
   @override
@@ -129,14 +147,15 @@ class _FilterContainerState extends State<FilterContainer> {
   String? selectedFilter;
   late double newprice;
 
-  void getSelectedFilter(String filter) {
+  void getSelectedFilter(String filter, bool selected) {
     setState(() {
       selectedFilter = filter;
+      selected = selected;
     });
 
     if (selectedFilter!.isNotEmpty) {
       fetchFiltedCollection();
-      widget.addToMap(widget.title, filter);
+      widget.updateSelected(widget.title, [filter], selected);
     } else if (selectedFilter!.isEmpty) {
       widget.listFiltedCollection([]);
     }
@@ -222,7 +241,7 @@ class _FilterContainerState extends State<FilterContainer> {
 
 // ignore: must_be_immutable
 class FilterItem extends StatefulWidget {
-  final Function(String) selectedFilter;
+  final Function(String, bool) selectedFilter;
   final String title;
 
   FilterItem({
@@ -253,16 +272,8 @@ class _FilterItemState extends State<FilterItem> {
         onChanged: (value) {
           setState(() {
             isChecked = value!;
+            widget.selectedFilter(widget.title, isChecked);
           });
-          if (isChecked == true) {
-            setState(() {
-              widget.selectedFilter(widget.title);
-            });
-          } else if (isChecked == false) {
-            setState(() {
-              widget.selectedFilter('');
-            });
-          }
         },
       ),
     );

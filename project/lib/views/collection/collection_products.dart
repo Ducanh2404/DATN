@@ -2,6 +2,7 @@ import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
 class CollectionProducts extends StatefulWidget {
+  final Function(List<Widget>) defaultCollection;
   final List<Widget> listCollection;
   final String category;
   final String title;
@@ -10,6 +11,7 @@ class CollectionProducts extends StatefulWidget {
     required this.title,
     required this.category,
     required this.listCollection,
+    required this.defaultCollection,
   });
 
   @override
@@ -64,6 +66,8 @@ class _CollectionProductsState extends State<CollectionProducts> {
     } catch (e) {
       print('Failed to fetch documents: $e');
     }
+    widget.defaultCollection(widget.listCollection);
+
     return widget.listCollection;
   }
 
