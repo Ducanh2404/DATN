@@ -25,9 +25,8 @@ class _CollectionProductsState extends State<CollectionProducts> {
 
   String formatAsCurrency(double value) {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
-    final roundedValue = (value > 1000000)
-        ? (value / 1000000).round() * 1000000
-        : (value / 1000).round() * 1000; // Round to the nearest million
+    final roundedValue =
+        (value / 1000).round() * 1000; // Round to the nearest million
     return numberFormat.format(roundedValue);
   }
 

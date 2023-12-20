@@ -130,9 +130,7 @@ class _CartMainState extends State<CartMain> {
 
   String formatAsCurrency(double value) {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
-    final roundedValue = (value > 1000000)
-        ? (value / 1000000).round() * 1000000
-        : (value / 1000).round() * 1000;
+    final roundedValue = (value / 1000).round() * 1000;
     return numberFormat.format(roundedValue);
   }
 

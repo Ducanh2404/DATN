@@ -1,5 +1,4 @@
-import 'dart:ffi';
-
+import 'dart:math';
 import 'package:project/all_imports.dart';
 import 'package:intl/intl.dart';
 
@@ -20,6 +19,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
   Map<String, Set<String>>? filterList = {};
   List<Widget> filterWidget = [];
   Map<String, List<String>> selectedFilter = {};
+  Map<String, double> filterPrice = {};
   void addSelectedFilter(String key, List<String> values, bool selected) {
     if (selected == true) {
       setState(() {
@@ -39,12 +39,19 @@ class _FilterSideBarState extends State<FilterSideBar> {
     fetchFiltedCollection();
   }
 
+  final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+
   String formatAsCurrency(double value) {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
-    final roundedValue = (value > 1000000)
-        ? (value / 1000000).round() * 1000000
-        : (value / 1000).round() * 1000; // Round to the nearest million
+    final roundedValue = (value / 1000).round() * 1000;
     return numberFormat.format(roundedValue);
+  }
+
+  addFilterPrice() {
+    filterPrice = {'minPrice': rangePrice.start, 'maxPrice': rangePrice.end};
+    print(filterPrice);
+    print(filterPrice['minPrice']);
+    print(filterPrice['minPrice'].runtimeType);
   }
 
   Future<List<Widget>> fetchFiltedCollection() async {
@@ -58,7 +65,12 @@ class _FilterSideBarState extends State<FilterSideBar> {
           query = query.where('filter.$field', isEqualTo: value);
         });
       });
-
+      if (filterPrice.isNotEmpty) {
+        query = query.where('money',
+            isGreaterThanOrEqualTo: filterPrice['minPrice']);
+        query =
+            query.where('money', isLessThanOrEqualTo: filterPrice['maxPrice']);
+      }
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await query.where('category', arrayContains: widget.category).get();
       if (selectedFilter.values.every((value) => value.isEmpty) ||
@@ -138,13 +150,84 @@ class _FilterSideBarState extends State<FilterSideBar> {
     return filterWidget;
   }
 
+  late TextEditingController startPriceController;
+  late TextEditingController endPriceController;
   @override
   void initState() {
     fetchFilters();
+    getPrice();
+    startPriceController = TextEditingController();
+    endPriceController = TextEditingController();
     super.initState();
   }
 
-  RangeValues range = RangeValues(40, 80);
+  @override
+  void dispose() {
+    startPriceController.dispose();
+    endPriceController.dispose();
+    super.dispose();
+  }
+
+  Future<void> getPrice() async {
+    try {
+      final collection = FirebaseFirestore.instance
+          .collection('products')
+          .where('category', arrayContains: widget.category);
+      final querySnapshot = await collection.get();
+
+      double minMoney = double.infinity;
+      double maxMoney = double.negativeInfinity;
+
+      querySnapshot.docs.forEach((doc) {
+        late double newprice;
+        Map<String, dynamic> data = doc.data();
+        newprice = data['money'] - (data['money'] * (data['sale'] / 100));
+        minMoney = min(minMoney, newprice);
+        maxMoney = max(maxMoney, newprice);
+      });
+
+      setState(() {
+        rangePrice = RangeValues(minMoney, maxMoney);
+        minPrice = minMoney;
+        maxPrice = maxMoney;
+        startPriceController.text =
+            numberFormat.format(rangePrice.start).toString();
+        endPriceController.text =
+            numberFormat.format(rangePrice.end).toString();
+      });
+    } catch (error) {
+      print('Error fetching collection: $error');
+    }
+  }
+
+  double convertToDouble(String priceText) {
+    String priceCleaned = priceText.replaceAll('.', '').replaceAll('₫', '');
+    double price = double.tryParse(priceCleaned) ?? 0.0;
+    return price;
+  }
+
+  void updateRangeValues() {
+    double startPrice = convertToDouble(startPriceController.text);
+    double endPrice = convertToDouble(endPriceController.text);
+    if (startPrice < minPrice || startPrice >= maxPrice) {
+      startPriceController.text = numberFormat.format(minPrice).toString();
+      startPrice = minPrice;
+    }
+    if (endPrice > maxPrice || endPrice <= minPrice) {
+      setState(() {
+        endPriceController.text = numberFormat.format(maxPrice).toString();
+      });
+      endPrice = maxPrice;
+    }
+
+    setState(() {
+      rangePrice = RangeValues(startPrice, endPrice);
+    });
+  }
+
+  RangeValues rangePrice = RangeValues(0, 0);
+  double minPrice = 0;
+  double maxPrice = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -164,23 +247,100 @@ class _FilterSideBarState extends State<FilterSideBar> {
           Column(
             children: filterWidget,
           ),
+          Text(
+            'khoảng giá'.toUpperCase(),
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: Colors.grey,
+                height: 0.5),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Expanded(
                 child: RangeSlider(
-                    values: range,
-                    min: range.start,
-                    max: range.end,
-                    divisions: 10000,
-                    labels: RangeLabels(range.start.round().toString(),
-                        range.end.round().toString()),
+                    values: rangePrice,
+                    min: minPrice,
+                    max: maxPrice,
+                    labels: RangeLabels(rangePrice.start.round().toString(),
+                        rangePrice.end.round().toString()),
                     onChanged: (RangeValues newPrice) {
                       setState(() {
-                        range = newPrice;
+                        rangePrice = newPrice;
+                        startPriceController.text = numberFormat
+                            .format(rangePrice.start.round())
+                            .toString();
+                        endPriceController.text = numberFormat
+                            .format(rangePrice.end.round())
+                            .toString();
                       });
                     }),
-              )
+              ),
             ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: TextField(
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.grey),
+                            borderRadius: BorderRadius.zero)),
+                    controller: startPriceController,
+                    keyboardType: TextInputType.number,
+                    onTapOutside: (value) {
+                      setState(() {
+                        updateRangeValues();
+                      });
+                    }),
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: Text('-')),
+              Expanded(
+                  child: TextField(
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.zero)),
+                controller: endPriceController,
+                keyboardType: TextInputType.number,
+                onTapOutside: (value) => updateRangeValues(),
+              )),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: TextButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFF3278f6)),
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 10)),
+                    overlayColor: TransparentButton(),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                        const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                      side: BorderSide(color: Color(0xFF3278f6), width: 1),
+                    ))),
+                onPressed: () {
+                  updateRangeValues();
+                  addFilterPrice();
+                  fetchFiltedCollection();
+                },
+                child: Text(
+                  'Lọc',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800, color: Colors.white),
+                )),
           )
         ],
       ),
