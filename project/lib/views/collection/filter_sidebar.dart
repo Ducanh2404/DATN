@@ -20,6 +20,8 @@ class _FilterSideBarState extends State<FilterSideBar> {
   List<Widget> filterWidget = [];
   Map<String, List<String>> selectedFilter = {};
   Map<String, double> filterPrice = {};
+
+  Widget priceBox = Container();
   void addSelectedFilter(String key, List<String> values, bool selected) {
     if (selected == true) {
       setState(() {
@@ -47,11 +49,38 @@ class _FilterSideBarState extends State<FilterSideBar> {
     return numberFormat.format(roundedValue);
   }
 
-  addFilterPrice() {
+  void addFilterPrice() {
     filterPrice = {'minPrice': rangePrice.start, 'maxPrice': rangePrice.end};
+    setState(() {
+      bool isChecked = true;
+      priceBox = Container(
+        margin: EdgeInsets.only(bottom: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CheckboxListTile(
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+              overlayColor: TransparentButton(),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0.0,
+              ),
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(
+                  '${numberFormat.format(rangePrice.start).toString()} - ${numberFormat.format(rangePrice.end).toString()}'),
+              value: isChecked,
+              onChanged: (value) {
+                setState(() {
+                  filterPrice = {};
+                  priceBox = Container();
+                  fetchFiltedCollection();
+                });
+              },
+            ),
+          ],
+        ),
+      );
+    });
     print(filterPrice);
-    print(filterPrice['minPrice']);
-    print(filterPrice['minPrice'].runtimeType);
   }
 
   Future<List<Widget>> fetchFiltedCollection() async {
@@ -73,8 +102,8 @@ class _FilterSideBarState extends State<FilterSideBar> {
       }
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await query.where('category', arrayContains: widget.category).get();
-      if (selectedFilter.values.every((value) => value.isEmpty) ||
-          selectedFilter.isEmpty) {
+      if (selectedFilter.values.every((value) => value.isEmpty) &&
+          filterPrice.isEmpty) {
         QuerySnapshot<Map<String, dynamic>> defaultQuerySnapshot =
             await FirebaseFirestore.instance
                 .collection("products")
@@ -133,7 +162,6 @@ class _FilterSideBarState extends State<FilterSideBar> {
         }
         filterList!.forEach((key, value) {
           Widget item = FilterContainer(
-            category: widget.category,
             filterItems: value.toList(),
             title: key,
             updateSelected: addSelectedFilter,
@@ -228,7 +256,6 @@ class _FilterSideBarState extends State<FilterSideBar> {
   RangeValues rangePrice = RangeValues(0, 0);
   double minPrice = 0;
   double maxPrice = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -258,6 +285,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
           SizedBox(
             height: 10,
           ),
+          priceBox,
           Row(
             children: [
               Expanded(
@@ -350,14 +378,12 @@ class _FilterSideBarState extends State<FilterSideBar> {
 
 class FilterContainer extends StatefulWidget {
   final Function(String, List<String>, bool) updateSelected;
-  final String category;
   final List<String> filterItems;
   final String title;
   const FilterContainer({
     super.key,
     required this.title,
     required this.filterItems,
-    required this.category,
     required this.updateSelected,
   });
 
