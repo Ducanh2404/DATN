@@ -38,6 +38,7 @@ class _ViewedProductState extends State<ViewedProduct> {
                       sale: "12",
                       status: 'new',
                       short_des: '',
+                      img_url: '',
                     );
                   }).toList(),
                 ),

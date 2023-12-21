@@ -8,6 +8,7 @@ class ProductDetails extends StatefulWidget {
   final String sale;
   final String status;
   final String short_des;
+  final String img_url;
   ProductDetails(
       {super.key,
       required this.new_price,
@@ -16,7 +17,8 @@ class ProductDetails extends StatefulWidget {
       required this.sale,
       required this.status,
       required this.short_des,
-      required this.productId});
+      required this.productId,
+      required this.img_url});
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
@@ -79,10 +81,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: MaterialStateProperty.all<EdgeInsets>(
                     const EdgeInsets.all(3)),
               ),
-              child: const Align(
+              child: Align(
                 alignment: Alignment.topCenter,
                 child: Image(
-                  image: AssetImage('img/product/product1.jpg'),
+                  image: AssetImage('img/product/${widget.img_url}'),
                   fit: BoxFit.contain,
                 ),
               ),

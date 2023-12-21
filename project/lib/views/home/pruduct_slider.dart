@@ -32,16 +32,19 @@ class _PruductSliderState extends State<PruductSlider> {
         String price = formatAsCurrency(data['money']).toString();
         String sale = data['sale'].toString();
         String shortDes = data['short-des'];
+        String img_url = data['image'];
         String productId = doc.id;
         newprice = data['money'] - (data['money'] * (data['sale'] / 100));
         Widget product = ProductDetails(
-            productId: productId,
-            short_des: shortDes,
-            new_price: price,
-            old_price: formatAsCurrency(newprice).toString(),
-            product_name: name,
-            sale: sale,
-            status: 'new');
+          productId: productId,
+          short_des: shortDes,
+          new_price: price,
+          old_price: formatAsCurrency(newprice).toString(),
+          product_name: name,
+          sale: sale,
+          status: 'new',
+          img_url: img_url,
+        );
         setState(() {
           listProducts.add(product);
         });
@@ -109,7 +112,6 @@ class _PruductSliderState extends State<PruductSlider> {
                       padEnds: false,
                       viewportFraction: 1.0 / 5.0,
                       initialPage: 0,
-                      enableInfiniteScroll: true,
                     ),
                     items: listProducts,
                   ),

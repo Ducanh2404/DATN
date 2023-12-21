@@ -120,17 +120,20 @@ class _FilterSideBarState extends State<FilterSideBar> {
         String price = formatAsCurrency(data['money']).toString();
         String sale = data['sale'].toString();
         String shortDes = data['short-des'];
+        String img_url = data['image'];
         String productId = doc.id;
         newprice = data['money'] - (data['money'] * (data['sale'] / 100));
         Widget product = SizedBox(
           child: ProductDetails(
-              productId: productId,
-              short_des: shortDes,
-              new_price: price,
-              old_price: formatAsCurrency(newprice).toString(),
-              product_name: name,
-              sale: sale,
-              status: 'new'),
+            productId: productId,
+            short_des: shortDes,
+            new_price: price,
+            old_price: formatAsCurrency(newprice).toString(),
+            product_name: name,
+            sale: sale,
+            status: 'new',
+            img_url: img_url,
+          ),
         );
         setState(() {
           listFiltedCollection.add(product);
