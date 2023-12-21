@@ -31,7 +31,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                 },
                 child:
                     const Image(image: AssetImage('img/logo.png'), width: 160)),
-            Expanded(flex: 3, child: SearchBarApp()),
+            Expanded(child: SearchBarApp()),
             Row(
               children: [
                 Container(

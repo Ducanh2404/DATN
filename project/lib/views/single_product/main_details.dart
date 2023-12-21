@@ -7,6 +7,7 @@ class MainDetails extends StatefulWidget {
   final String product_name;
   final String sale;
   final String short_des;
+  final String image;
   const MainDetails(
       {Key? key,
       required this.price,
@@ -14,7 +15,8 @@ class MainDetails extends StatefulWidget {
       required this.product_name,
       required this.sale,
       required this.short_des,
-      required this.productId})
+      required this.productId,
+      required this.image})
       : super(key: key);
 
   @override
@@ -146,7 +148,7 @@ class _MainDetailsState extends State<MainDetails> {
               child: Column(
                 children: [
                   Image(
-                    image: AssetImage('img/product/product1.jpg'),
+                    image: AssetImage('img/product/${widget.image}'),
                   ),
                 ],
               )),

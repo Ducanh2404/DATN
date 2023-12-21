@@ -117,6 +117,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
         late double newprice;
         Map<String, dynamic> data = doc.data();
         String name = data['name'];
+        List<dynamic> category = data['category'];
         String price = formatAsCurrency(data['money']).toString();
         String sale = data['sale'].toString();
         String shortDes = data['short-des'];
@@ -133,6 +134,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
             sale: sale,
             status: 'new',
             img_url: img_url,
+            category: category,
           ),
         );
         setState(() {

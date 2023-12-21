@@ -9,6 +9,7 @@ class ProductDetails extends StatefulWidget {
   final String status;
   final String short_des;
   final String img_url;
+  final List<dynamic> category;
   ProductDetails(
       {super.key,
       required this.new_price,
@@ -18,7 +19,8 @@ class ProductDetails extends StatefulWidget {
       required this.status,
       required this.short_des,
       required this.productId,
-      required this.img_url});
+      required this.img_url,
+      required this.category});
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
@@ -93,13 +95,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SingleProduct(
-                            productId: widget.productId,
-                            short_des: widget.short_des,
-                            new_price: widget.new_price,
-                            old_price: widget.old_price,
-                            product_name: widget.product_name,
-                            sale: widget.sale,
-                            status: widget.status)));
+                              productId: widget.productId,
+                              short_des: widget.short_des,
+                              new_price: widget.new_price,
+                              old_price: widget.old_price,
+                              product_name: widget.product_name,
+                              sale: widget.sale,
+                              status: widget.status,
+                              image: widget.img_url,
+                              category: widget.category,
+                            )));
               },
             ),
           ),
@@ -149,13 +154,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SingleProduct(
-                                          productId: widget.productId,
-                                          short_des: widget.short_des,
-                                          new_price: widget.new_price,
-                                          old_price: widget.old_price,
-                                          product_name: widget.product_name,
-                                          sale: widget.sale,
-                                          status: widget.status)));
+                                            category: widget.category,
+                                            productId: widget.productId,
+                                            short_des: widget.short_des,
+                                            new_price: widget.new_price,
+                                            old_price: widget.old_price,
+                                            product_name: widget.product_name,
+                                            sale: widget.sale,
+                                            status: widget.status,
+                                            image: widget.img_url,
+                                          )));
                             },
                             onHover: (value) {
                               setState(() {

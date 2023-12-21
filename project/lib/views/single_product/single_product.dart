@@ -1,6 +1,7 @@
 import 'package:project/all_imports.dart';
 
 class SingleProduct extends StatefulWidget {
+  final List<dynamic> category;
   final String productId;
   final String new_price;
   final String old_price;
@@ -8,6 +9,7 @@ class SingleProduct extends StatefulWidget {
   final String sale;
   final String status;
   final String short_des;
+  final String image;
   const SingleProduct(
       {Key? key,
       required this.new_price,
@@ -16,7 +18,9 @@ class SingleProduct extends StatefulWidget {
       required this.sale,
       required this.status,
       required this.short_des,
-      required this.productId})
+      required this.productId,
+      required this.image,
+      required this.category})
       : super(key: key);
 
   @override
@@ -35,15 +39,19 @@ class _SingleProductState extends State<SingleProduct> {
           child: Column(children: [
             Header(),
             MainDetails(
-                productId: widget.productId,
-                short_des: widget.short_des,
-                price: widget.new_price,
-                sale_price: widget.old_price,
-                product_name: widget.product_name,
-                sale: widget.sale),
+              productId: widget.productId,
+              short_des: widget.short_des,
+              price: widget.new_price,
+              sale_price: widget.old_price,
+              product_name: widget.product_name,
+              sale: widget.sale,
+              image: widget.image,
+            ),
             ProductContent(),
-            RelatedProduct(),
-            ViewedProduct(),
+            RelatedProduct(
+              category: widget.category,
+            ),
+            // ViewedProduct(),
             Footer(),
           ]),
         ),

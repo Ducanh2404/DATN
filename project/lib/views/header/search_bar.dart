@@ -9,15 +9,18 @@ class SearchBarApp extends StatefulWidget {
 }
 
 class _SearchBarAppState extends State<SearchBarApp> {
-  final SearchController _searchController = SearchController();
   List<String> searchResults = [];
   List<String> searchHistory = [];
-  List<String> listName = [];
 
   @override
   initState() {
     super.initState();
-    getProducts();
+  }
+
+  String formatAsCurrency(double value) {
+    final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+    final roundedValue = (value / 1000).round() * 1000;
+    return numberFormat.format(roundedValue);
   }
 
   Iterable<Widget> getHistoryList(SearchController controller) {
@@ -37,27 +40,84 @@ class _SearchBarAppState extends State<SearchBarApp> {
     );
   }
 
-  Iterable<Widget> getSuggestions(SearchController controller) {
+  Future<Iterable<Widget>> getSuggestions(SearchController controller) async {
     final String input = controller.value.text;
-    return listName
-        .where((name) => name.toLowerCase().contains(input.toLowerCase()))
-        .map(
-          (String name) => ListTile(
-            title: Text(name),
-            trailing: IconButton(
-              icon: const Icon(Icons.call_missed),
-              onPressed: () {
-                controller.text = name;
-                controller.selection =
-                    TextSelection.collapsed(offset: controller.text.length);
-              },
-            ),
+    List<Widget> listSearch = [];
+    QuerySnapshot<Map<String, dynamic>> query =
+        await FirebaseFirestore.instance.collection("products").get();
+    query.docs.forEach((doc) {
+      Map<String, dynamic> data = doc.data();
+      String name = data['name'];
+      List<dynamic> category = data['category'];
+      String price = formatAsCurrency(data['money']).toString();
+      String sale = data['sale'].toString();
+      String shortDes = data['short-des'];
+      String img_url = data['image'];
+      String productId = doc.id;
+      String img = data['image'];
+      double newprice = data['money'] - (data['money'] * (data['sale'] / 100));
+      if (name.toLowerCase().contains(input.toLowerCase()) == true) {
+        listSearch.add(MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
             onTap: () {
-              controller.closeView(name);
-              handleSelection(name);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SingleProduct(
+                            image: img_url,
+                            productId: productId,
+                            short_des: shortDes,
+                            new_price: price,
+                            old_price: formatAsCurrency(newprice).toString(),
+                            product_name: name,
+                            sale: sale,
+                            status: 'new',
+                            category: category,
+                          )));
             },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  border: BorderDirectional(
+                      bottom: BorderSide(width: 1, color: Colors.grey))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontFamily: GoogleFonts.chakraPetch().fontFamily,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        formatAsCurrency(newprice).toString(),
+                        style: TextStyle(
+                            fontFamily: GoogleFonts.chakraPetch().fontFamily,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: Colors.red),
+                      )
+                    ],
+                  ),
+                  Image(
+                    image: AssetImage('img/product/$img'),
+                    width: 60,
+                    fit: BoxFit.cover,
+                  ),
+                ],
+              ),
+            ),
           ),
-        );
+        ));
+      }
+    });
+    return listSearch;
   }
 
   void handleSelection(String name) {
@@ -69,45 +129,30 @@ class _SearchBarAppState extends State<SearchBarApp> {
     });
   }
 
-  String formatAsCurrency(double value) {
-    final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
-    final roundedValue = (value / 1000).round() * 1000;
-    return numberFormat.format(roundedValue);
-  }
-
-  Future<List<String>> getProducts() async {
-    QuerySnapshot<Map<String, dynamic>> query =
-        await FirebaseFirestore.instance.collection("products").get();
-    query.docs.forEach((doc) {
-      Map<String, dynamic> data = doc.data();
-      String name = data['name'];
-      String img = data['image'];
-      double newprice = data['money'] - (data['money'] * (data['sale'] / 100));
-      setState(() {
-        listName.add(name);
-      });
-    });
-    return listName;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SearchAnchor.bar(
-      barHintText: 'Tìm kiếm sản phẩm',
-      suggestionsBuilder: (BuildContext context, SearchController controller) {
-        if (controller.text.isEmpty) {
-          if (searchHistory.isNotEmpty) {
-            return getHistoryList(controller);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      child: SearchAnchor.bar(
+        barOverlayColor: TransparentButton(),
+        viewBackgroundColor: Color(0xFFFFFFFF),
+        barHintText: 'Tìm kiếm sản phẩm',
+        suggestionsBuilder:
+            (BuildContext context, SearchController controller) {
+          if (controller.text.isEmpty) {
+            if (searchHistory.isNotEmpty) {
+              return getHistoryList(controller);
+            }
+            return <Widget>[
+              Center(
+                  child: Text(
+                'Không có lịch sử tìm kiếm.',
+              ))
+            ];
           }
-          return <Widget>[
-            Center(
-                child: Text(
-              'Không có lịch sử tìm kiếm.',
-            ))
-          ];
-        }
-        return getSuggestions(controller);
-      },
+          return getSuggestions(controller);
+        },
+      ),
     );
   }
 }

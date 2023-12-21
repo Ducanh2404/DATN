@@ -14,7 +14,6 @@ class Cart extends StatelessWidget {
           child: const Column(children: [
             Header(),
             CartMain(),
-            RelatedProduct(),
             Footer(),
           ]),
         ),

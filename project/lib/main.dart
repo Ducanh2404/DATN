@@ -16,8 +16,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Website Technologies',
       theme: ThemeData(
+          searchViewTheme: SearchViewThemeData(
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+          ),
+          searchBarTheme: SearchBarThemeData(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            surfaceTintColor: MaterialStateProperty.all<Color>(Colors.white),
+            overlayColor: MaterialStateProperty.all<Color>(Colors.white),
+          ),
           fontFamily: GoogleFonts.chakraPetch().fontFamily,
-          colorSchemeSeed: Color(0xff3278f6),
+          colorSchemeSeed: Color.fromARGB(255, 7, 7, 7),
           useMaterial3: true,
           inputDecorationTheme: const InputDecorationTheme(
             enabledBorder: OutlineInputBorder(

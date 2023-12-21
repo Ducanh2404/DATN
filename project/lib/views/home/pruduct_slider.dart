@@ -28,6 +28,7 @@ class _PruductSliderState extends State<PruductSlider> {
           .get();
       querySnapshot.docs.forEach((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        List<dynamic> category = data['category'];
         String name = data['name'];
         String price = formatAsCurrency(data['money']).toString();
         String sale = data['sale'].toString();
@@ -44,6 +45,7 @@ class _PruductSliderState extends State<PruductSlider> {
           sale: sale,
           status: 'new',
           img_url: img_url,
+          category: category,
         );
         setState(() {
           listProducts.add(product);
