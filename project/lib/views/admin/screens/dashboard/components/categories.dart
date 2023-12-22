@@ -104,7 +104,13 @@ class _CategoriesProductState extends State<CategoriesProduct> {
 
   Future<void> addCategory() async {
     try {
-      FirebaseFirestore.instance.collection('categories');
+      FirebaseFirestore.instance
+          .collection('categories')
+          .add({
+            'name': categoryController.text,
+          })
+          .then((value) => print("ok"))
+          .catchError((error) => print("Đã xảy ra lỗi $error"));
     } catch (err) {
       print(err);
     }
