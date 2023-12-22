@@ -17,7 +17,7 @@ class Sales extends StatelessWidget {
               ),
               SizedBox(width: 16),
               BannerSale(
-                image_url: 'img/sales/sale1.jpg',
+                image_url: 'img/sales/sale2.jpg',
               ),
             ],
           ),
@@ -25,11 +25,11 @@ class Sales extends StatelessWidget {
           Row(
             children: [
               BannerSale(
-                image_url: 'img/sales/sale1.jpg',
+                image_url: 'img/sales/sale3.jpg',
               ),
               SizedBox(width: 16),
               BannerSale(
-                image_url: 'img/sales/sale1.jpg',
+                image_url: 'img/sales/sale4.jpg',
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:project/all_imports.dart';
+import 'package:project/views/admin/main.dart';
 
 class HeaderBottom extends StatefulWidget {
   const HeaderBottom({super.key});
@@ -26,7 +27,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                 onTap: () {
                   setState(() {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const MyApp()));
+                        MaterialPageRoute(builder: (context) => Admin()));
                   });
                 },
                 child:

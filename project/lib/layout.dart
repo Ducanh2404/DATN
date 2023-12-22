@@ -33,7 +33,6 @@ class _HomeState extends State {
             category: 'Laptop Acer',
           ),
           Sales(),
-          News(),
           Brand(),
           Footer(),
         ]),

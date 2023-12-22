@@ -27,10 +27,10 @@ class _BrandState extends State<Brand> {
               enableInfiniteScroll: true,
             ),
             items: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) {
-              return const Align(
+              return Align(
                   alignment: Alignment.topLeft,
                   child: Image(
-                    image: AssetImage('img/brand/brand1.jpg'),
+                    image: AssetImage('img/brand/brand${i}.png'),
                     width: 80,
                     height: 80,
                     fit: BoxFit.contain,

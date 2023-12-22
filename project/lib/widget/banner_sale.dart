@@ -14,39 +14,38 @@ class _BannerSaleState extends State<BannerSale> {
   Widget build(BuildContext context) {
     return Expanded(
         child: AnimatedScale(
-          scale: scale,
-          duration: const Duration(milliseconds: 400),
-          child: TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                  horizontal: 0.0,
-                )),
-                side: MaterialStateProperty.all<BorderSide>(
-                    const BorderSide(
-                        color: Colors.grey,
-                        width: 1.0), // Set border color and width
-                ),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero, // Set border radius to zero
-                  ),
-                ),
+      scale: scale,
+      duration: const Duration(milliseconds: 400),
+      child: TextButton(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+              horizontal: 0.0,
+            )),
+            side: MaterialStateProperty.all<BorderSide>(
+              const BorderSide(
+                  color: Colors.grey, width: 1.0), // Set border color and width
+            ),
+            shape: MaterialStateProperty.all<OutlinedBorder>(
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero, // Set border radius to zero
               ),
-              onHover: (hovered) {
-                setState(() {
-                  if (hovered) {
-                    scale = 1.03;
-                  } else {
-                    scale = 1;
-                  }
-                });
-              },
-              onPressed: () {},
-              child: const Image(
-                image: AssetImage('img/sales/sale1.jpg'),
-                fit: BoxFit.contain,
-              )),
-        ));
+            ),
+          ),
+          onHover: (hovered) {
+            setState(() {
+              if (hovered) {
+                scale = 1.03;
+              } else {
+                scale = 1;
+              }
+            });
+          },
+          onPressed: () {},
+          child: Image(
+            image: AssetImage(widget.image_url),
+            fit: BoxFit.contain,
+          )),
+    ));
   }
 }
