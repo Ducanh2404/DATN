@@ -9,7 +9,6 @@ import 'components/side_menu.dart';
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Widget? displayWidget = DashboardScreen();
     return Scaffold(
       key: context.read<MenuAppController>().scaffoldKey,
       drawer: SideMenu(),
@@ -26,7 +25,7 @@ class MainScreen extends StatelessWidget {
             Expanded(
               // 5/6 screen
               flex: 5,
-              child: displayWidget,
+              child: DashboardScreen(),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:project/views/admin/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:project/views/admin/screens/dashboard/components/categories.dart';
+import 'package:project/views/admin/screens/dashboard/components/categories_manage.dart';
+import 'package:project/views/admin/screens/dashboard/components/products_manage.dart';
 import '../../constants.dart';
 import 'components/header.dart';
 import 'components/storage_details.dart';
@@ -24,7 +25,8 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: defaultPadding),
-                      CategoriesProduct(),
+                      // CategoriesProduct(),
+                      ProductsManage(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context)) StorageDetails(),
@@ -33,12 +35,10 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 if (!Responsive.isMobile(context))
                   SizedBox(width: defaultPadding),
-                // On Mobile means if the screen is less than 850 we don't want to show it
-                if (!Responsive.isMobile(context))
-                  Expanded(
-                    flex: 2,
-                    child: StorageDetails(),
-                  ),
+                Expanded(
+                  flex: 2,
+                  child: StorageDetails(),
+                ),
               ],
             )
           ],

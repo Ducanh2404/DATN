@@ -53,7 +53,6 @@ export 'package:project/views/single_product/main_details.dart';
 export 'package:project/views/single_product/product_content.dart';
 export 'package:project/views/single_product/related_product.dart';
 export 'package:project/views/single_product/viewed_product.dart';
-
 //firebase
 export 'package:firebase_core/firebase_core.dart';
 export 'firebase_options.dart';
