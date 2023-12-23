@@ -105,11 +105,8 @@ class _ProductsManageState extends State<ProductsManage> {
                             decoration: InputDecoration(
                               labelText: 'Enter text',
                               hintText: 'Type something...',
-                              // You can customize the appearance of the text field by modifying the InputDecoration properties
-                              // For example, you can add an icon, change the border, etc.
                             ),
                             onChanged: (value) {
-                              // Handle the text input changes here
                               print('Input: $value');
                             },
                           ),
