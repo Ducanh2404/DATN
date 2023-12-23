@@ -24,19 +24,11 @@ class _CategoriesProductState extends State<CategoriesProduct> {
     try {
       await FirebaseFirestore.instance
           .collection('categories')
+          .orderBy('name')
           .get()
           .then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
-          List<Widget> listSubCate = [
-            TextButton.icon(
-                // style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(0))),
-                label: Text('Thêm Danh Mục Con'),
-                onPressed: () {},
-                icon: FaIcon(
-                  FontAwesomeIcons.circlePlus,
-                  size: 20,
-                ))
-          ];
+          List<Widget> listSubCate = [];
           Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
           String mainCate = data['name'];
           tableCate.add(
@@ -49,7 +41,43 @@ class _CategoriesProductState extends State<CategoriesProduct> {
                     Row(
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Xóa Danh Mục'),
+                                    content: Text(
+                                        'Bạn có muốn xóa danh mục $mainCate ?'),
+                                    actions: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextButton(
+                                            child: Text('Hủy'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text('Xóa'),
+                                            onPressed: () {
+                                              deleteCategory(doc.id);
+                                              setState(() {
+                                                tableCate = [];
+                                                fetchCategories();
+                                              });
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                             icon: FaIcon(
                               FontAwesomeIcons.circleMinus,
                               size: 20,
@@ -79,27 +107,134 @@ class _CategoriesProductState extends State<CategoriesProduct> {
                   subdoc.data() as Map<String, dynamic>;
               String subCate = subData['name'];
               setState(() {
-                listSubCate.insert(
-                    0,
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: FaIcon(
-                              FontAwesomeIcons.circleMinus,
-                              size: 20,
-                            )),
-                        Text(subCate),
-                      ],
-                    ));
+                listSubCate.add(Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Xóa Danh Mục'),
+                                content:
+                                    Text('Bạn có muốn xóa danh mục $subCate ?'),
+                                actions: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        child: Text('Hủy'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text('Xóa'),
+                                        onPressed: () {
+                                          deleteSubCategory(doc.id, subdoc.id);
+                                          setState(() {
+                                            tableCate = [];
+                                            fetchCategories();
+                                          });
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        icon: FaIcon(
+                          FontAwesomeIcons.circleMinus,
+                          size: 20,
+                        )),
+                    Text(subCate),
+                  ],
+                ));
               });
             });
+            listSubCate.add(TextButton.icon(
+                label: Text('Thêm Danh Mục Con'),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Row(
+                          children: [
+                            Expanded(
+                              child: Text('Thêm Danh Mục Vào $mainCate'),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                categoryController.clear();
+                              },
+                            ),
+                          ],
+                        ),
+                        content: TextField(
+                          controller: subCateController,
+                          decoration: InputDecoration(
+                            hintText: 'Tên Danh Mục',
+                          ),
+                        ),
+                        actions: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                child: Text('Hủy'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  categoryController.clear();
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Thêm'),
+                                onPressed: () {
+                                  addSubCategory(doc.id);
+                                  setState(() {
+                                    tableCate = [];
+                                    fetchCategories();
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+                icon: FaIcon(
+                  FontAwesomeIcons.circlePlus,
+                  size: 20,
+                )));
           });
         });
       });
     } catch (error) {
       print('$error');
     }
+  }
+
+  void deleteCategory(String id) {
+    FirebaseFirestore.instance.collection('categories').doc(id).delete();
+  }
+
+  void deleteSubCategory(String id, String subId) {
+    FirebaseFirestore.instance
+        .collection('categories')
+        .doc(id)
+        .collection('subCate')
+        .doc(subId)
+        .delete();
   }
 
   Future<void> addCategory() async {
@@ -110,7 +245,26 @@ class _CategoriesProductState extends State<CategoriesProduct> {
             'name': categoryController.text,
           })
           .then((value) => print("ok"))
-          .catchError((error) => print("Đã xảy ra lỗi $error"));
+          .catchError((error) => print(" $error"));
+      categoryController.clear();
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  TextEditingController subCateController = TextEditingController();
+  Future<void> addSubCategory(String id) async {
+    try {
+      FirebaseFirestore.instance
+          .collection('categories')
+          .doc(id)
+          .collection('subCate')
+          .add({
+            'name': subCateController.text,
+          })
+          .then((value) => print("ok2"))
+          .catchError((error) => print(" $error"));
+      subCateController.clear();
     } catch (err) {
       print(err);
     }
@@ -148,6 +302,7 @@ class _CategoriesProductState extends State<CategoriesProduct> {
                                 icon: Icon(Icons.close),
                                 onPressed: () {
                                   Navigator.of(context).pop();
+                                  categoryController.clear();
                                 },
                               ),
                             ],
@@ -166,12 +321,17 @@ class _CategoriesProductState extends State<CategoriesProduct> {
                                   child: Text('Hủy'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
+                                    categoryController.clear();
                                   },
                                 ),
                                 TextButton(
                                   child: Text('Thêm'),
                                   onPressed: () {
-                                    // Perform OK button action here
+                                    addCategory();
+                                    setState(() {
+                                      tableCate = [];
+                                      fetchCategories();
+                                    });
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -190,7 +350,6 @@ class _CategoriesProductState extends State<CategoriesProduct> {
             child: DataTable(
               dataRowMaxHeight: double.infinity,
               columnSpacing: defaultPadding,
-              // minWidth: 600,
               columns: [
                 DataColumn(
                   label: Text(
