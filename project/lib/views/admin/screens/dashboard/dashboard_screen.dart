@@ -1,12 +1,19 @@
 import 'package:project/views/admin/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:project/views/admin/screens/dashboard/components/categories_manage.dart';
-import 'package:project/views/admin/screens/dashboard/components/products_manage.dart';
 import '../../constants.dart';
 import 'components/header.dart';
 import 'components/storage_details.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  final Widget displayWidget;
+
+  DashboardScreen({super.key, required this.displayWidget});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,8 +32,7 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: defaultPadding),
-                      // CategoriesProduct(),
-                      ProductsManage(),
+                      widget.displayWidget,
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context)) StorageDetails(),

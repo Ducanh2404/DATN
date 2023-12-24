@@ -1,16 +1,16 @@
 import '../../../constants.dart';
 import 'package:project/all_imports.dart';
 
-class CategoriesProduct extends StatefulWidget {
-  const CategoriesProduct({
+class CategoriesManage extends StatefulWidget {
+  const CategoriesManage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CategoriesProduct> createState() => _CategoriesProductState();
+  State<CategoriesManage> createState() => _CategoriesManageState();
 }
 
-class _CategoriesProductState extends State<CategoriesProduct> {
+class _CategoriesManageState extends State<CategoriesManage> {
   List<DataRow> tableCate = [];
   TextEditingController categoryController = TextEditingController();
 

@@ -1,8 +1,12 @@
 import 'package:project/all_imports.dart';
+import 'package:project/views/admin/screens/dashboard/components/categories_manage.dart';
+import 'package:project/views/admin/screens/dashboard/components/products_manage.dart';
 
 class SideMenu extends StatelessWidget {
+  final Function(Widget) changeWidget;
   const SideMenu({
     Key? key,
+    required this.changeWidget,
   }) : super(key: key);
 
   @override
@@ -17,7 +21,9 @@ class SideMenu extends StatelessWidget {
               )),
           DrawerListTile(
             title: "Sản phẩm",
-            press: () {},
+            press: () {
+              changeWidget(ProductsManage());
+            },
             icon: FaIcon(
               FontAwesomeIcons.boxOpen,
               size: 18,
@@ -37,7 +43,9 @@ class SideMenu extends StatelessWidget {
               FontAwesomeIcons.tableList,
               size: 18,
             ),
-            press: () {},
+            press: () {
+              changeWidget(CategoriesManage());
+            },
           ),
           DrawerListTile(
             title: "Tài khoản",
