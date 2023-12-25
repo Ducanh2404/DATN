@@ -1,3 +1,4 @@
+import 'package:image_picker_web/image_picker_web.dart';
 import '../../../constants.dart';
 import 'package:project/all_imports.dart';
 
@@ -17,12 +18,32 @@ class _ProductsManageState extends State<ProductsManage> {
     super.initState();
   }
 
+  bool imageAvailable = false;
+  String webImage = '';
+
+  Future<void> pickImage() async {
+    final image = await ImagePickerWeb.getImageAsFile();
+    String fileName = image!.name;
+    setState(() {
+      imageAvailable = true;
+      webImage = fileName;
+    });
+  }
+
+  Future selectedProduct(String id) async {
+    DocumentSnapshot documentSnapshot =
+        await FirebaseFirestore.instance.collection('products').doc(id).get();
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+    setState(() {
+      nameController.text = data['name'];
+    });
+  }
+
   final TextEditingController searchProduct = TextEditingController();
   List<DataRow> finalList = [];
   Future fetchDocuments() async {
     try {
       List<DataRow> listProd = [];
-
       await FirebaseFirestore.instance.collection("products").get().then(
           (QuerySnapshot querySnapshot) => querySnapshot.docs.forEach((doc) {
                 Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -50,6 +71,7 @@ class _ProductsManageState extends State<ProductsManage> {
                                 ),
                                 onPressed: () {
                                   setState(() {
+                                    selectedProduct(doc.id);
                                     manageProd = !manageProd;
                                     editProd = !editProd;
                                   });
@@ -86,6 +108,7 @@ class _ProductsManageState extends State<ProductsManage> {
                                 ),
                                 onPressed: () {
                                   setState(() {
+                                    selectedProduct(doc.id);
                                     manageProd = !manageProd;
                                     editProd = !editProd;
                                   });
@@ -110,7 +133,10 @@ class _ProductsManageState extends State<ProductsManage> {
 
   bool manageProd = true;
   bool editProd = false;
-  TextEditingController nameController = TextEditingController(text: '123');
+  TextEditingController nameController = TextEditingController();
+  TextEditingController saleController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController salePriceController = TextEditingController();
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -130,12 +156,63 @@ class _ProductsManageState extends State<ProductsManage> {
                 ),
                 child: Column(
                   children: [
-                    TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Tên sản phẩm',
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              labelText: 'Tên sản phẩm',
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: priceController,
+                            decoration: InputDecoration(
+                              labelText: 'Giá gốc',
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: saleController,
+                            decoration: InputDecoration(
+                              labelText: 'Giảm giá',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: salePriceController,
+                            decoration: InputDecoration(
+                              labelText: 'Giá sau khi giảm',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            pickImage();
+                          });
+                        },
+                        child: Text('pickme')),
+                    imageAvailable
+                        ? Image.asset('img/product/$webImage')
+                        : Image.asset('img/imagepicker.png')
                   ],
                 )),
           ),

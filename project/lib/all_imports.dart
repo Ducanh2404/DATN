@@ -7,7 +7,6 @@ export 'package:carousel_slider/carousel_slider.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:card_swiper/card_swiper.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
-export 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 export 'package:go_router/go_router.dart';
 export 'package:get/get.dart';
 

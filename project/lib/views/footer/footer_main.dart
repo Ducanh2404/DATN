@@ -1,4 +1,5 @@
 import 'package:project/all_imports.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class FooterMain extends StatelessWidget {
   const FooterMain({Key? key}) : super(key: key);
