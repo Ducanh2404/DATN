@@ -110,6 +110,7 @@ class _ProductsManageState extends State<ProductsManage> {
 
   bool manageProd = true;
   bool editProd = false;
+  TextEditingController nameController = TextEditingController(text: '123');
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -127,7 +128,16 @@ class _ProductsManageState extends State<ProductsManage> {
                   color: secondaryColor,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
-                child: Column()),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Tên sản phẩm',
+                      ),
+                    ),
+                  ],
+                )),
           ),
           Visibility(
             visible: manageProd,
