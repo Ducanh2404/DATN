@@ -22,7 +22,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
 
   @override
   void dispose() {
-    categoryController.dispose(); // Dispose the text controller
+    categoryController.dispose();
     super.dispose();
   }
 
@@ -33,8 +33,8 @@ class _CategoriesManageState extends State<CategoriesManage> {
             .collection('categories')
             .orderBy('name')
             .get();
-        if (mounted) {
-          querySnapshot.docs.forEach((doc) {
+        if (querySnapshot.docs.isNotEmpty) {
+          querySnapshot.docs.forEach((doc) async {
             List<Widget> listSubCate = [];
             Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
             String mainCate = data['name'];
@@ -71,10 +71,12 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                               child: Text('Xóa'),
                                               onPressed: () {
                                                 deleteCategory(doc.id);
-                                                setState(() {
-                                                  tableCate = [];
-                                                  fetchCategories();
-                                                });
+                                                if (mounted) {
+                                                  setState(() {
+                                                    tableCate = [];
+                                                    fetchCategories();
+                                                  });
+                                                }
                                                 Navigator.of(context).pop();
                                               },
                                             ),
@@ -103,7 +105,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                 )),
               ]),
             );
-            FirebaseFirestore.instance
+            await FirebaseFirestore.instance
                 .collection('categories')
                 .doc(doc.id)
                 .collection('subCate')
@@ -139,10 +141,12 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                         child: Text('Xóa'),
                                         onPressed: () {
                                           deleteSubCategory(doc.id, subdoc.id);
-                                          setState(() {
-                                            tableCate = [];
-                                            fetchCategories();
-                                          });
+                                          if (mounted) {
+                                            setState(() {
+                                              tableCate = [];
+                                              fetchCategories();
+                                            });
+                                          }
                                           Navigator.of(context).pop();
                                         },
                                       ),
@@ -160,9 +164,11 @@ class _CategoriesManageState extends State<CategoriesManage> {
                     Text(subCate),
                   ],
                 ));
-                setState(() {
-                  listSubCate.add(subWidget);
-                });
+                if (mounted) {
+                  setState(() {
+                    listSubCate.add(subWidget);
+                  });
+                }
               });
               listSubCate.add(TextButton.icon(
                   label: Text('Thêm Danh Mục Con'),
@@ -206,10 +212,12 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                   child: Text('Thêm'),
                                   onPressed: () {
                                     addSubCategory(doc.id);
-                                    setState(() {
-                                      tableCate = [];
-                                      fetchCategories();
-                                    });
+                                    if (mounted) {
+                                      setState(() {
+                                        tableCate = [];
+                                        fetchCategories();
+                                      });
+                                    }
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -337,10 +345,12 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                   child: Text('Thêm'),
                                   onPressed: () {
                                     addCategory();
-                                    setState(() {
-                                      tableCate = [];
-                                      fetchCategories();
-                                    });
+                                    if (mounted) {
+                                      setState(() {
+                                        tableCate = [];
+                                        fetchCategories();
+                                      });
+                                    }
                                     Navigator.of(context).pop();
                                   },
                                 ),
