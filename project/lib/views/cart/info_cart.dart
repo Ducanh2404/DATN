@@ -4,11 +4,13 @@ class InfoCart extends StatefulWidget {
   final String productId;
   final String name;
   final String price;
+  final String image;
   const InfoCart({
     Key? key,
     required this.name,
     required this.price,
     required this.productId,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class _InfoCartState extends State<InfoCart> {
           Expanded(
               flex: 1,
               child: Image(
-                image: AssetImage('img/product/product1.jpg'),
+                image: AssetImage('img/product/${widget.image}'),
                 fit: BoxFit.contain,
               )),
           SizedBox(

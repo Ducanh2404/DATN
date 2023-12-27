@@ -42,7 +42,7 @@ class _ShipInfoState extends State<ShipInfo> {
     'Thanh Hóa',
   ];
   String? selectedCity;
-  PayMethod? method = PayMethod.banking;
+  PayMethod? method;
   @override
   void dispose() {
     widget.cityController.dispose();
@@ -201,12 +201,13 @@ class _ShipInfoState extends State<ShipInfo> {
               contentPadding: EdgeInsets.all(0),
               title: const Text('Thanh toán khi nhận hàng'),
               leading: Radio<PayMethod>(
-                value: PayMethod.banking,
+                value: PayMethod.money,
                 groupValue: method,
                 onChanged: (PayMethod? value) {
                   setState(() {
                     widget.method('cash');
                     method = value;
+                    print(method);
                   });
                 },
               ),
@@ -215,12 +216,13 @@ class _ShipInfoState extends State<ShipInfo> {
               contentPadding: EdgeInsets.all(0),
               title: const Text('Thanh toán chuyển khoản'),
               leading: Radio<PayMethod>(
-                value: PayMethod.money,
+                value: PayMethod.banking,
                 groupValue: method,
                 onChanged: (PayMethod? value) {
                   setState(() {
                     widget.method('banking');
                     method = value;
+                    print(method);
                   });
                 },
               ),

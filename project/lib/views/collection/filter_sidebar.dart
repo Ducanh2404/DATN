@@ -80,7 +80,6 @@ class _FilterSideBarState extends State<FilterSideBar> {
         ),
       );
     });
-    print(filterPrice);
   }
 
   Future<List<Widget>> fetchFiltedCollection() async {
@@ -143,7 +142,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
       });
       widget.listFiltedCollection(listFiltedCollection);
     } catch (e) {
-      print('Failed to fetch documents: $e');
+      print('$e');
     }
     return listFiltedCollection;
   }
@@ -175,10 +174,9 @@ class _FilterSideBarState extends State<FilterSideBar> {
             filterWidget.add(item);
           });
         });
-        print(filterList);
       }
     } catch (e) {
-      print('Failed to fetch documents: $e');
+      print('$e');
     }
     return filterWidget;
   }
@@ -229,7 +227,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
             numberFormat.format(rangePrice.end).toString();
       });
     } catch (error) {
-      print('Error fetching collection: $error');
+      print('$error');
     }
   }
 

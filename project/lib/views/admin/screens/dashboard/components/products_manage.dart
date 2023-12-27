@@ -22,6 +22,38 @@ class _ProductsManageState extends State<ProductsManage> {
     super.initState();
   }
 
+  //xóa sản phẩm
+  Future<void> deleteProduct() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('products')
+          .doc(selectedProductId)
+          .delete();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Xóa sản phẩm thành công'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  manageProd = !manageProd;
+                  editProd = !editProd;
+                  finalList = [];
+                  fetchDocuments();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) { 
+      print('$error');
+    }
+  }
+
   //Thêm sản phẩm
   int i = 0;
   Future<void> addProduct() async {
@@ -802,11 +834,23 @@ class _ProductsManageState extends State<ProductsManage> {
                   height: 20,
                 ),
                 Center(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        updateProduct();
-                      },
-                      child: Text('Cập nhật sản phẩm')),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            updateProduct();
+                          },
+                          child: Text('Cập nhật sản phẩm')),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            deleteProduct();
+                          },
+                          child: Text('Xóa sản phẩm')),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -818,8 +862,8 @@ class _ProductsManageState extends State<ProductsManage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Danh Sách Sản Phẩm",
@@ -933,6 +977,7 @@ class _ProductsManageState extends State<ProductsManage> {
                       columns: [
                         DataColumn(
                           label: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
                             spacing: 20,
                             children: [
                               Text(

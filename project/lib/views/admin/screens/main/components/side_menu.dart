@@ -1,5 +1,7 @@
 import 'package:project/all_imports.dart';
+import 'package:project/views/admin/screens/dashboard/components/account_manage.dart';
 import 'package:project/views/admin/screens/dashboard/components/categories_manage.dart';
+import 'package:project/views/admin/screens/dashboard/components/order_manage.dart';
 import 'package:project/views/admin/screens/dashboard/components/products_manage.dart';
 
 class SideMenu extends StatelessWidget {
@@ -35,7 +37,9 @@ class SideMenu extends StatelessWidget {
               FontAwesomeIcons.receipt,
               size: 18,
             ),
-            press: () {},
+            press: () {
+              changeWidget(OrderManage());
+            },
           ),
           DrawerListTile(
             title: "Danh Mục",
@@ -53,7 +57,9 @@ class SideMenu extends StatelessWidget {
               FontAwesomeIcons.user,
               size: 18,
             ),
-            press: () {},
+            press: () {
+              changeWidget(AccountManage());
+            },
           ),
         ],
       ),

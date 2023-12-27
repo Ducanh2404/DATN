@@ -36,8 +36,138 @@ class _CategoriesManageState extends State<CategoriesManage> {
         if (querySnapshot.docs.isNotEmpty) {
           querySnapshot.docs.forEach((doc) async {
             List<Widget> listSubCate = [];
+
             Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
             String mainCate = data['name'];
+
+            await FirebaseFirestore.instance
+                .collection('categories')
+                .doc(doc.id)
+                .collection('subCate')
+                .get()
+                .then((QuerySnapshot querySnapshot1) {
+              querySnapshot1.docs.forEach((subdoc) {
+                Map<String, dynamic>? subData =
+                    subdoc.data() as Map<String, dynamic>;
+                String subCate = subData['name'];
+                if (mounted) {
+                  setState(() {
+                    listSubCate.add(Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Xóa Danh Mục'),
+                                    content: Text(
+                                        'Bạn có muốn xóa danh mục $subCate ?'),
+                                    actions: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextButton(
+                                            child: Text('Hủy'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text('Xóa'),
+                                            onPressed: () {
+                                              deleteSubCategory(
+                                                  doc.id, subdoc.id);
+                                              if (mounted) {
+                                                setState(() {
+                                                  tableCate = [];
+                                                  fetchCategories();
+                                                });
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            icon: FaIcon(
+                              FontAwesomeIcons.circleMinus,
+                              size: 20,
+                            )),
+                        Text(subCate),
+                      ],
+                    ));
+                  });
+                }
+              });
+              listSubCate.add(TextButton.icon(
+                  label: Text('Thêm Danh Mục Con'),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Row(
+                            children: [
+                              Expanded(
+                                child: Text('Thêm Danh Mục Vào $mainCate'),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.close),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  categoryController.clear();
+                                },
+                              ),
+                            ],
+                          ),
+                          content: TextField(
+                            controller: subCateController,
+                            decoration: InputDecoration(
+                              hintText: 'Tên Danh Mục',
+                            ),
+                          ),
+                          actions: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  child: Text('Hủy'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    categoryController.clear();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('Thêm'),
+                                  onPressed: () {
+                                    addSubCategory(doc.id);
+                                    if (mounted) {
+                                      setState(() {
+                                        tableCate = [];
+                                        fetchCategories();
+                                      });
+                                    }
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  icon: FaIcon(
+                    FontAwesomeIcons.circlePlus,
+                    size: 20,
+                  )));
+            });
             tableCate.add(
               DataRow(cells: [
                 DataCell(Padding(
@@ -105,134 +235,6 @@ class _CategoriesManageState extends State<CategoriesManage> {
                 )),
               ]),
             );
-            await FirebaseFirestore.instance
-                .collection('categories')
-                .doc(doc.id)
-                .collection('subCate')
-                .get()
-                .then((QuerySnapshot querySnapshot1) {
-              querySnapshot1.docs.forEach((subdoc) {
-                Map<String, dynamic>? subData =
-                    subdoc.data() as Map<String, dynamic>;
-                String subCate = subData['name'];
-                Widget subWidget = (Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Xóa Danh Mục'),
-                                content:
-                                    Text('Bạn có muốn xóa danh mục $subCate ?'),
-                                actions: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      TextButton(
-                                        child: Text('Hủy'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: Text('Xóa'),
-                                        onPressed: () {
-                                          deleteSubCategory(doc.id, subdoc.id);
-                                          if (mounted) {
-                                            setState(() {
-                                              tableCate = [];
-                                              fetchCategories();
-                                            });
-                                          }
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        icon: FaIcon(
-                          FontAwesomeIcons.circleMinus,
-                          size: 20,
-                        )),
-                    Text(subCate),
-                  ],
-                ));
-                if (mounted) {
-                  setState(() {
-                    listSubCate.add(subWidget);
-                  });
-                }
-              });
-              listSubCate.add(TextButton.icon(
-                  label: Text('Thêm Danh Mục Con'),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Row(
-                            children: [
-                              Expanded(
-                                child: Text('Thêm Danh Mục Vào $mainCate'),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.close),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  categoryController.clear();
-                                },
-                              ),
-                            ],
-                          ),
-                          content: TextField(
-                            controller: subCateController,
-                            decoration: InputDecoration(
-                              hintText: 'Tên Danh Mục',
-                            ),
-                          ),
-                          actions: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButton(
-                                  child: Text('Hủy'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    categoryController.clear();
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text('Thêm'),
-                                  onPressed: () {
-                                    addSubCategory(doc.id);
-                                    if (mounted) {
-                                      setState(() {
-                                        tableCate = [];
-                                        fetchCategories();
-                                      });
-                                    }
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  icon: FaIcon(
-                    FontAwesomeIcons.circlePlus,
-                    size: 20,
-                  )));
-            });
           });
         }
       } catch (error) {
@@ -366,18 +368,21 @@ class _CategoriesManageState extends State<CategoriesManage> {
           ),
           SizedBox(
             width: double.infinity,
-            child: DataTable(
-              dataRowMaxHeight: double.infinity,
-              columnSpacing: defaultPadding,
-              columns: [
-                DataColumn(
-                  label: Text(
-                    "Tên Danh Mục",
-                    style: TextStyle(fontSize: 18),
+            height: MediaQuery.of(context).size.height * 4 / 5,
+            child: SingleChildScrollView(
+              child: DataTable(
+                dataRowMaxHeight: double.infinity,
+                columnSpacing: defaultPadding,
+                columns: [
+                  DataColumn(
+                    label: Text(
+                      "Tên Danh Mục",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                ),
-              ],
-              rows: tableCate,
+                ],
+                rows: tableCate,
+              ),
             ),
           ),
         ],

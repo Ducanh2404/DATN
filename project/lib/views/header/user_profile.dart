@@ -35,7 +35,20 @@ class _UserProfileState extends State<UserProfile> {
       User? user = auth.currentUser;
       if (user != null) {
         await user.updateDisplayName(newName);
-        user = auth.currentUser;
+        await FirebaseFirestore.instance
+            .collection('user')
+            .where('email', isEqualTo: user.email)
+            .get()
+            .then(
+          (QuerySnapshot query) {
+            query.docs.forEach((doc) {
+              doc.reference.update({
+                'name': newName,
+              });
+            });
+          },
+        );
+
         setState(() {
           showDialog(
             context: context,

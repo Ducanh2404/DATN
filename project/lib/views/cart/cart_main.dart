@@ -17,16 +17,16 @@ class _CartMainState extends State<CartMain> {
   String fieldNameError = '';
   String fieldPhoneError = '';
   String fieldAddressError = '';
-  String method = "";
+  String selectedMethod = "";
   void getPayMethod(String method) {
     if (method == "banking") {
       setState(() {
-        method = "banking";
+        selectedMethod = "banking";
       });
     }
     if (method == "cash") {
       setState(() {
-        method = "cash";
+        selectedMethod = "cash";
       });
     }
   }
@@ -37,9 +37,8 @@ class _CartMainState extends State<CartMain> {
           .collection('cart')
           .doc(documentId)
           .delete();
-      print('xóa sản phẩm "$documentId" .');
     } catch (error) {
-      print(' lỗi "$documentId"  $error');
+      print('$error');
     }
   }
 
@@ -54,9 +53,9 @@ class _CartMainState extends State<CartMain> {
     return orders.add({
       'receiver': nameController.text,
       'email': email,
-      'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
+      'date': DateFormat('dd-MM-yyyy,HH:mm').format(DateTime.now()),
       'total': sumPrice,
-      'method': method,
+      'method': selectedMethod,
       'city': cityController.text,
       'phone': phoneController.text,
       'address': addressController.text,
@@ -165,13 +164,16 @@ class _CartMainState extends State<CartMain> {
                 dynamic nameProd = productDetail!['name'];
                 dynamic price = productDetail['money'];
                 dynamic sale = productDetail['sale'];
+                String image = productDetail['image'];
                 double newprice = price - (price * (sale / 100));
                 Widget prod = CartProduct(
+                    image: image,
                     productId: key,
                     productName: nameProd,
                     price: formatAsCurrency(newprice).toString(),
                     quantity: value);
                 Widget prodInfo = InfoCart(
+                  image: image,
                   productId: key,
                   name: nameProd,
                   price: formatAsCurrency(newprice).toString(),

@@ -5,6 +5,7 @@ class CartProduct extends StatefulWidget {
   final String productId;
   final String productName;
   final String price;
+  final String image;
   int quantity;
   CartProduct({
     Key? key,
@@ -12,6 +13,7 @@ class CartProduct extends StatefulWidget {
     required this.price,
     required this.quantity,
     required this.productId,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -126,7 +128,7 @@ class _CartProductState extends State<CartProduct> {
             Expanded(
                 flex: 1,
                 child: Image(
-                  image: AssetImage('img/product/product1.jpg'),
+                  image: AssetImage('img/product/${widget.image}'),
                 )),
             SizedBox(
               width: 16,
