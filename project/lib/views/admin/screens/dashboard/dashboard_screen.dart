@@ -2,7 +2,7 @@ import 'package:project/views/admin/responsive.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import 'components/header.dart';
-import 'components/storage_details.dart';
+import 'components/admin_info.dart';
 
 class DashboardScreen extends StatefulWidget {
   final Widget displayWidget;
@@ -39,12 +39,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ],
                   ),
                 ),
-                if (!Responsive.isMobile(context))
-                  SizedBox(width: defaultPadding),
-                Expanded(
-                  flex: 2,
-                  child: StorageDetails(),
+                SizedBox(
+                  width: defaultPadding,
                 ),
+                if (!Responsive.isMobile(context))
+                  Expanded(
+                    flex: 2,
+                    child: StorageDetails(),
+                  ),
               ],
             )
           ],

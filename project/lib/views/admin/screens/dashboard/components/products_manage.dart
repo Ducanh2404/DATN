@@ -49,7 +49,7 @@ class _ProductsManageState extends State<ProductsManage> {
           );
         },
       );
-    } catch (error) { 
+    } catch (error) {
       print('$error');
     }
   }
@@ -201,7 +201,7 @@ class _ProductsManageState extends State<ProductsManage> {
       int index = i;
       keyControllers.add(TextEditingController(text: key));
       valueControllers.add(TextEditingController(text: value));
-      Widget filter = Row(
+      Widget filter = Wrap(
         children: [
           Container(
             constraints: BoxConstraints(minWidth: 0, maxWidth: 200),
@@ -260,7 +260,7 @@ class _ProductsManageState extends State<ProductsManage> {
                 int index = i;
                 filterWidget.insert(
                     i,
-                    Row(
+                    Wrap(
                       children: [
                         Container(
                           constraints:
@@ -486,11 +486,13 @@ class _ProductsManageState extends State<ProductsManage> {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //widget thêm sản phẩm
           Visibility(
             visible: addProd,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -556,8 +558,7 @@ class _ProductsManageState extends State<ProductsManage> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
                   children: [
                     Text('Hình ảnh sản phẩm',
                         style: Theme.of(context).textTheme.titleLarge),
@@ -611,6 +612,9 @@ class _ProductsManageState extends State<ProductsManage> {
                   ],
                 ),
                 Wrap(
+                  alignment: WrapAlignment.start,
+                  runAlignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
                   children: categoriesOptions.map((String option) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -643,6 +647,7 @@ class _ProductsManageState extends State<ProductsManage> {
                   height: 10,
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: filterWidget,
                 ),
                 SizedBox(
@@ -663,6 +668,7 @@ class _ProductsManageState extends State<ProductsManage> {
           Visibility(
             visible: editProd,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -741,8 +747,7 @@ class _ProductsManageState extends State<ProductsManage> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Wrap(
                   children: [
                     Text('Hình ảnh sản phẩm',
                         style: Theme.of(context).textTheme.titleLarge),
@@ -828,13 +833,16 @@ class _ProductsManageState extends State<ProductsManage> {
                   height: 10,
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: filterWidget,
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 Center(
-                  child: Row(
+                  child: Wrap(
+                    runSpacing: 20,
+                    alignment: WrapAlignment.center,
                     children: [
                       ElevatedButton(
                           onPressed: () {
@@ -845,8 +853,39 @@ class _ProductsManageState extends State<ProductsManage> {
                         width: 30,
                       ),
                       ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.red)),
                           onPressed: () {
-                            deleteProduct();
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Bạn muốn xóa sản phẩm này?'),
+                                  actions: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton(
+                                          child: Text('Hủy'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text('Xóa'),
+                                          onPressed: () {
+                                            deleteProduct();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                           child: Text('Xóa sản phẩm')),
                     ],
@@ -862,111 +901,120 @@ class _ProductsManageState extends State<ProductsManage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Danh Sách Sản Phẩm",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            keyControllers = [];
-                            valueControllers = [];
-                            imageAvailable = false;
-                            selectedOptions = [];
-                            filterWidget = [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextButton.icon(
-                                      onPressed: () {
-                                        keyControllers
-                                            .add(TextEditingController());
-                                        valueControllers
-                                            .add(TextEditingController());
-                                        setState(() {
-                                          int index = i;
-                                          filterWidget.insert(
-                                              i,
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    constraints: BoxConstraints(
-                                                        minWidth: 0,
-                                                        maxWidth: 200),
-                                                    child: DropdownMenu(
-                                                      expandedInsets:
-                                                          EdgeInsets.all(0),
-                                                      controller:
-                                                          keyControllers[i],
-                                                      requestFocusOnTap: true,
-                                                      onSelected:
-                                                          (String? filter) {},
-                                                      dropdownMenuEntries:
-                                                          filterList
-                                                              .map((filter) {
-                                                        return DropdownMenuEntry<
-                                                            String>(
-                                                          value: '',
-                                                          label: filter,
-                                                        );
-                                                      }).toList(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Danh Sách Sản Phẩm",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              keyControllers = [];
+                              valueControllers = [];
+                              imageAvailable = false;
+                              selectedOptions = [];
+                              filterWidget = [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextButton.icon(
+                                        onPressed: () {
+                                          keyControllers
+                                              .add(TextEditingController());
+                                          valueControllers
+                                              .add(TextEditingController());
+                                          setState(() {
+                                            int index = i;
+                                            filterWidget.insert(
+                                                i,
+                                                Wrap(
+                                                  children: [
+                                                    Container(
+                                                      constraints:
+                                                          BoxConstraints(
+                                                              minWidth: 0,
+                                                              maxWidth: 200),
+                                                      child: DropdownMenu(
+                                                        expandedInsets:
+                                                            EdgeInsets.all(0),
+                                                        controller:
+                                                            keyControllers[i],
+                                                        requestFocusOnTap: true,
+                                                        onSelected:
+                                                            (String? filter) {},
+                                                        dropdownMenuEntries:
+                                                            filterList
+                                                                .map((filter) {
+                                                          return DropdownMenuEntry<
+                                                              String>(
+                                                            value: '',
+                                                            label: filter,
+                                                          );
+                                                        }).toList(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  Container(
-                                                    constraints: BoxConstraints(
-                                                        minWidth: 0,
-                                                        maxWidth: 200),
-                                                    child: TextField(
-                                                      controller:
-                                                          valueControllers[i],
+                                                    SizedBox(
+                                                      width: 20,
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          filterWidget
-                                                              .removeAt(index);
-                                                          keyControllers
-                                                              .removeAt(index);
-                                                          valueControllers
-                                                              .removeAt(index);
-                                                          i--;
-                                                        });
-                                                      },
-                                                      icon: FaIcon(
-                                                        FontAwesomeIcons
-                                                            .circleMinus,
-                                                        size: 20,
-                                                        color: Colors.red,
-                                                      )),
-                                                ],
-                                              ));
-                                          i++;
-                                        });
-                                      },
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.circlePlus,
-                                        size: 20,
-                                      ),
-                                      label: Text('Thêm đặc điểm')),
-                                ],
-                              )
-                            ];
-                            manageProd = !manageProd;
-                            addProd = !addProd;
-                          });
-                        },
-                        child: Text('Thêm Sản Phẩm'))
-                  ],
+                                                    Container(
+                                                      constraints:
+                                                          BoxConstraints(
+                                                              minWidth: 0,
+                                                              maxWidth: 200),
+                                                      child: TextField(
+                                                        controller:
+                                                            valueControllers[i],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            filterWidget
+                                                                .removeAt(
+                                                                    index);
+                                                            keyControllers
+                                                                .removeAt(
+                                                                    index);
+                                                            valueControllers
+                                                                .removeAt(
+                                                                    index);
+                                                            i--;
+                                                          });
+                                                        },
+                                                        icon: FaIcon(
+                                                          FontAwesomeIcons
+                                                              .circleMinus,
+                                                          size: 20,
+                                                          color: Colors.red,
+                                                        )),
+                                                  ],
+                                                ));
+                                            i++;
+                                          });
+                                        },
+                                        icon: FaIcon(
+                                          FontAwesomeIcons.circlePlus,
+                                          size: 20,
+                                        ),
+                                        label: Text('Thêm đặc điểm')),
+                                  ],
+                                )
+                              ];
+                              manageProd = !manageProd;
+                              addProd = !addProd;
+                            });
+                          },
+                          child: Text('Thêm Sản Phẩm'))
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 4 / 5,
@@ -978,14 +1026,17 @@ class _ProductsManageState extends State<ProductsManage> {
                         DataColumn(
                           label: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 20,
                             children: [
                               Text(
                                 "Sản Phẩm",
                                 style: TextStyle(fontSize: 18),
                               ),
                               SizedBox(
-                                width: Responsive.isMobile(context) ? 100 : 400,
+                                width: Responsive.isMobile(context)
+                                    ? 50
+                                    : Responsive.isTablet(context)
+                                        ? 300
+                                        : 500,
                                 child: TextField(
                                   controller: searchProduct,
                                   decoration: InputDecoration(

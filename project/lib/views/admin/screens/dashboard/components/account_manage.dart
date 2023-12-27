@@ -58,30 +58,33 @@ class _AccountManageState extends State<AccountManage> {
           ),
           SizedBox(
             width: double.infinity,
-            child: DataTable(
-              dataRowMaxHeight: double.infinity,
-              columnSpacing: defaultPadding,
-              columns: [
-                DataColumn(
-                  label: Text(
-                    "Họ và tên",
-                    style: TextStyle(fontSize: 18),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                dataRowMaxHeight: double.infinity,
+                columnSpacing: defaultPadding,
+                columns: [
+                  DataColumn(
+                    label: Text(
+                      "Họ và tên",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    "Email",
-                    style: TextStyle(fontSize: 18),
+                  DataColumn(
+                    label: Text(
+                      "Email",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    "Status",
-                    style: TextStyle(fontSize: 18),
+                  DataColumn(
+                    label: Text(
+                      "Status",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                ),
-              ],
-              rows: listAcc,
+                ],
+                rows: listAcc,
+              ),
             ),
           ),
         ],

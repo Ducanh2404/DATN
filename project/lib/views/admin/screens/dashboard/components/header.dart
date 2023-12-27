@@ -2,6 +2,7 @@ import 'package:project/views/admin/controllers/MenuAppController.dart';
 import 'package:project/views/admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../constants.dart';
 
@@ -32,10 +33,32 @@ class Header extends StatelessWidget {
   }
 }
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   const ProfileCard({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  String userName = '';
+  @override
+  initState() {
+    currentUser();
+    super.initState();
+  }
+
+  Future<void> currentUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String? username = user.displayName;
+      setState(() {
+        userName = username!;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +75,10 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (!Responsive.isMobile(context))
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Xin chào,Tài khoản"),
-            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+            child: Text("Xin chào,$userName"),
+          ),
         ],
       ),
     );

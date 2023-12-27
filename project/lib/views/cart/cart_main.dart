@@ -50,6 +50,7 @@ class _CartMainState extends State<CartMain> {
     if (user != null) {
       email = user.email;
     }
+    sumPrice = 0;
     return orders.add({
       'receiver': nameController.text,
       'email': email,

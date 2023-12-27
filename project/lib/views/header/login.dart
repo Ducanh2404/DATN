@@ -1,4 +1,5 @@
 import 'package:project/all_imports.dart';
+import 'package:project/views/admin/main.dart';
 
 class Login extends StatefulWidget {
   final Function(String) updateLoginStatus;
@@ -38,25 +39,43 @@ class _LoginState extends State<Login> {
         });
         return;
       }
+      await FirebaseFirestore.instance
+          .collection('order')
+          .where('email', isEqualTo: user.email)
+          .get()
+          .then((QuerySnapshot query) => {
+                query.docs.forEach((doc) {
+                  Map<String, dynamic> data =
+                      doc.data() as Map<String, dynamic>;
+                  if (data['status'] == '1') {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Admin(),
+                        ));
+                  }
+                })
+              });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Đăng nhập thành công'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
       setState(() {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Đăng nhập thành công'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
         widget.toProfile('profile');
         widget.updateLoginStatus(userName!);
       });
     } catch (e) {
+      print(e);
       setState(() {
         _errorText = 'Sai tài khoản hoặc mật khẩu.';
       });

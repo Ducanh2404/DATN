@@ -99,7 +99,10 @@ class _CategoriesManageState extends State<CategoriesManage> {
                               FontAwesomeIcons.circleMinus,
                               size: 20,
                             )),
-                        Text(subCate),
+                        Text(
+                          subCate,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     ));
                   });
@@ -221,7 +224,10 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                 FontAwesomeIcons.circleMinus,
                                 size: 20,
                               )),
-                          Text(mainCate),
+                          Text(
+                            mainCate,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ],
                       ),
                       Container(
@@ -299,72 +305,77 @@ class _CategoriesManageState extends State<CategoriesManage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Danh Mục Sản Phẩm",
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Row(
-                            children: [
-                              Expanded(
-                                child: Text('Thêm Danh Mục Sản Phẩm'),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.close),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  categoryController.clear();
-                                },
-                              ),
-                            ],
-                          ),
-                          content: TextField(
-                            controller: categoryController,
-                            decoration: InputDecoration(
-                              hintText: 'Tên Danh Mục',
-                            ),
-                          ),
-                          actions: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Danh Mục Sản Phẩm",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Row(
                               children: [
-                                TextButton(
-                                  child: Text('Hủy'),
+                                Expanded(
+                                  child: Text('Thêm Danh Mục Sản Phẩm'),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.close),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                     categoryController.clear();
                                   },
                                 ),
-                                TextButton(
-                                  child: Text('Thêm'),
-                                  onPressed: () {
-                                    addCategory();
-                                    if (mounted) {
-                                      setState(() {
-                                        tableCate = [];
-                                        fetchCategories();
-                                      });
-                                    }
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
                               ],
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: Text('Thêm Danh Mục'))
-            ],
+                            ),
+                            content: TextField(
+                              controller: categoryController,
+                              decoration: InputDecoration(
+                                hintText: 'Tên Danh Mục',
+                              ),
+                            ),
+                            actions: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    child: Text('Hủy'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      categoryController.clear();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('Thêm'),
+                                    onPressed: () {
+                                      addCategory();
+                                      if (mounted) {
+                                        setState(() {
+                                          tableCate = [];
+                                          fetchCategories();
+                                        });
+                                      }
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Thêm Danh Mục'))
+              ],
+            ),
           ),
           SizedBox(
             width: double.infinity,
