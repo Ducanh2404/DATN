@@ -22,7 +22,11 @@ class _BrandState extends State<Brand> {
             options: CarouselOptions(
               height: 80,
               padEnds: false,
-              viewportFraction: 1.0 / 9.0,
+              viewportFraction: Responsive.isDesktop(context)
+                  ? 1.0 / 9.0
+                  : Responsive.isTablet(context)
+                      ? 1 / 6
+                      : 1 / 3,
               initialPage: 0,
               enableInfiniteScroll: true,
             ),

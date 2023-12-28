@@ -72,38 +72,16 @@ class _PruductSliderState extends State<PruductSlider> {
         morebtn: true,
         content: Row(
           children: [
-            TextButton(
-                onPressed: () {
-                  CollectionReference orders =
-                      FirebaseFirestore.instance.collection('products');
-                  Future<void> addProduct() {
-                    return orders.add({
-                      'category': ['Laptop Dell'],
-                      'filter': {
-                        'Hãng sản xuất': 'Dell',
-                        'core': 'Intel i5',
-                        'ram': '16 GB',
-                        'VGA': 'MX570',
-                        'Màn hình': '15 inch',
-                      },
-                      'money': '27990000',
-                      'name':
-                          'Laptop Dell Vostro 5620 VWXVW i5 1240P/ 16GB/ 512GB/ MX570/ 16 inch FHD/ Win 11',
-                      'sale': 11,
-                      'short-des':
-                          '- CPU: Intel® Core™ i5 1240P ( up to 4.40 GHz, 12 MB)- RAM: 16GB DDR4 3200 MHz- Ổ cứng: 512GB SSD M.2 NVMe PCIe- VGA: Nvidia GeForce MX570 2GB GDDR6- Màn hình: 16 inch FHD- Pin: 4-cell, 54 WHr- Cân nặng: 1.97 kg- Tính năng: Bảo mật vân tay- Màu sắc: Xám- OS: Windows 11 Home + Office Student',
-                      // ignore: unnecessary_set_literal
-                    }).then((value) => {print('ok')});
-                  }
-
-                  addProduct();
-                },
-                style: ButtonStyle(
-                    overlayColor: TransparentButton(),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                        const EdgeInsets.symmetric(horizontal: 0.0))),
-                child: const Image(
-                    image: AssetImage('img/product-thumbnail/category1.jpg'))),
+            if (Responsive.isDesktop(context))
+              TextButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      overlayColor: TransparentButton(),
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.symmetric(horizontal: 0.0))),
+                  child: const Image(
+                      image:
+                          AssetImage('img/product-thumbnail/category1.jpg'))),
             Expanded(
               child: Stack(
                 children: [
@@ -112,7 +90,11 @@ class _PruductSliderState extends State<PruductSlider> {
                     options: CarouselOptions(
                       height: 405,
                       padEnds: false,
-                      viewportFraction: 1.0 / 5.0,
+                      viewportFraction: Responsive.isDesktop(context)
+                          ? 1.0 / 5
+                          : Responsive.isTablet(context)
+                              ? 1.0 / 3.0
+                              : 1,
                       initialPage: 0,
                     ),
                     items: listProducts,

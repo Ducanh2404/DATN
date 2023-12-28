@@ -13,7 +13,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State {
   @override
   Widget build(BuildContext context) {
-    /// returning a container widget
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(

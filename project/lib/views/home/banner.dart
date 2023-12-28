@@ -21,7 +21,11 @@ class _CarouselBannerState extends State<CarouselBanner> {
         child: Stack(children: <Widget>[
           CarouselSlider(
             options: CarouselOptions(
-              height: 580,
+              height: Responsive.isDesktop(context)
+                  ? 580
+                  : Responsive.isTablet(context)
+                      ? 350
+                      : 150,
               viewportFraction: 1,
               initialPage: 0,
               enableInfiniteScroll: true,

@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.zero,
             ),
           )),
-      home: Scaffold(body: Home()),
+      home: Scaffold(drawer: DrawerWidget(), body: Home()),
     );
   }
 }

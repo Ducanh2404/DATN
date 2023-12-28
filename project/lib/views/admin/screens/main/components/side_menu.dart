@@ -25,6 +25,7 @@ class SideMenu extends StatelessWidget {
             title: "Sản phẩm",
             press: () {
               changeWidget(ProductsManage());
+              Navigator.pop(context);
             },
             icon: FaIcon(
               FontAwesomeIcons.boxOpen,
@@ -39,6 +40,8 @@ class SideMenu extends StatelessWidget {
             ),
             press: () {
               changeWidget(OrderManage());
+              Navigator.pop(context);
+              ;
             },
           ),
           DrawerListTile(
@@ -49,6 +52,7 @@ class SideMenu extends StatelessWidget {
             ),
             press: () {
               changeWidget(CategoriesManage());
+              Navigator.pop(context);
             },
           ),
           DrawerListTile(
@@ -59,6 +63,7 @@ class SideMenu extends StatelessWidget {
             ),
             press: () {
               changeWidget(AccountManage());
+              Navigator.pop(context);
             },
           ),
         ],

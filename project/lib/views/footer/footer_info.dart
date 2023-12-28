@@ -9,7 +9,7 @@ class FooterInfo extends StatelessWidget {
       alignment: Alignment.center,
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(0, 24, 0, 24),
-      margin: const EdgeInsets.symmetric(vertical:32 ),
+      margin: const EdgeInsets.symmetric(vertical: 32),
       decoration: const BoxDecoration(
         color: Color(0xFF29324e),
       ),
@@ -63,22 +63,23 @@ class FooterInfo extends StatelessWidget {
               )
             ],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Đăng ký email để nhận tin khuyến mãi',
-                style: TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Subcriber(),
-            ],
-          ),
+          if (!Responsive.isMobile(context))
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Đăng ký email để nhận tin khuyến mãi',
+                  style: TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Subcriber(),
+              ],
+            ),
         ]),
       ),
     );
@@ -121,10 +122,10 @@ class _SubcriberState extends State<Subcriber> {
               filled: true,
               fillColor: Colors.white,
               hintText: "Nhập email của bạn",
-              hintStyle: TextStyle(color: Colors.grey,fontSize: 14),
-               contentPadding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+              hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               focusColor: Color(0xFF3278f6),
-               
             ),
             controller: _controller,
             onSubmitted: (String value) {
@@ -150,7 +151,11 @@ class _SubcriberState extends State<Subcriber> {
                 ),
               ),
               onPressed: () {},
-              child: const Text("Đăng ký", style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w700))),
+              child: const Text("Đăng ký",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700))),
         )
       ],
     );

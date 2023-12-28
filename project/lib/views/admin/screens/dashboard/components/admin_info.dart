@@ -145,24 +145,31 @@ class _StorageDetailsState extends State<StorageDetails> {
           ),
           SizedBox(height: defaultPadding),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
-                  onPressed: () {
-                    updateUserInformation(_controllerName.text);
-                  },
-                  child: Text('Cập Nhật')),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.red)),
-                  onPressed: () {
-                    signOut();
-                  },
-                  child: Text(
-                    'Đăng Xuất',
-                    style: TextStyle(color: Colors.white),
-                  )),
+              Expanded(
+                child: Wrap(
+                  runSpacing: 20,
+                  alignment: WrapAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          updateUserInformation(_controllerName.text);
+                        },
+                        child: Text('Cập Nhật')),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red)),
+                        onPressed: () {
+                          signOut();
+                        },
+                        child: Text(
+                          'Đăng Xuất',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ],
+                ),
+              ),
             ],
           ),
           SizedBox(height: defaultPadding),

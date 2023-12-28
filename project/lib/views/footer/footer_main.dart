@@ -9,8 +9,9 @@ class FooterMain extends StatelessWidget {
     return Container(
         width: 1600,
         padding: const EdgeInsets.symmetric(vertical: 24),
-        child: Column(children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FooterItem(
                   title: 'Danh Mục Sản Phẩm',
@@ -45,11 +46,14 @@ class FooterMain extends StatelessWidget {
           const SizedBox(
             height: 32,
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Wrap(
             children: [
-              HtmlWidget(
-                  '<p><iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.767559905542!2d105.84159807591003!3d21.001952588697478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac70cf94287f%3A0x7362ea6005b5ac6e!2sTNC%20Store!5e0!3m2!1svi!2s!4v1701075821731!5m2!1svi!2s" width="350" height="210" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>'),
+              SizedBox(
+                height: 210,
+                width: 350,
+                child: HtmlWidget(
+                    '<p><iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.767559905542!2d105.84159807591003!3d21.001952588697478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac70cf94287f%3A0x7362ea6005b5ac6e!2sTNC%20Store!5e0!3m2!1svi!2s!4v1701075821731!5m2!1svi!2s" width="350" height="210" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>'),
+              ),
               const SizedBox(
                 width: 32,
               ),

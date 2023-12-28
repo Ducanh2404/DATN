@@ -30,7 +30,7 @@ class _CategoriesState extends State<Categories> {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
-                      margin:const EdgeInsets.only(right: 5),
+                      margin: const EdgeInsets.only(right: 5),
                       child: TextButton(
                         style: ButtonStyle(
                           overlayColor: TransparentButton(),
@@ -49,9 +49,17 @@ class _CategoriesState extends State<Categories> {
                 );
               }).toList(),
               options: CarouselOptions(
-                height: 250,
+                height: Responsive.isDesktop(context)
+                    ? 250
+                    : Responsive.isTablet(context)
+                        ? 150
+                        : 150,
                 padEnds: false,
-                viewportFraction: 1.0 / 4.0,
+                viewportFraction: Responsive.isDesktop(context)
+                    ? 1 / 4
+                    : Responsive.isTablet(context)
+                        ? 1 / 3
+                        : 1,
                 initialPage: 0,
                 enableInfiniteScroll: true,
               ),
