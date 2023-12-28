@@ -48,7 +48,7 @@ class FooterMain extends StatelessWidget {
           ),
           Wrap(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 210,
                 width: 350,
                 child: HtmlWidget(

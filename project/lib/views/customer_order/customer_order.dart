@@ -13,13 +13,13 @@ class _CustomerOrderState extends State<CustomerOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
             color: Color(0xFFf3f3f3),
           ),
-          child: Column(children: [
+          child: const Column(children: [
             Header(),
             CustomerOrderList(),
             Footer(),

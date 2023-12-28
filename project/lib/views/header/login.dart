@@ -48,19 +48,16 @@ class _LoginState extends State<Login> {
                 query.docs.forEach((doc) {
                   Map<String, dynamic> data =
                       doc.data() as Map<String, dynamic>;
-                  print('ok');
 
                   if (data['status'] == '0') {
-                    print('ok');
                     setState(() {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Admin(),
+                            builder: (context) => const Admin(),
                           ));
                     });
                   } else {
-                    print('notok');
                     setState(() {
                       widget.toProfile('profile');
                       widget.updateLoginStatus(userName!);
@@ -72,11 +69,11 @@ class _LoginState extends State<Login> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Đăng nhập thành công'),
+            title: const Text('Đăng nhập thành công'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -111,10 +108,10 @@ class _LoginState extends State<Login> {
       children: [
         Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: 24),
+            margin: const EdgeInsets.only(bottom: 24),
             child: Text('Đăng Nhập',
                 style: GoogleFonts.chakraPetch(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
                       color: Colors.black,
@@ -123,7 +120,7 @@ class _LoginState extends State<Login> {
         Text(
           'Email',
           style: GoogleFonts.chakraPetch(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   color: Color(0xFF8d94ac),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -133,20 +130,20 @@ class _LoginState extends State<Login> {
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.grey),
                   borderRadius: BorderRadius.zero),
               errorText: _errorText.isNotEmpty ? _errorText : null,
-              errorBorder: OutlineInputBorder(
+              errorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.red),
                   borderRadius: BorderRadius.zero),
               filled: true,
               fillColor: Colors.white,
               hintText: "Nhập email của bạn",
-              hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
+              hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 8.0),
-              focusColor: Color(0xFF3278f6),
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 8.0),
+              focusColor: const Color(0xFF3278f6),
             ),
             controller: _controllerEmail,
             onSubmitted: (String value) {
@@ -157,13 +154,13 @@ class _LoginState extends State<Login> {
             },
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Text(
           'Mật khẩu',
           style: GoogleFonts.chakraPetch(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   color: Color(0xFF8d94ac),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -179,7 +176,7 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.zero,
               ),
               errorText: _errorText.isNotEmpty ? _errorText : null,
-              errorBorder: OutlineInputBorder(
+              errorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.red),
                   borderRadius: BorderRadius.zero),
               suffixIcon: IconButton(
@@ -196,10 +193,10 @@ class _LoginState extends State<Login> {
               filled: true,
               fillColor: Colors.white,
               hintText: "Nhập mật khẩu của bạn",
-              hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
+              hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 8.0),
-              focusColor: Color(0xFF3278f6),
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 8.0),
+              focusColor: const Color(0xFF3278f6),
             ),
             controller: _controllerPass,
             onSubmitted: (String value) {
@@ -210,7 +207,7 @@ class _LoginState extends State<Login> {
             },
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Row(
@@ -219,21 +216,21 @@ class _LoginState extends State<Login> {
               child: TextButton(
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.symmetric(vertical: 20)),
+                          const EdgeInsets.symmetric(vertical: 20)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFF3278f6))),
                   onPressed: () {
                     loginUsingEmailPassword(
                       email: _controllerEmail.text,
                       password: _controllerPass.text,
                     );
                   },
-                  child: Text('Đăng nhập',
+                  child: const Text('Đăng nhập',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -241,7 +238,7 @@ class _LoginState extends State<Login> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Row(
@@ -250,7 +247,7 @@ class _LoginState extends State<Login> {
             Text(
               'Khách hàng mới?',
               style: GoogleFonts.chakraPetch(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       color: Color(0xFF8d94ac),
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -265,7 +262,7 @@ class _LoginState extends State<Login> {
                     widget.toRegister('register');
                   });
                 },
-                child: Text(
+                child: const Text(
                   'Tạo tài khoản',
                   style: TextStyle(
                       fontSize: 16,
@@ -280,7 +277,7 @@ class _LoginState extends State<Login> {
             Text(
               'Quên mật khẩu?',
               style: GoogleFonts.chakraPetch(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       color: Color(0xFF8d94ac),
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -293,7 +290,7 @@ class _LoginState extends State<Login> {
                     widget.toRegister('forgetPass');
                   });
                 },
-                child: Text(
+                child: const Text(
                   'Đặt lại mật khẩu',
                   style: TextStyle(
                       fontSize: 16,

@@ -7,7 +7,7 @@ import 'components/admin_info.dart';
 class DashboardScreen extends StatefulWidget {
   final Widget displayWidget;
 
-  DashboardScreen({super.key, required this.displayWidget});
+  const DashboardScreen({super.key, required this.displayWidget});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -19,11 +19,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return SafeArea(
       child: SingleChildScrollView(
         primary: false,
-        padding: EdgeInsets.all(defaultPadding),
+        padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            Header(),
-            SizedBox(height: defaultPadding),
+            const Header(),
+            const SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -31,19 +31,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   flex: 5,
                   child: Column(
                     children: [
-                      SizedBox(height: defaultPadding),
+                      const SizedBox(height: defaultPadding),
                       widget.displayWidget,
                       if (Responsive.isMobile(context))
-                        SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) StorageDetails(),
+                        const SizedBox(height: defaultPadding),
+                      if (Responsive.isMobile(context)) const StorageDetails(),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: defaultPadding,
                 ),
                 if (!Responsive.isMobile(context))
-                  Expanded(
+                  const Expanded(
                     flex: 2,
                     child: StorageDetails(),
                   ),

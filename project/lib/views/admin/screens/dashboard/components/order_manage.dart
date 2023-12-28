@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:project/views/admin/responsive.dart';
 
 import '../../../constants.dart';
 import 'package:project/all_imports.dart';
@@ -66,7 +65,7 @@ class _OrderManageState extends State<OrderManage> {
               Expanded(
                 flex: 3,
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Image(
                     image: AssetImage('img/product/$image'),
                     width: 50,
@@ -87,10 +86,10 @@ class _OrderManageState extends State<OrderManage> {
                   child: Text(formatAsCurrency(newprice)),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text('x'),
                 ),
               ),
@@ -130,23 +129,23 @@ class _OrderManageState extends State<OrderManage> {
                 infoOrder = !infoOrder;
               });
             },
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.arrowLeftLong,
               size: 16,
             ),
-            label: Text('Danh sách đơn hàng'),
+            label: const Text('Danh sách đơn hàng'),
           ),
           Text(
             "Chi tiết đơn hàng",
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(status, style: TextStyle(color: Colors.orange)),
+          Text(status, style: const TextStyle(color: Colors.orange)),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20),
-            decoration: BoxDecoration(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            decoration: const BoxDecoration(
                 border: BorderDirectional(
                     bottom: BorderSide(width: 1, color: Colors.white10))),
           ),
@@ -160,8 +159,8 @@ class _OrderManageState extends State<OrderManage> {
                   flex: 3,
                   child: Container(
                     alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text('Tổng cộng'),
                     ),
                   )),
@@ -198,7 +197,7 @@ class _OrderManageState extends State<OrderManage> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Tên khách hàng'),
@@ -206,7 +205,7 @@ class _OrderManageState extends State<OrderManage> {
                     Text('SĐT'),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Column(
@@ -269,10 +268,10 @@ class _OrderManageState extends State<OrderManage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         children: [
@@ -298,7 +297,7 @@ class _OrderManageState extends State<OrderManage> {
                       showCheckboxColumn: false,
                       dataRowMaxHeight: double.infinity,
                       columnSpacing: defaultPadding,
-                      columns: [
+                      columns: const [
                         DataColumn(
                           label: Text(
                             "STT",
@@ -348,7 +347,7 @@ class _OrderManageState extends State<OrderManage> {
                         showCheckboxColumn: false,
                         dataRowMaxHeight: double.infinity,
                         columnSpacing: defaultPadding,
-                        columns: [
+                        columns: const [
                           DataColumn(
                             label: Text(
                               "STT",

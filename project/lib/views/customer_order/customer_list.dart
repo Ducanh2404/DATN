@@ -62,7 +62,7 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
               Expanded(
                 flex: 3,
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Image(
                     image: AssetImage('img/product/$image'),
                     width: 50,
@@ -83,10 +83,10 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
                   child: Text(formatAsCurrency(newprice)),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text('x'),
                 ),
               ),
@@ -126,23 +126,23 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
                 infoOrder = !infoOrder;
               });
             },
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.arrowLeftLong,
               size: 16,
             ),
-            label: Text('Danh sách đơn hàng'),
+            label: const Text('Danh sách đơn hàng'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(status,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.orange,
                   fontSize: 16,
                   fontWeight: FontWeight.w800)),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20),
-            decoration: BoxDecoration(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            decoration: const BoxDecoration(
                 border: BorderDirectional(
                     bottom: BorderSide(width: 1, color: Colors.white10))),
           ),
@@ -156,8 +156,8 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
                   flex: 3,
                   child: Container(
                     alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text('Tổng cộng'),
                     ),
                   )),
@@ -183,11 +183,13 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
               children: [
                 Text(
                   city,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w800),
                 ),
                 Text(
                   address,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w800),
                 ),
               ],
             ),
@@ -200,7 +202,7 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -220,7 +222,7 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Column(
@@ -228,18 +230,18 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
                   children: [
                     Text(
                       ': $receiver',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w800),
                     ),
                     Text(
                       ': $email',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w800),
                     ),
                     Text(
                       ': $phone',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
@@ -319,7 +321,7 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
                     showCheckboxColumn: false,
                     dataRowMaxHeight: double.infinity,
                     columnSpacing: 10,
-                    columns: [
+                    columns: const [
                       DataColumn(
                         label: Text(
                           "STT",

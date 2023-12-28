@@ -52,7 +52,7 @@ class _PruductSliderState extends State<PruductSlider> {
         });
       });
     } catch (e) {
-      print('Failed to fetch documents: $e');
+      print(' $e');
     }
     return listProducts;
   }

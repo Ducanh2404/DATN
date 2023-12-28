@@ -12,7 +12,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  Widget displayWidget = ProductsManage();
+  Widget displayWidget = const ProductsManage();
 
   void changeWidget(Widget widget) {
     setState(() {

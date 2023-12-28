@@ -54,7 +54,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     subCate['name'],
-                                    style: TextStyle(color: Colors.white),
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 ))),
                       ],
@@ -65,7 +65,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   listDrawer.add(Column(
                     children: [
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             border: Border.symmetric(
                           horizontal:
                               BorderSide(width: .1, color: Colors.white),
@@ -89,11 +89,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         mainCate['name'],
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(color: Colors.white),
                                       ),
                                     ))),
                             Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   border: BorderDirectional(
                                       start: BorderSide(
                                           width: 1, color: Colors.white))),
@@ -101,7 +101,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                 style: ButtonStyle(
                                   overlayColor: TransparentButton(),
                                 ),
-                                icon: FaIcon(
+                                icon: const FaIcon(
                                   FontAwesomeIcons.caretDown,
                                   color: Colors.white,
                                   size: 16,
@@ -136,8 +136,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
+            const Padding(
+              padding: EdgeInsets.all(10.0),
               child: Text(
                 'Danh mục sản phẩm',
                 style: TextStyle(color: Colors.white, fontSize: 20),

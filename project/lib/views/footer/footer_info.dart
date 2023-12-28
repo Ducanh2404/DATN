@@ -110,10 +110,11 @@ class _SubcriberState extends State<Subcriber> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 350,
           height: 40,
           child: TextField(

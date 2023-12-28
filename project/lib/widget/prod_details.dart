@@ -46,22 +46,22 @@ class _ProductDetailsState extends State<ProductDetails> {
       banner = false;
       titleBanner = "";
     }
-    ;
+
     if (widget.status == "sell") {
       titleBanner = "Best Seller";
-      bannerColor = Color(0xFFf28902);
+      bannerColor = const Color(0xFFf28902);
     }
-    ;
+
     if (widget.status == "choice") {
       titleBanner = "Best Choice";
-      bannerColor = Color(0xFFE30019);
+      bannerColor = const Color(0xFFE30019);
     }
-    ;
+
     if (widget.status == "new") {
       titleBanner = "New";
-      bannerColor = Color(0xFF8FFF00);
+      bannerColor = const Color(0xFF8FFF00);
     }
-    ;
+
     return MouseRegion(
       onEnter: (_) {
         setState(() {
@@ -200,7 +200,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       Text(
                         widget.new_price,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xFF8d94ac),
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
@@ -212,7 +212,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           Text(
                             widget.old_price,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Color(0xFFfb4e4e),
                                 fontSize: 20,
                                 fontWeight: FontWeight.w800,
@@ -226,7 +226,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             margin: const EdgeInsets.only(left: 8),
                             child: Text(
                               '-${widget.sale}%',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color(0xFFfb4e4e),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600),

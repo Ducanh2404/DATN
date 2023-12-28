@@ -41,38 +41,35 @@ class _CustomContainerState extends State<CustomContainer> {
                 ),
                 Visibility(
                   visible: widget.morebtn,
-                  child: Container(
-                    child: TextButton(
-                      style: ButtonStyle(
-                          overlayColor: TransparentButton(),
-                          padding:
-                              MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                  const EdgeInsets.symmetric(
-                            horizontal: 0.0,
-                          ))),
-                      onPressed: () {
-                        setState(() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Collection(
-                                      category: widget.category,
-                                    )),
-                          );
-                        });
-                      },
-                      child: const Row(
-                        children: [
-                          Text(
-                            "Xem tất cả",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
+                  child: TextButton(
+                    style: ButtonStyle(
+                        overlayColor: TransparentButton(),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                          horizontal: 0.0,
+                        ))),
+                    onPressed: () {
+                      setState(() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Collection(
+                                    category: widget.category,
+                                  )),
+                        );
+                      });
+                    },
+                    child: const Row(
+                      children: [
+                        Text(
+                          "Xem tất cả",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Icon(Icons.arrow_forward),
+                      ],
                     ),
                   ),
                 ),

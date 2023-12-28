@@ -16,7 +16,7 @@ class SideMenu extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
+          const DrawerHeader(
               padding: EdgeInsets.all(20),
               child: Image(
                 image: AssetImage('img/logo.png'),
@@ -24,45 +24,44 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Sản phẩm",
             press: () {
-              changeWidget(ProductsManage());
+              changeWidget(const ProductsManage());
               Navigator.pop(context);
             },
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.boxOpen,
               size: 18,
             ),
           ),
           DrawerListTile(
             title: "Đơn hàng",
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.receipt,
               size: 18,
             ),
             press: () {
-              changeWidget(OrderManage());
+              changeWidget(const OrderManage());
               Navigator.pop(context);
-              ;
             },
           ),
           DrawerListTile(
             title: "Danh Mục",
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.tableList,
               size: 18,
             ),
             press: () {
-              changeWidget(CategoriesManage());
+              changeWidget(const CategoriesManage());
               Navigator.pop(context);
             },
           ),
           DrawerListTile(
             title: "Tài khoản",
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.user,
               size: 18,
             ),
             press: () {
-              changeWidget(AccountManage());
+              changeWidget(const AccountManage());
               Navigator.pop(context);
             },
           ),
@@ -92,7 +91,7 @@ class DrawerListTile extends StatelessWidget {
       leading: icon,
       title: Text(
         title,
-        style: TextStyle(color: Colors.white54),
+        style: const TextStyle(color: Colors.white54),
       ),
     );
   }

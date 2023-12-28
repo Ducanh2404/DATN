@@ -54,14 +54,14 @@ class _FilterSideBarState extends State<FilterSideBar> {
     setState(() {
       bool isChecked = true;
       priceBox = Container(
-        margin: EdgeInsets.only(bottom: 24),
+        margin: const EdgeInsets.only(bottom: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CheckboxListTile(
               materialTapTargetSize: MaterialTapTargetSize.padded,
               overlayColor: TransparentButton(),
-              contentPadding: EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 horizontal: 0.0,
               ),
               controlAffinity: ListTileControlAffinity.leading,
@@ -256,7 +256,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
     });
   }
 
-  RangeValues rangePrice = RangeValues(0, 0);
+  RangeValues rangePrice = const RangeValues(0, 0);
   double minPrice = 0;
   double maxPrice = 0;
   @override
@@ -267,11 +267,11 @@ class _FilterSideBarState extends State<FilterSideBar> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Bộ lọc sản phẩm',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Column(
@@ -279,13 +279,13 @@ class _FilterSideBarState extends State<FilterSideBar> {
           ),
           Text(
             'khoảng giá'.toUpperCase(),
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: Colors.grey,
                 height: 0.5),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           priceBox,
@@ -317,7 +317,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
             children: [
               Expanded(
                 child: TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(width: 1, color: Colors.grey),
@@ -331,11 +331,11 @@ class _FilterSideBarState extends State<FilterSideBar> {
                     }),
               ),
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  child: Text('-')),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  child: const Text('-')),
               Expanded(
                   child: TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 1, color: Colors.grey),
                         borderRadius: BorderRadius.zero)),
@@ -345,14 +345,14 @@ class _FilterSideBarState extends State<FilterSideBar> {
               )),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
             child: TextButton(
                 style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFF3278f6)),
+                        MaterialStateProperty.all<Color>(const Color(0xFF3278f6)),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                         const EdgeInsets.symmetric(
                             vertical: 20, horizontal: 10)),
@@ -367,7 +367,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
                   addFilterPrice();
                   fetchFiltedCollection();
                 },
-                child: Text(
+                child: const Text(
                   'Lọc',
                   style: TextStyle(
                       fontWeight: FontWeight.w800, color: Colors.white),
@@ -404,9 +404,9 @@ class _FilterContainerState extends State<FilterContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 24),
+      margin: const EdgeInsets.only(bottom: 24),
       padding: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           border: BorderDirectional(
               bottom: BorderSide(
                   width: 1, style: BorderStyle.solid, color: Colors.grey))),
@@ -415,13 +415,13 @@ class _FilterContainerState extends State<FilterContainer> {
         children: [
           Text(
             widget.title.toUpperCase(),
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: Colors.grey,
                 height: 0.5),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Builder(
@@ -466,7 +466,7 @@ class _FilterItemState extends State<FilterItem> {
       child: CheckboxListTile(
         materialTapTargetSize: MaterialTapTargetSize.padded,
         overlayColor: TransparentButton(),
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 0.0,
         ),
         controlAffinity: ListTileControlAffinity.leading,

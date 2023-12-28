@@ -27,7 +27,6 @@ class _RelatedProductState extends State<RelatedProduct> {
   Future<List<Widget>> fetchRelatedCollection() async {
     List<String> categories =
         widget.category.map((element) => element.toString()).toList();
-    print(categories.first);
     QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
         .instance
         .collection("products")

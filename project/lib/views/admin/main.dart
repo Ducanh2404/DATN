@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Admin extends StatelessWidget {
+  const Admin({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

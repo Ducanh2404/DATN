@@ -33,7 +33,7 @@ class _MenuItemsState extends State<MenuItems> {
                   Map<String, dynamic> subCate =
                       sub.data() as Map<String, dynamic>;
                   listSubCate.add(Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 78, 80, 87),
                         border: BorderDirectional(
                             bottom: BorderSide(
@@ -54,7 +54,7 @@ class _MenuItemsState extends State<MenuItems> {
                         style: ButtonStyle(overlayColor: TransparentButton()),
                         child: Text(
                           subCate['name'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Colors.white,
                           ),
@@ -68,7 +68,7 @@ class _MenuItemsState extends State<MenuItems> {
               setState(() {
                 listCate.add(
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 78, 80, 87),
                         border: BorderDirectional(
                             bottom: BorderSide(
@@ -80,9 +80,9 @@ class _MenuItemsState extends State<MenuItems> {
                     child: SubmenuButton(
                         menuStyle: MenuStyle(
                           padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(0)),
+                              const EdgeInsets.all(0)),
                           shape: MaterialStateProperty.all<OutlinedBorder>(
-                              BeveledRectangleBorder(
+                              const BeveledRectangleBorder(
                                   borderRadius: BorderRadius.zero)),
                         ),
                         style: ButtonStyle(
@@ -100,7 +100,7 @@ class _MenuItemsState extends State<MenuItems> {
                           },
                           child: Text(
                             mainCate['name'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
                             ),
@@ -127,12 +127,12 @@ class _MenuItemsState extends State<MenuItems> {
             children: [
               if (!Responsive.isDesktop(context))
                 TextButton.icon(
-                    label: Text(
+                    label: const Text(
                       'Danh Mục',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: openDrawer,
-                    icon: FaIcon(
+                    icon: const FaIcon(
                       FontAwesomeIcons.bars,
                       color: Colors.white,
                       size: 16,
@@ -141,48 +141,48 @@ class _MenuItemsState extends State<MenuItems> {
                 MenuBar(
                     style: MenuStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder>(
-                          BeveledRectangleBorder(
+                          const BeveledRectangleBorder(
                               borderRadius: BorderRadius.zero)),
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                          EdgeInsets.all(0)),
+                          const EdgeInsets.all(0)),
                       surfaceTintColor:
-                          MaterialStatePropertyAll<Color>(Colors.transparent),
+                          const MaterialStatePropertyAll<Color>(Colors.transparent),
                       shadowColor:
-                          MaterialStatePropertyAll<Color>(Colors.transparent),
+                          const MaterialStatePropertyAll<Color>(Colors.transparent),
                       backgroundColor:
-                          MaterialStatePropertyAll<Color>(Colors.transparent),
+                          const MaterialStatePropertyAll<Color>(Colors.transparent),
                     ),
                     children: [
                       SubmenuButton(
                         menuStyle: MenuStyle(
                           padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(0)),
+                              const EdgeInsets.all(0)),
                           shape: MaterialStateProperty.all<OutlinedBorder>(
-                              BeveledRectangleBorder(
+                              const BeveledRectangleBorder(
                                   borderRadius: BorderRadius.zero)),
                         ),
                         menuChildren: listCate,
                         child: Row(
                           children: [
-                            FaIcon(
+                            const FaIcon(
                               FontAwesomeIcons.bars,
                               size: 16,
                               color: Colors.white,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text('danh mục sản phẩm'.toUpperCase(),
                                 style: GoogleFonts.chakraPetch(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
                                   ),
                                 )),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            FaIcon(
+                            const FaIcon(
                               FontAwesomeIcons.chevronDown,
                               size: 14,
                               color: Colors.white,

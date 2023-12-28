@@ -12,19 +12,19 @@ class _CollectionState extends State<Collection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
             color: Color(0xFFf3f3f3),
           ),
           child: Column(children: [
-            Header(),
-            BannerCollection(),
+            const Header(),
+            const BannerCollection(),
             ContentCollection(
               category: widget.category,
             ),
-            Footer(),
+            const Footer(),
           ]),
         ),
       ),

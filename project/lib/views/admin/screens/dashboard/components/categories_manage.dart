@@ -60,7 +60,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text('Xóa Danh Mục'),
+                                    title: const Text('Xóa Danh Mục'),
                                     content: Text(
                                         'Bạn có muốn xóa danh mục $subCate ?'),
                                     actions: <Widget>[
@@ -69,13 +69,13 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           TextButton(
-                                            child: Text('Hủy'),
+                                            child: const Text('Hủy'),
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
                                           ),
                                           TextButton(
-                                            child: Text('Xóa'),
+                                            child: const Text('Xóa'),
                                             onPressed: () {
                                               deleteSubCategory(
                                                   doc.id, subdoc.id);
@@ -95,7 +95,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                 },
                               );
                             },
-                            icon: FaIcon(
+                            icon: const FaIcon(
                               FontAwesomeIcons.circleMinus,
                               size: 20,
                             )),
@@ -109,7 +109,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                 }
               });
               listSubCate.add(TextButton.icon(
-                  label: Text('Thêm Danh Mục Con'),
+                  label: const Text('Thêm Danh Mục Con'),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -121,7 +121,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                 child: Text('Thêm Danh Mục Vào $mainCate'),
                               ),
                               IconButton(
-                                icon: Icon(Icons.close),
+                                icon: const Icon(Icons.close),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                   categoryController.clear();
@@ -131,7 +131,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                           ),
                           content: TextField(
                             controller: subCateController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Tên Danh Mục',
                             ),
                           ),
@@ -140,14 +140,14 @@ class _CategoriesManageState extends State<CategoriesManage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextButton(
-                                  child: Text('Hủy'),
+                                  child: const Text('Hủy'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                     categoryController.clear();
                                   },
                                 ),
                                 TextButton(
-                                  child: Text('Thêm'),
+                                  child: const Text('Thêm'),
                                   onPressed: () {
                                     addSubCategory(doc.id);
                                     if (mounted) {
@@ -166,7 +166,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                       },
                     );
                   },
-                  icon: FaIcon(
+                  icon: const FaIcon(
                     FontAwesomeIcons.circlePlus,
                     size: 20,
                   )));
@@ -186,7 +186,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text('Xóa Danh Mục'),
+                                      title: const Text('Xóa Danh Mục'),
                                       content: Text(
                                           'Bạn có muốn xóa danh mục $mainCate ?'),
                                       actions: <Widget>[
@@ -195,13 +195,13 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             TextButton(
-                                              child: Text('Hủy'),
+                                              child: const Text('Hủy'),
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
                                             ),
                                             TextButton(
-                                              child: Text('Xóa'),
+                                              child: const Text('Xóa'),
                                               onPressed: () {
                                                 deleteCategory(doc.id);
                                                 if (mounted) {
@@ -220,7 +220,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                   },
                                 );
                               },
-                              icon: FaIcon(
+                              icon: const FaIcon(
                                 FontAwesomeIcons.circleMinus,
                                 size: 20,
                               )),
@@ -231,7 +231,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20),
+                        margin: const EdgeInsets.only(left: 20),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: listSubCate),
@@ -264,13 +264,9 @@ class _CategoriesManageState extends State<CategoriesManage> {
 
   Future<void> addCategory() async {
     try {
-      FirebaseFirestore.instance
-          .collection('categories')
-          .add({
-            'name': categoryController.text,
-          })
-          .then((value) => print("ok"))
-          .catchError((error) => print(" $error"));
+      FirebaseFirestore.instance.collection('categories').add({
+        'name': categoryController.text,
+      }).catchError((error) => print(" $error"));
       categoryController.clear();
     } catch (err) {
       print(err);
@@ -285,22 +281,21 @@ class _CategoriesManageState extends State<CategoriesManage> {
           .doc(id)
           .collection('subCate')
           .add({
-            'name': subCateController.text,
-          })
-          .then((value) => print("ok2"))
-          .catchError((error) => print(" $error"));
+        'name': subCateController.text,
+      }).catchError((error) => print(" $error"));
       subCateController.clear();
     } catch (err) {
       print(err);
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,11 +318,11 @@ class _CategoriesManageState extends State<CategoriesManage> {
                           return AlertDialog(
                             title: Row(
                               children: [
-                                Expanded(
+                                const Expanded(
                                   child: Text('Thêm Danh Mục Sản Phẩm'),
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.close),
+                                  icon: const Icon(Icons.close),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                     categoryController.clear();
@@ -337,7 +332,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                             ),
                             content: TextField(
                               controller: categoryController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'Tên Danh Mục',
                               ),
                             ),
@@ -347,14 +342,14 @@ class _CategoriesManageState extends State<CategoriesManage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
-                                    child: Text('Hủy'),
+                                    child: const Text('Hủy'),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                       categoryController.clear();
                                     },
                                   ),
                                   TextButton(
-                                    child: Text('Thêm'),
+                                    child: const Text('Thêm'),
                                     onPressed: () {
                                       addCategory();
                                       if (mounted) {
@@ -373,7 +368,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
                         },
                       );
                     },
-                    child: Text('Thêm Danh Mục'))
+                    child: const Text('Thêm Danh Mục'))
               ],
             ),
           ),
@@ -384,7 +379,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
               child: DataTable(
                 dataRowMaxHeight: double.infinity,
                 columnSpacing: defaultPadding,
-                columns: [
+                columns: const [
                   DataColumn(
                     label: Text(
                       "Tên Danh Mục",

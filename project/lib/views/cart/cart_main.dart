@@ -69,7 +69,7 @@ class _CartMainState extends State<CartMain> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Đơn hàng đã đặt thành công'),
+                  title: const Text('Đơn hàng đã đặt thành công'),
                   actions: [
                     TextButton(
                       onPressed: () => {
@@ -77,10 +77,10 @@ class _CartMainState extends State<CartMain> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyApp(),
+                              builder: (context) => const MyApp(),
                             ))
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 );
@@ -225,10 +225,10 @@ class _CartMainState extends State<CartMain> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Thông tin sản phẩm",
-                              style: const TextStyle(
+                          const Text("Thông tin sản phẩm",
+                              style: TextStyle(
                                   fontWeight: FontWeight.w900, fontSize: 18)),
-                          SizedBox(
+                          const SizedBox(
                             height: 24,
                           ),
                           Column(
@@ -239,7 +239,7 @@ class _CartMainState extends State<CartMain> {
                                 style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
-                                            Color(0xFF3278f6)),
+                                            const Color(0xFF3278f6)),
                                     padding: MaterialStateProperty.all<
                                             EdgeInsetsGeometry>(
                                         const EdgeInsets.symmetric(
@@ -257,11 +257,11 @@ class _CartMainState extends State<CartMain> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Cart(),
+                                          builder: (context) => const Cart(),
                                         ));
                                   });
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Cập nhật giỏ hàng',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w800,
@@ -288,7 +288,7 @@ class _CartMainState extends State<CartMain> {
                   ],
                 ),
               )),
-          SizedBox(
+          const SizedBox(
             width: 24,
           ),
           Expanded(
@@ -300,10 +300,10 @@ class _CartMainState extends State<CartMain> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Thông tin giỏ hàng",
-                          style: const TextStyle(
+                      const Text("Thông tin giỏ hàng",
+                          style: TextStyle(
                               fontWeight: FontWeight.w900, fontSize: 18)),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       Column(
@@ -312,39 +312,39 @@ class _CartMainState extends State<CartMain> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Tổng số lượng sản phẩm',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w800),
                           ),
                           Text(
                             sumQuantity.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w800),
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Tổng chi phí',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w800),
                           ),
                           Text(
                             formatAsCurrency(sumPrice).toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.red,
                                 fontWeight: FontWeight.w800),
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24,
                       ),
                       Row(
@@ -354,7 +354,7 @@ class _CartMainState extends State<CartMain> {
                                 style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
-                                            Color(0xFF3278f6)),
+                                            const Color(0xFF3278f6)),
                                     padding: MaterialStateProperty.all<
                                             EdgeInsetsGeometry>(
                                         const EdgeInsets.symmetric(
@@ -382,7 +382,7 @@ class _CartMainState extends State<CartMain> {
                                 },
                                 child: Text(
                                   confirm,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w800,
                                       color: Colors.white),
                                 )),
@@ -390,13 +390,13 @@ class _CartMainState extends State<CartMain> {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 12),
-                        padding: EdgeInsets.symmetric(vertical: 22),
-                        decoration: BoxDecoration(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 22),
+                        decoration: const BoxDecoration(
                             border: BorderDirectional(
                                 bottom:
                                     BorderSide(width: 1, color: Colors.grey))),
-                        child: Row(
+                        child: const Row(
                           children: [
                             Expanded(
                                 child: Image(
@@ -409,27 +409,27 @@ class _CartMainState extends State<CartMain> {
                           titleColor: Colors.black,
                           title: '  Hỗ trợ trả góp 0%, trả trước 0 đ',
                           icon: FontAwesomeIcons.creditCard,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Hoàn tiền 200% nếu có hàng giả',
                           icon: FontAwesomeIcons.moneyBill,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Giao hàng nhanh trên toàn quốc',
                           icon: FontAwesomeIcons.truckFast,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Hỗ trợ kĩ thuật online 24/7',
                           icon: FontAwesomeIcons.headphones,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Vệ sinh miễn phí PC, Laptop trọn đời',
                           icon: FontAwesomeIcons.wrench,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                     ],
                   ))),
         ],

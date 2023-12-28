@@ -6,14 +6,14 @@ class ProductContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 32),
+      margin: const EdgeInsets.only(top: 32),
       width: 1600,
       child: Row(
         children: [
           Expanded(
               flex: 5,
               child: Container(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,13 +30,13 @@ class ProductContent extends StatelessWidget {
                   ],
                 ),
               )),
-          SizedBox(
+          const SizedBox(
             width: 32,
           ),
           Expanded(
               flex: 2,
               child: Container(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

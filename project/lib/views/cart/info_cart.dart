@@ -21,7 +21,7 @@ class _InfoCartState extends State<InfoCart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 22),
+      margin: const EdgeInsets.only(bottom: 22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class _InfoCartState extends State<InfoCart> {
                 image: AssetImage('img/product/${widget.image}'),
                 fit: BoxFit.contain,
               )),
-          SizedBox(
+          const SizedBox(
             width: 16,
           ),
           Expanded(

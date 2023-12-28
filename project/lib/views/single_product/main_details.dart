@@ -32,9 +32,9 @@ class _MainDetailsState extends State<MainDetails> {
 
   int num = 1;
   Color color1 = Colors.white;
-  Color color2 = Color(0xFF3278f6);
+  Color color2 = const Color(0xFF3278f6);
   Color color3 = Colors.white;
-  Color color4 = Color(0xFF3278f6);
+  Color color4 = const Color(0xFF3278f6);
   @override
   void initState() {
     super.initState();
@@ -71,23 +71,22 @@ class _MainDetailsState extends State<MainDetails> {
           cart.doc(userEmail).set({
             'products': {productId: updatedQuantity},
           }, SetOptions(merge: true)).then((value) {
-            print('Product added to cart successfully');
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Thêm vào giỏ hàng thành công'),
+                  title: const Text('Thêm vào giỏ hàng thành công'),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 );
               },
             );
           }).catchError((error) {
-            print('Error adding product to cart: $error');
+            print('$error');
           });
         } else {
           cart.doc(userEmail).set({
@@ -97,11 +96,11 @@ class _MainDetailsState extends State<MainDetails> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Thêm vào giỏ hàng thành công'),
+                  title: const Text('Thêm vào giỏ hàng thành công'),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 );
@@ -119,12 +118,12 @@ class _MainDetailsState extends State<MainDetails> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Lỗi'),
-            content: Text('Vui lòng đăng nhập để sử dụng tính năng này'),
+            title: const Text('Lỗi'),
+            content: const Text('Vui lòng đăng nhập để sử dụng tính năng này'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -156,31 +155,32 @@ class _MainDetailsState extends State<MainDetails> {
                 Expanded(
                     flex: 3,
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 24),
+                      margin: const EdgeInsets.symmetric(horizontal: 24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             widget.product_name,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w800),
                           ),
                           Container(
                             height: 16,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 border: BorderDirectional(
                                     bottom: BorderSide(
                                         width: 1, color: Color(0xffededed)))),
                           ),
                           Text(
                             separateItems(widget.short_des),
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black),
                           ),
                           Row(
                             children: [
                               Text(widget.sale_price,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 28,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.red)),
@@ -189,7 +189,7 @@ class _MainDetailsState extends State<MainDetails> {
                                     horizontal: 16.0),
                                 child: Text(
                                   widget.price,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFF8d94ac),
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
@@ -208,7 +208,7 @@ class _MainDetailsState extends State<MainDetails> {
                                 margin: const EdgeInsets.only(left: 8),
                                 child: Text(
                                   '-${widget.sale}%',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color(0xFFfb4e4e),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600),
@@ -217,22 +217,22 @@ class _MainDetailsState extends State<MainDetails> {
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.only(bottom: 16),
+                            margin: const EdgeInsets.only(bottom: 16),
                             height: 16,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 border: BorderDirectional(
                                     bottom: BorderSide(
                                         width: 1, color: Color(0xffededed)))),
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 'Số lượng',
                                 style: TextStyle(
                                     color: Color(0xFF8d94ac),
                                     fontWeight: FontWeight.w700),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 16,
                               ),
                               IconButton(
@@ -251,16 +251,17 @@ class _MainDetailsState extends State<MainDetails> {
                                   onPressed: () {
                                     minus();
                                   },
-                                  icon: FaIcon(FontAwesomeIcons.minus)),
+                                  icon: const FaIcon(FontAwesomeIcons.minus)),
                               Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Color(0xFF8d94ac), width: 1)),
-                                padding: EdgeInsets.symmetric(
+                                        color: const Color(0xFF8d94ac),
+                                        width: 1)),
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 4.5),
                                 child: Text(
                                   "$num",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w800),
                                 ),
@@ -281,10 +282,10 @@ class _MainDetailsState extends State<MainDetails> {
                                   onPressed: () {
                                     add();
                                   },
-                                  icon: FaIcon(FontAwesomeIcons.plus))
+                                  icon: const FaIcon(FontAwesomeIcons.plus))
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Row(
@@ -314,11 +315,12 @@ class _MainDetailsState extends State<MainDetails> {
                                       onHover: (a) {
                                         setState(() {
                                           color1 = color1 == Colors.white
-                                              ? Color(0xFF3278f6)
+                                              ? const Color(0xFF3278f6)
                                               : Colors.white;
-                                          color2 = color2 == Color(0xFF3278f6)
-                                              ? Colors.white
-                                              : Color(0xFF3278f6);
+                                          color2 =
+                                              color2 == const Color(0xFF3278f6)
+                                                  ? Colors.white
+                                                  : const Color(0xFF3278f6);
                                         });
                                       },
                                       child: Text(
@@ -327,7 +329,7 @@ class _MainDetailsState extends State<MainDetails> {
                                             fontWeight: FontWeight.w800,
                                             color: color1),
                                       ))),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Expanded(
@@ -353,11 +355,12 @@ class _MainDetailsState extends State<MainDetails> {
                                       addToCart(widget.productId, num);
                                       Future<void> _delayedFunction() async {
                                         await Future.delayed(
-                                            Duration(seconds: 1));
+                                            const Duration(seconds: 1));
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => Cart(),
+                                              builder: (context) =>
+                                                  const Cart(),
                                             ));
                                       }
 
@@ -366,11 +369,12 @@ class _MainDetailsState extends State<MainDetails> {
                                     onHover: (b) {
                                       setState(() {
                                         color3 = color3 == Colors.white
-                                            ? Color(0xFF3278f6)
+                                            ? const Color(0xFF3278f6)
                                             : Colors.white;
-                                        color4 = color4 == Color(0xFF3278f6)
-                                            ? Colors.white
-                                            : Color(0xFF3278f6);
+                                        color4 =
+                                            color4 == const Color(0xFF3278f6)
+                                                ? Colors.white
+                                                : const Color(0xFF3278f6);
                                       });
                                     },
                                     child: Text('Mua Ngay',
@@ -392,27 +396,27 @@ class _MainDetailsState extends State<MainDetails> {
                             titleColor: Colors.black,
                             title: '  Hỗ trợ trả góp 0%, trả trước 0 đ',
                             icon: FontAwesomeIcons.creditCard,
-                            color: Color(0xFF29324e)),
+                            color: const Color(0xFF29324e)),
                         CustomIcon(
                             titleColor: Colors.black,
                             title: '  Hoàn tiền 200% nếu có hàng giả',
                             icon: FontAwesomeIcons.moneyBill,
-                            color: Color(0xFF29324e)),
+                            color: const Color(0xFF29324e)),
                         CustomIcon(
                             titleColor: Colors.black,
                             title: '  Giao hàng nhanh trên toàn quốc',
                             icon: FontAwesomeIcons.truckFast,
-                            color: Color(0xFF29324e)),
+                            color: const Color(0xFF29324e)),
                         CustomIcon(
                             titleColor: Colors.black,
                             title: '  Hỗ trợ kĩ thuật online 24/7',
                             icon: FontAwesomeIcons.headphones,
-                            color: Color(0xFF29324e)),
+                            color: const Color(0xFF29324e)),
                         CustomIcon(
                             titleColor: Colors.black,
                             title: '  Vệ sinh miễn phí PC, Laptop trọn đời',
                             icon: FontAwesomeIcons.wrench,
-                            color: Color(0xFF29324e)),
+                            color: const Color(0xFF29324e)),
                       ],
                     )),
               ],
@@ -430,32 +434,33 @@ class _MainDetailsState extends State<MainDetails> {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24),
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         widget.product_name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w800),
                       ),
                       Container(
                         height: 16,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             border: BorderDirectional(
                                 bottom: BorderSide(
                                     width: 1, color: Color(0xffededed)))),
                       ),
                       Text(
                         separateItems(widget.short_des),
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(widget.sale_price,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w800,
                                   color: Colors.red)),
@@ -464,7 +469,7 @@ class _MainDetailsState extends State<MainDetails> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
                               widget.price,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF8d94ac),
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -481,7 +486,7 @@ class _MainDetailsState extends State<MainDetails> {
                             margin: const EdgeInsets.only(left: 8),
                             child: Text(
                               '-${widget.sale}%',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color(0xFFfb4e4e),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600),
@@ -490,22 +495,22 @@ class _MainDetailsState extends State<MainDetails> {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 16),
+                        margin: const EdgeInsets.only(bottom: 16),
                         height: 16,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             border: BorderDirectional(
                                 bottom: BorderSide(
                                     width: 1, color: Color(0xffededed)))),
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Số lượng',
                             style: TextStyle(
                                 color: Color(0xFF8d94ac),
                                 fontWeight: FontWeight.w700),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           IconButton(
@@ -524,16 +529,16 @@ class _MainDetailsState extends State<MainDetails> {
                               onPressed: () {
                                 minus();
                               },
-                              icon: FaIcon(FontAwesomeIcons.minus)),
+                              icon: const FaIcon(FontAwesomeIcons.minus)),
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: Color(0xFF8d94ac), width: 1)),
-                            padding: EdgeInsets.symmetric(
+                                    color: const Color(0xFF8d94ac), width: 1)),
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 4.5),
                             child: Text(
                               "$num",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w800),
                             ),
                           ),
@@ -553,10 +558,10 @@ class _MainDetailsState extends State<MainDetails> {
                               onPressed: () {
                                 add();
                               },
-                              icon: FaIcon(FontAwesomeIcons.plus))
+                              icon: const FaIcon(FontAwesomeIcons.plus))
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -585,11 +590,11 @@ class _MainDetailsState extends State<MainDetails> {
                                   onHover: (a) {
                                     setState(() {
                                       color1 = color1 == Colors.white
-                                          ? Color(0xFF3278f6)
+                                          ? const Color(0xFF3278f6)
                                           : Colors.white;
-                                      color2 = color2 == Color(0xFF3278f6)
+                                      color2 = color2 == const Color(0xFF3278f6)
                                           ? Colors.white
-                                          : Color(0xFF3278f6);
+                                          : const Color(0xFF3278f6);
                                     });
                                   },
                                   child: Text(
@@ -598,7 +603,7 @@ class _MainDetailsState extends State<MainDetails> {
                                         fontWeight: FontWeight.w800,
                                         color: color1),
                                   ))),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -622,11 +627,12 @@ class _MainDetailsState extends State<MainDetails> {
                                 onPressed: () {
                                   addToCart(widget.productId, num);
                                   Future<void> _delayedFunction() async {
-                                    await Future.delayed(Duration(seconds: 1));
+                                    await Future.delayed(
+                                        const Duration(seconds: 1));
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => Cart(),
+                                          builder: (context) => const Cart(),
                                         ));
                                   }
 
@@ -635,11 +641,11 @@ class _MainDetailsState extends State<MainDetails> {
                                 onHover: (b) {
                                   setState(() {
                                     color3 = color3 == Colors.white
-                                        ? Color(0xFF3278f6)
+                                        ? const Color(0xFF3278f6)
                                         : Colors.white;
-                                    color4 = color4 == Color(0xFF3278f6)
+                                    color4 = color4 == const Color(0xFF3278f6)
                                         ? Colors.white
-                                        : Color(0xFF3278f6);
+                                        : const Color(0xFF3278f6);
                                   });
                                 },
                                 child: Text('Mua Ngay',
@@ -661,27 +667,27 @@ class _MainDetailsState extends State<MainDetails> {
                           titleColor: Colors.black,
                           title: '  Hỗ trợ trả góp 0%, trả trước 0 đ',
                           icon: FontAwesomeIcons.creditCard,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Hoàn tiền 200% nếu có hàng giả',
                           icon: FontAwesomeIcons.moneyBill,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Giao hàng nhanh trên toàn quốc',
                           icon: FontAwesomeIcons.truckFast,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Hỗ trợ kĩ thuật online 24/7',
                           icon: FontAwesomeIcons.headphones,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                       CustomIcon(
                           titleColor: Colors.black,
                           title: '  Vệ sinh miễn phí PC, Laptop trọn đời',
                           icon: FontAwesomeIcons.wrench,
-                          color: Color(0xFF29324e)),
+                          color: const Color(0xFF29324e)),
                     ],
                   ),
                 ),

@@ -54,11 +54,11 @@ class _UserProfileState extends State<UserProfile> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Cập nhật thông tin thành công'),
+                title: const Text('Cập nhật thông tin thành công'),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               );
@@ -68,7 +68,7 @@ class _UserProfileState extends State<UserProfile> {
         });
       }
     } catch (e) {
-      print('Failed to update user information: $e');
+      print(' $e');
     }
   }
 
@@ -84,7 +84,7 @@ class _UserProfileState extends State<UserProfile> {
         });
       }
     } catch (e) {
-      print('Failed to fetch user information: $e');
+      print(' $e');
     }
   }
 
@@ -95,11 +95,11 @@ class _UserProfileState extends State<UserProfile> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Đăng xuất thành công'),
+            title: const Text('Đăng xuất thành công'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -107,8 +107,6 @@ class _UserProfileState extends State<UserProfile> {
       );
       widget.updateLoginStatus('');
       widget.toLogin('login');
-
-      ;
     } catch (e) {
       print('Sign out error: $e');
     }
@@ -121,10 +119,10 @@ class _UserProfileState extends State<UserProfile> {
       children: [
         Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: 24),
+            margin: const EdgeInsets.only(bottom: 24),
             child: Text('Thông Tin Tài Khoản',
                 style: GoogleFonts.chakraPetch(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
                       color: Colors.black,
@@ -133,7 +131,7 @@ class _UserProfileState extends State<UserProfile> {
         Text(
           'Họ và tên',
           style: GoogleFonts.chakraPetch(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   color: Color(0xFF8d94ac),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -158,13 +156,13 @@ class _UserProfileState extends State<UserProfile> {
             onSubmitted: (String value) {},
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Text(
           'Email',
           style: GoogleFonts.chakraPetch(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   color: Color(0xFF8d94ac),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -190,7 +188,7 @@ class _UserProfileState extends State<UserProfile> {
             onSubmitted: (String value) {},
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Row(
@@ -199,18 +197,18 @@ class _UserProfileState extends State<UserProfile> {
               child: TextButton(
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.symmetric(vertical: 20)),
+                          const EdgeInsets.symmetric(vertical: 20)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFF3278f6))),
                   onPressed: () {
                     updateUserInformation(_controllerName.text);
                   },
-                  child: Text('Cập nhật',
+                  child: const Text('Cập nhật',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -218,7 +216,7 @@ class _UserProfileState extends State<UserProfile> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Row(
@@ -227,7 +225,7 @@ class _UserProfileState extends State<UserProfile> {
               child: TextButton(
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.symmetric(vertical: 20)),
+                          const EdgeInsets.symmetric(vertical: 20)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
@@ -239,9 +237,9 @@ class _UserProfileState extends State<UserProfile> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CustomerOrder()));
+                            builder: (context) => const CustomerOrder()));
                   },
-                  child: Text('Đơn hàng',
+                  child: const Text('Đơn hàng',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -249,7 +247,7 @@ class _UserProfileState extends State<UserProfile> {
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Row(
@@ -258,7 +256,7 @@ class _UserProfileState extends State<UserProfile> {
               child: TextButton(
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.symmetric(vertical: 20)),
+                          const EdgeInsets.symmetric(vertical: 20)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
@@ -269,7 +267,7 @@ class _UserProfileState extends State<UserProfile> {
                   onPressed: () {
                     signOut();
                   },
-                  child: Text('Đăng Xuất',
+                  child: const Text('Đăng Xuất',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -277,7 +275,7 @@ class _UserProfileState extends State<UserProfile> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
       ],

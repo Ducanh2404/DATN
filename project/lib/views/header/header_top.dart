@@ -54,7 +54,7 @@ class _HeaderTopState extends State<HeaderTop> {
                 decoration: BoxDecoration(
                     border: Responsive.isMobile(context)
                         ? null
-                        : Border(
+                        : const Border(
                             right: BorderSide(
                               color: Color(0xFF2860c5),
                               width: 2.0,

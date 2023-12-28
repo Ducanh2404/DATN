@@ -66,7 +66,7 @@ class _CollectionProductsState extends State<CollectionProducts> {
         });
       });
     } catch (e) {
-      print('Failed to fetch documents: $e');
+      print(' $e');
     }
 
     return widget.listCollection;
@@ -75,7 +75,7 @@ class _CollectionProductsState extends State<CollectionProducts> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 32),
+      margin: const EdgeInsets.only(left: 32),
       color: Colors.white,
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -96,11 +96,11 @@ class _CollectionProductsState extends State<CollectionProducts> {
               ),
               Text(
                 '${widget.listCollection.length} sản phẩm',
-                style: TextStyle(color: Color(0xFF8d94ac)),
+                style: const TextStyle(color: Color(0xFF8d94ac)),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Column(

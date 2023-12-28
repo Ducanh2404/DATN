@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:project/all_imports.dart';
 import 'package:project/views/admin/main.dart';
 
@@ -16,8 +15,8 @@ class StorageDetails extends StatefulWidget {
 }
 
 class _StorageDetailsState extends State<StorageDetails> {
-  TextEditingController _controllerName = TextEditingController();
-  TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -37,11 +36,11 @@ class _StorageDetailsState extends State<StorageDetails> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Đăng xuất thành công'),
+            title: const Text('Đăng xuất thành công'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -50,7 +49,7 @@ class _StorageDetailsState extends State<StorageDetails> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MyApp(),
+            builder: (context) => const MyApp(),
           ));
     } catch (e) {
       print(' $e');
@@ -79,11 +78,11 @@ class _StorageDetailsState extends State<StorageDetails> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Cập nhật thông tin thành công'),
+              title: const Text('Cập nhật thông tin thành công'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -92,7 +91,7 @@ class _StorageDetailsState extends State<StorageDetails> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Admin(),
+              builder: (context) => const Admin(),
             ));
       }
     } catch (e) {
@@ -103,15 +102,15 @@ class _StorageDetailsState extends State<StorageDetails> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Thông tin tài khoản",
             style: TextStyle(
               fontSize: 18,
@@ -122,7 +121,7 @@ class _StorageDetailsState extends State<StorageDetails> {
             children: [
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Tên',
                   ),
                   controller: _controllerName,
@@ -135,7 +134,7 @@ class _StorageDetailsState extends State<StorageDetails> {
               Expanded(
                 child: TextField(
                   readOnly: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Email',
                   ),
                   controller: _controllerEmail,
@@ -143,7 +142,7 @@ class _StorageDetailsState extends State<StorageDetails> {
               ),
             ],
           ),
-          SizedBox(height: defaultPadding),
+          const SizedBox(height: defaultPadding),
           Row(
             children: [
               Expanded(
@@ -155,7 +154,7 @@ class _StorageDetailsState extends State<StorageDetails> {
                         onPressed: () {
                           updateUserInformation(_controllerName.text);
                         },
-                        child: Text('Cập Nhật')),
+                        child: const Text('Cập Nhật')),
                     ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
@@ -163,7 +162,7 @@ class _StorageDetailsState extends State<StorageDetails> {
                         onPressed: () {
                           signOut();
                         },
-                        child: Text(
+                        child: const Text(
                           'Đăng Xuất',
                           style: TextStyle(color: Colors.white),
                         )),
@@ -172,7 +171,7 @@ class _StorageDetailsState extends State<StorageDetails> {
               ),
             ],
           ),
-          SizedBox(height: defaultPadding),
+          const SizedBox(height: defaultPadding),
         ],
       ),
     );

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Website Technologies',
       theme: ThemeData(
-          searchViewTheme: SearchViewThemeData(
+          searchViewTheme: const SearchViewThemeData(
             backgroundColor: Colors.white,
             surfaceTintColor: Colors.white,
           ),
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             overlayColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
           fontFamily: GoogleFonts.chakraPetch().fontFamily,
-          colorSchemeSeed: Color.fromARGB(255, 7, 7, 7),
+          colorSchemeSeed: const Color.fromARGB(255, 7, 7, 7),
           useMaterial3: true,
           inputDecorationTheme: const InputDecorationTheme(
             enabledBorder: OutlineInputBorder(
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.zero,
             ),
           )),
-      home: Scaffold(drawer: DrawerWidget(), body: Home()),
+      home: const Scaffold(drawer: DrawerWidget(), body: Home()),
     );
   }
 }

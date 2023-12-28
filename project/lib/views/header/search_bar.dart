@@ -77,8 +77,8 @@ class _SearchBarAppState extends State<SearchBarApp> {
                           )));
             },
             child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
                   border: BorderDirectional(
                       bottom: BorderSide(width: 1, color: Colors.grey))),
               child: Row(
@@ -143,7 +143,7 @@ class _SearchBarAppState extends State<SearchBarApp> {
       padding: const EdgeInsets.symmetric(horizontal: 50.0),
       child: SearchAnchor.bar(
         barOverlayColor: TransparentButton(),
-        viewBackgroundColor: Color(0xFFFFFFFF),
+        viewBackgroundColor: const Color(0xFFFFFFFF),
         barHintText: 'Tìm kiếm sản phẩm',
         suggestionsBuilder:
             (BuildContext context, SearchController controller) {
@@ -152,7 +152,7 @@ class _SearchBarAppState extends State<SearchBarApp> {
               return getHistoryList(controller);
             }
             return <Widget>[
-              Center(
+              const Center(
                   child: Text(
                 'Không có lịch sử tìm kiếm.',
               ))

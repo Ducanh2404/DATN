@@ -31,14 +31,14 @@ class _SingleProductState extends State<SingleProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
             color: Color(0xFFf3f3f3),
           ),
           child: Column(children: [
-            Header(),
+            const Header(),
             MainDetails(
               productId: widget.productId,
               short_des: widget.short_des,
@@ -48,12 +48,12 @@ class _SingleProductState extends State<SingleProduct> {
               sale: widget.sale,
               image: widget.image,
             ),
-            ProductContent(),
+            const ProductContent(),
             RelatedProduct(
               category: widget.category,
             ),
             // ViewedProduct(),
-            Footer(),
+            const Footer(),
           ]),
         ),
       ),

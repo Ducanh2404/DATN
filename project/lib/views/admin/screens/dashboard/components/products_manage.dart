@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
-import 'package:project/views/admin/responsive.dart';
 import '../../../constants.dart';
 import 'package:project/all_imports.dart';
 
@@ -33,10 +32,10 @@ class _ProductsManageState extends State<ProductsManage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Xóa sản phẩm thành công'),
+            title: const Text('Xóa sản phẩm thành công'),
             actions: <Widget>[
               TextButton(
-                child: Text('Ok'),
+                child: const Text('Ok'),
                 onPressed: () {
                   manageProd = !manageProd;
                   editProd = !editProd;
@@ -77,10 +76,10 @@ class _ProductsManageState extends State<ProductsManage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Thêm sản phẩm thành công'),
+            title: const Text('Thêm sản phẩm thành công'),
             actions: <Widget>[
               TextButton(
-                child: Text('Ok'),
+                child: const Text('Ok'),
                 onPressed: () {
                   manageProd = !manageProd;
                   addProd = !addProd;
@@ -93,7 +92,6 @@ class _ProductsManageState extends State<ProductsManage> {
           );
         },
       );
-      print('thêm thành công');
     } catch (e) {
       print(e);
     }
@@ -116,7 +114,6 @@ class _ProductsManageState extends State<ProductsManage> {
       for (int i = 0; i < keyControllers.length; i++) {
         updatefilter[keyControllers[i].text] = valueControllers[i].text;
       }
-      print(updatefilter);
       await document.update({
         'name': nameController.text,
         'sale': double.tryParse(saleController.text),
@@ -130,10 +127,10 @@ class _ProductsManageState extends State<ProductsManage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Cập nhật sản phẩm thành công'),
+            title: const Text('Cập nhật sản phẩm thành công'),
             actions: <Widget>[
               TextButton(
-                child: Text('Ok'),
+                child: const Text('Ok'),
                 onPressed: () {
                   manageProd = !manageProd;
                   editProd = !editProd;
@@ -146,7 +143,6 @@ class _ProductsManageState extends State<ProductsManage> {
           );
         },
       );
-      print('Sửa thành công');
     } catch (e) {
       print(e);
     }
@@ -204,9 +200,9 @@ class _ProductsManageState extends State<ProductsManage> {
       Widget filter = Wrap(
         children: [
           Container(
-            constraints: BoxConstraints(minWidth: 0, maxWidth: 200),
+            constraints: const BoxConstraints(minWidth: 0, maxWidth: 200),
             child: DropdownMenu(
-              expandedInsets: EdgeInsets.all(0),
+              expandedInsets: const EdgeInsets.all(0),
               controller: keyControllers[i],
               requestFocusOnTap: true,
               onSelected: (String? filter) {},
@@ -218,16 +214,16 @@ class _ProductsManageState extends State<ProductsManage> {
               }).toList(),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           Container(
-            constraints: BoxConstraints(minWidth: 0, maxWidth: 200),
+            constraints: const BoxConstraints(minWidth: 0, maxWidth: 200),
             child: TextField(
               controller: valueControllers[i],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           IconButton(
@@ -239,7 +235,7 @@ class _ProductsManageState extends State<ProductsManage> {
                   index--;
                 });
               },
-              icon: FaIcon(
+              icon: const FaIcon(
                 FontAwesomeIcons.circleMinus,
                 size: 20,
                 color: Colors.red,
@@ -264,9 +260,9 @@ class _ProductsManageState extends State<ProductsManage> {
                       children: [
                         Container(
                           constraints:
-                              BoxConstraints(minWidth: 0, maxWidth: 200),
+                              const BoxConstraints(minWidth: 0, maxWidth: 200),
                           child: DropdownMenu(
-                            expandedInsets: EdgeInsets.all(0),
+                            expandedInsets: const EdgeInsets.all(0),
                             controller: keyControllers[i],
                             requestFocusOnTap: true,
                             onSelected: (String? filter) {},
@@ -278,17 +274,17 @@ class _ProductsManageState extends State<ProductsManage> {
                             }).toList(),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Container(
                           constraints:
-                              BoxConstraints(minWidth: 0, maxWidth: 200),
+                              const BoxConstraints(minWidth: 0, maxWidth: 200),
                           child: TextField(
                             controller: valueControllers[i],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         IconButton(
@@ -300,7 +296,7 @@ class _ProductsManageState extends State<ProductsManage> {
                                 i--;
                               });
                             },
-                            icon: FaIcon(
+                            icon: const FaIcon(
                               FontAwesomeIcons.circleMinus,
                               size: 20,
                               color: Colors.red,
@@ -310,11 +306,11 @@ class _ProductsManageState extends State<ProductsManage> {
               });
               i++;
             },
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.circlePlus,
               size: 20,
             ),
-            label: Text('Thêm đặc điểm')),
+            label: const Text('Thêm đặc điểm')),
       ],
     ));
     newprice = data['money'] - (data['money'] * (data['sale'] / 100));
@@ -426,7 +422,6 @@ class _ProductsManageState extends State<ProductsManage> {
       setState(() {
         finalList = listProd;
       });
-      ;
     } catch (err) {
       print(err);
     }
@@ -478,12 +473,13 @@ class _ProductsManageState extends State<ProductsManage> {
   TextEditingController addSaleController = TextEditingController();
   TextEditingController addPriceController = TextEditingController();
   TextEditingController addShortDesController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(defaultPadding),
+      decoration: const BoxDecoration(
         color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -504,11 +500,11 @@ class _ProductsManageState extends State<ProductsManage> {
                           addProd = !addProd;
                         });
                       },
-                      icon: FaIcon(
+                      icon: const FaIcon(
                         FontAwesomeIcons.arrowLeftLong,
                         size: 16,
                       ),
-                      label: Text('Danh sách sản phẩm'),
+                      label: const Text('Danh sách sản phẩm'),
                     ),
                   ],
                 ),
@@ -517,7 +513,7 @@ class _ProductsManageState extends State<ProductsManage> {
                     Expanded(
                       child: TextField(
                         controller: addNameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Tên sản phẩm',
                         ),
                       ),
@@ -533,12 +529,12 @@ class _ProductsManageState extends State<ProductsManage> {
                         ],
                         keyboardType: TextInputType.number,
                         controller: addPriceController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Giá gốc',
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 30,
                     ),
                     Expanded(
@@ -548,14 +544,14 @@ class _ProductsManageState extends State<ProductsManage> {
                         ],
                         keyboardType: TextInputType.number,
                         controller: addSaleController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Giảm giá',
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Wrap(
@@ -568,7 +564,7 @@ class _ProductsManageState extends State<ProductsManage> {
                             pickImage();
                           });
                         },
-                        child: Text('Chọn ảnh')),
+                        child: const Text('Chọn ảnh')),
                   ],
                 ),
                 Row(
@@ -593,7 +589,7 @@ class _ProductsManageState extends State<ProductsManage> {
                       child: TextField(
                         maxLines: null,
                         controller: addShortDesController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText:
                               'Mô tả ngắn (Mỗi dòng cách nhau bởi dấu *)',
                         ),
@@ -601,7 +597,7 @@ class _ProductsManageState extends State<ProductsManage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -625,10 +621,8 @@ class _ProductsManageState extends State<ProductsManage> {
                           setState(() {
                             if (selected) {
                               selectedOptions.add(option);
-                              print(selectedOptions);
                             } else {
                               selectedOptions.remove(option);
-                              print(selectedOptions);
                             }
                           });
                         },
@@ -643,14 +637,14 @@ class _ProductsManageState extends State<ProductsManage> {
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: filterWidget,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Center(
@@ -658,7 +652,7 @@ class _ProductsManageState extends State<ProductsManage> {
                       onPressed: () {
                         addProduct();
                       },
-                      child: Text('Thêm sản phẩm')),
+                      child: const Text('Thêm sản phẩm')),
                 )
               ],
             ),
@@ -680,11 +674,11 @@ class _ProductsManageState extends State<ProductsManage> {
                           editProd = !editProd;
                         });
                       },
-                      icon: FaIcon(
+                      icon: const FaIcon(
                         FontAwesomeIcons.arrowLeftLong,
                         size: 16,
                       ),
-                      label: Text('Danh sách sản phẩm'),
+                      label: const Text('Danh sách sản phẩm'),
                     ),
                   ],
                 ),
@@ -693,7 +687,7 @@ class _ProductsManageState extends State<ProductsManage> {
                     Expanded(
                       child: TextField(
                         controller: nameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Tên sản phẩm',
                         ),
                       ),
@@ -709,12 +703,12 @@ class _ProductsManageState extends State<ProductsManage> {
                         ],
                         keyboardType: TextInputType.number,
                         controller: priceController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Giá gốc',
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 30,
                     ),
                     Expanded(
@@ -724,7 +718,7 @@ class _ProductsManageState extends State<ProductsManage> {
                         ],
                         keyboardType: TextInputType.number,
                         controller: saleController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Giảm giá',
                         ),
                       ),
@@ -737,14 +731,14 @@ class _ProductsManageState extends State<ProductsManage> {
                       child: TextField(
                         readOnly: true,
                         controller: salePriceController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Giá sau khi giảm',
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Wrap(
@@ -757,7 +751,7 @@ class _ProductsManageState extends State<ProductsManage> {
                             pickImage();
                           });
                         },
-                        child: Text('Chọn ảnh')),
+                        child: const Text('Chọn ảnh')),
                   ],
                 ),
                 Row(
@@ -782,7 +776,7 @@ class _ProductsManageState extends State<ProductsManage> {
                       child: TextField(
                         maxLines: null,
                         controller: shortDesController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText:
                               'Mô tả ngắn (Mỗi dòng cách nhau bởi dấu *)',
                         ),
@@ -790,7 +784,7 @@ class _ProductsManageState extends State<ProductsManage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -811,10 +805,8 @@ class _ProductsManageState extends State<ProductsManage> {
                           setState(() {
                             if (selected) {
                               selectedOptions.add(option);
-                              print(selectedOptions);
                             } else {
                               selectedOptions.remove(option);
-                              print(selectedOptions);
                             }
                           });
                         },
@@ -829,14 +821,14 @@ class _ProductsManageState extends State<ProductsManage> {
                         style: Theme.of(context).textTheme.titleLarge),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: filterWidget,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Center(
@@ -848,8 +840,8 @@ class _ProductsManageState extends State<ProductsManage> {
                           onPressed: () {
                             updateProduct();
                           },
-                          child: Text('Cập nhật sản phẩm')),
-                      SizedBox(
+                          child: const Text('Cập nhật sản phẩm')),
+                      const SizedBox(
                         width: 30,
                       ),
                       ElevatedButton(
@@ -861,20 +853,21 @@ class _ProductsManageState extends State<ProductsManage> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('Bạn muốn xóa sản phẩm này?'),
+                                  title:
+                                      const Text('Bạn muốn xóa sản phẩm này?'),
                                   actions: <Widget>[
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         TextButton(
-                                          child: Text('Hủy'),
+                                          child: const Text('Hủy'),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
                                         ),
                                         TextButton(
-                                          child: Text('Xóa'),
+                                          child: const Text('Xóa'),
                                           onPressed: () {
                                             deleteProduct();
                                             Navigator.of(context).pop();
@@ -887,7 +880,7 @@ class _ProductsManageState extends State<ProductsManage> {
                               },
                             );
                           },
-                          child: Text('Xóa sản phẩm')),
+                          child: const Text('Xóa sản phẩm')),
                     ],
                   ),
                 )
@@ -936,12 +929,13 @@ class _ProductsManageState extends State<ProductsManage> {
                                                   children: [
                                                     Container(
                                                       constraints:
-                                                          BoxConstraints(
+                                                          const BoxConstraints(
                                                               minWidth: 0,
                                                               maxWidth: 200),
                                                       child: DropdownMenu(
                                                         expandedInsets:
-                                                            EdgeInsets.all(0),
+                                                            const EdgeInsets
+                                                                .all(0),
                                                         controller:
                                                             keyControllers[i],
                                                         requestFocusOnTap: true,
@@ -958,12 +952,12 @@ class _ProductsManageState extends State<ProductsManage> {
                                                         }).toList(),
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 20,
                                                     ),
                                                     Container(
                                                       constraints:
-                                                          BoxConstraints(
+                                                          const BoxConstraints(
                                                               minWidth: 0,
                                                               maxWidth: 200),
                                                       child: TextField(
@@ -971,7 +965,7 @@ class _ProductsManageState extends State<ProductsManage> {
                                                             valueControllers[i],
                                                       ),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 20,
                                                     ),
                                                     IconButton(
@@ -989,7 +983,7 @@ class _ProductsManageState extends State<ProductsManage> {
                                                             i--;
                                                           });
                                                         },
-                                                        icon: FaIcon(
+                                                        icon: const FaIcon(
                                                           FontAwesomeIcons
                                                               .circleMinus,
                                                           size: 20,
@@ -1000,11 +994,11 @@ class _ProductsManageState extends State<ProductsManage> {
                                             i++;
                                           });
                                         },
-                                        icon: FaIcon(
+                                        icon: const FaIcon(
                                           FontAwesomeIcons.circlePlus,
                                           size: 20,
                                         ),
-                                        label: Text('Thêm đặc điểm')),
+                                        label: const Text('Thêm đặc điểm')),
                                   ],
                                 )
                               ];
@@ -1012,7 +1006,7 @@ class _ProductsManageState extends State<ProductsManage> {
                               addProd = !addProd;
                             });
                           },
-                          child: Text('Thêm Sản Phẩm'))
+                          child: const Text('Thêm Sản Phẩm'))
                     ],
                   ),
                 ),
@@ -1027,7 +1021,7 @@ class _ProductsManageState extends State<ProductsManage> {
                           label: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 "Sản Phẩm",
                                 style: TextStyle(fontSize: 18),
                               ),
@@ -1039,7 +1033,7 @@ class _ProductsManageState extends State<ProductsManage> {
                                         : 500,
                                 child: TextField(
                                   controller: searchProduct,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical: 0, horizontal: 10),
                                       hintText: 'Tìm kiếm sản phẩm',

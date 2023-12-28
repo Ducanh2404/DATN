@@ -57,9 +57,9 @@ class _ShipInfoState extends State<ShipInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Thông tin giao hàng",
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18)),
-        SizedBox(
+        const Text("Thông tin giao hàng",
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18)),
+        const SizedBox(
           height: 24,
         ),
         Row(
@@ -72,12 +72,12 @@ class _ShipInfoState extends State<ShipInfo> {
                   errorText: widget.fieldNameError.isNotEmpty
                       ? widget.fieldNameError
                       : null,
-                  errorBorder: OutlineInputBorder(
+                  errorBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.red,
                           style: BorderStyle.solid)),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.grey,
@@ -86,7 +86,7 @@ class _ShipInfoState extends State<ShipInfo> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 24,
             ),
             Expanded(
@@ -94,7 +94,7 @@ class _ShipInfoState extends State<ShipInfo> {
               child: TextField(
                 controller: widget.phoneController,
                 decoration: InputDecoration(
-                  errorBorder: OutlineInputBorder(
+                  errorBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.red,
@@ -102,7 +102,7 @@ class _ShipInfoState extends State<ShipInfo> {
                   errorText: widget.fieldPhoneError.isNotEmpty
                       ? widget.fieldPhoneError
                       : null,
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.grey,
@@ -113,7 +113,7 @@ class _ShipInfoState extends State<ShipInfo> {
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Row(
@@ -124,7 +124,7 @@ class _ShipInfoState extends State<ShipInfo> {
                 errorText: widget.fieldCityError.isNotEmpty
                     ? widget.fieldCityError
                     : null,
-                inputDecorationTheme: InputDecorationTheme(
+                inputDecorationTheme: const InputDecorationTheme(
                     errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 1,
@@ -135,10 +135,10 @@ class _ShipInfoState extends State<ShipInfo> {
                             width: 1,
                             color: Colors.grey,
                             style: BorderStyle.solid))),
-                expandedInsets: EdgeInsets.all(0),
+                expandedInsets: const EdgeInsets.all(0),
                 controller: widget.cityController,
                 requestFocusOnTap: true,
-                label: Text('Chọn tỉnh/thành phố'),
+                label: const Text('Chọn tỉnh/thành phố'),
                 onSelected: (String? city) {
                   setState(() {
                     selectedCity = city;
@@ -154,15 +154,15 @@ class _ShipInfoState extends State<ShipInfo> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Row(
           children: [
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(bottom: 24),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(bottom: 24),
+                decoration: const BoxDecoration(
                     border: BorderDirectional(
                         bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: TextField(
@@ -172,12 +172,12 @@ class _ShipInfoState extends State<ShipInfo> {
                     errorText: widget.fieldAddressError.isNotEmpty
                         ? widget.fieldAddressError
                         : null,
-                    errorBorder: OutlineInputBorder(
+                    errorBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 1,
                             color: Colors.red,
                             style: BorderStyle.solid)),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 1,
                             color: Colors.grey,
@@ -190,15 +190,14 @@ class _ShipInfoState extends State<ShipInfo> {
           ],
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 24),
-          child: Text("Hình thức thanh toán",
-              style:
-                  const TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: const Text("Hình thức thanh toán",
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
         ),
         Column(
           children: [
             ListTile(
-              contentPadding: EdgeInsets.all(0),
+              contentPadding: const EdgeInsets.all(0),
               title: const Text('Thanh toán khi nhận hàng'),
               leading: Radio<PayMethod>(
                 value: PayMethod.money,
@@ -207,13 +206,12 @@ class _ShipInfoState extends State<ShipInfo> {
                   setState(() {
                     widget.method('cash');
                     method = value;
-                    print(method);
                   });
                 },
               ),
             ),
             ListTile(
-              contentPadding: EdgeInsets.all(0),
+              contentPadding: const EdgeInsets.all(0),
               title: const Text('Thanh toán chuyển khoản'),
               leading: Radio<PayMethod>(
                 value: PayMethod.banking,
@@ -222,7 +220,6 @@ class _ShipInfoState extends State<ShipInfo> {
                   setState(() {
                     widget.method('banking');
                     method = value;
-                    print(method);
                   });
                 },
               ),

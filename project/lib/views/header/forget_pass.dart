@@ -35,12 +35,12 @@ class _ForgetPassState extends State<ForgetPass> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Email đặt lại mật khẩu'),
+            title: const Text('Email đặt lại mật khẩu'),
             content: Text('Một email đặt lại mật khẩu đã được gửi đến $email.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -51,18 +51,18 @@ class _ForgetPassState extends State<ForgetPass> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Lỗi'),
-            content: Text('Email bạn nhập không tồn tại.'),
+            title: const Text('Lỗi'),
+            content: const Text('Email bạn nhập không tồn tại.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
         },
       );
-      print('Password reset error: $e');
+      print(' $e');
     }
   }
 
@@ -73,10 +73,10 @@ class _ForgetPassState extends State<ForgetPass> {
       children: [
         Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: 24),
+            margin: const EdgeInsets.only(bottom: 24),
             child: Text('Đặt lại mật khẩu',
                 style: GoogleFonts.chakraPetch(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
                       color: Colors.black,
@@ -85,7 +85,7 @@ class _ForgetPassState extends State<ForgetPass> {
         Text(
           'Email',
           style: GoogleFonts.chakraPetch(
-              textStyle: TextStyle(
+              textStyle: const TextStyle(
                   color: Color(0xFF8d94ac),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -112,7 +112,7 @@ class _ForgetPassState extends State<ForgetPass> {
             },
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Row(
@@ -121,18 +121,18 @@ class _ForgetPassState extends State<ForgetPass> {
               child: TextButton(
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.symmetric(vertical: 20)),
+                          const EdgeInsets.symmetric(vertical: 20)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFF3278f6))),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFF3278f6))),
                   onPressed: () {
                     _resetPassword();
                   },
-                  child: Text('Lấy lại mật khẩu',
+                  child: const Text('Lấy lại mật khẩu',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _ForgetPassState extends State<ForgetPass> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Row(
@@ -149,7 +149,7 @@ class _ForgetPassState extends State<ForgetPass> {
             Text(
               'Nhớ mật khẩu?',
               style: GoogleFonts.chakraPetch(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       color: Color(0xFF8d94ac),
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -164,7 +164,7 @@ class _ForgetPassState extends State<ForgetPass> {
                     widget.toLogin('login');
                   });
                 },
-                child: Text(
+                child: const Text(
                   'Đăng nhập',
                   style: TextStyle(
                       fontSize: 16,

@@ -26,12 +26,12 @@ class _HeaderBottomState extends State<HeaderBottom> {
                 onTap: () {
                   setState(() {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyApp()));
+                        MaterialPageRoute(builder: (context) => const MyApp()));
                   });
                 },
                 child:
                     const Image(image: AssetImage('img/logo.png'), width: 160)),
-            Expanded(child: SearchBarApp()),
+            const Expanded(child: SearchBarApp()),
             if (Responsive.isDesktop(context))
               Row(
                 children: [
@@ -43,7 +43,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                       color: Colors.white,
                       width: 1.0,
                     ))),
-                    child: Account(),
+                    child: const Account(),
                   ),
                   IconButton(
                     style: ButtonStyle(
@@ -63,27 +63,26 @@ class _HeaderBottomState extends State<HeaderBottom> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Cart(),
+                                builder: (context) => const Cart(),
                               ));
                         } else if (user == null) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title:
-                                    Text('Vui lòng đăng nhập để xem giỏ hàng'),
+                                title: const Text(
+                                    'Vui lòng đăng nhập để xem giỏ hàng'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               );
                             },
                           );
                         }
-                        ;
                       });
                     },
                     icon: const Icon(
@@ -183,7 +182,7 @@ class _AccountState extends State<Account> {
   }
 
   Widget buildOverlay() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -209,7 +208,7 @@ class _AccountState extends State<Account> {
                       hideOverlay();
                     });
                   },
-                  icon: FaIcon(
+                  icon: const FaIcon(
                     FontAwesomeIcons.xmark,
                     size: 20,
                   )),
@@ -260,8 +259,8 @@ class _AccountState extends State<Account> {
             size: 20.0,
           ),
           label: Text(userName.isNotEmpty ? userName : "Tài Khoản",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold))),
     );
   }
 }

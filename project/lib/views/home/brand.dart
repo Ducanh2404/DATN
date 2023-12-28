@@ -34,7 +34,7 @@ class _BrandState extends State<Brand> {
               return Align(
                   alignment: Alignment.topLeft,
                   child: Image(
-                    image: AssetImage('img/brand/brand${i}.png'),
+                    image: AssetImage('img/brand/brand$i.png'),
                     width: 80,
                     height: 80,
                     fit: BoxFit.contain,

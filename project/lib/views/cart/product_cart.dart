@@ -117,9 +117,9 @@ class _CartProductState extends State<CartProduct> {
     return Visibility(
       visible: visible,
       child: Container(
-        margin: EdgeInsets.only(bottom: 16),
-        padding: EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.only(bottom: 16),
+        decoration: const BoxDecoration(
             border: BorderDirectional(
                 bottom: BorderSide(width: 1, color: Colors.grey))),
         child: Row(
@@ -130,7 +130,7 @@ class _CartProductState extends State<CartProduct> {
                 child: Image(
                   image: AssetImage('img/product/${widget.image}'),
                 )),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
             Expanded(
@@ -198,16 +198,16 @@ class _CartProductState extends State<CartProduct> {
                                   onPressed: () {
                                     minus();
                                   },
-                                  icon: FaIcon(FontAwesomeIcons.minus)),
+                                  icon: const FaIcon(FontAwesomeIcons.minus)),
                               Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: Color(0xFF8d94ac), width: 1)),
-                                padding: EdgeInsets.symmetric(
+                                        color: const Color(0xFF8d94ac), width: 1)),
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 4.5),
                                 child: Text(
                                   widget.quantity.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w800),
                                 ),
@@ -228,7 +228,7 @@ class _CartProductState extends State<CartProduct> {
                                   onPressed: () {
                                     add();
                                   },
-                                  icon: FaIcon(FontAwesomeIcons.plus))
+                                  icon: const FaIcon(FontAwesomeIcons.plus))
                             ],
                           ),
                           TextButton(
@@ -240,7 +240,7 @@ class _CartProductState extends State<CartProduct> {
                                 });
                                 deleteProduct(emailUser, widget.productId);
                               },
-                              child: Text(
+                              child: const Text(
                                 'Xóa',
                                 style: TextStyle(
                                     color: Colors.grey,
