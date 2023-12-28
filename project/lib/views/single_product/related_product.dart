@@ -68,7 +68,7 @@ class _RelatedProductState extends State<RelatedProduct> {
   Widget build(BuildContext context) {
     return CustomContainer(
       title: 'sản phẩm tương tự',
-      morebtn: true,
+      morebtn: false,
       content: Row(
         children: [
           Expanded(
@@ -79,7 +79,11 @@ class _RelatedProductState extends State<RelatedProduct> {
                   options: CarouselOptions(
                     height: 405,
                     padEnds: false,
-                    viewportFraction: 1.0 / 6.0,
+                    viewportFraction: Responsive.isDesktop(context)
+                        ? 1.0 / 6.0
+                        : Responsive.isTablet(context)
+                            ? 1.0 / 3.0
+                            : 1,
                     initialPage: 0,
                     enableInfiniteScroll: true,
                   ),

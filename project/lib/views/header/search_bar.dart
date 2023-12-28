@@ -84,31 +84,39 @@ class _SearchBarAppState extends State<SearchBarApp> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: TextStyle(
-                          fontFamily: GoogleFonts.chakraPetch().fontFamily,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        formatAsCurrency(newprice).toString(),
-                        style: TextStyle(
+                  Expanded(
+                    flex: 9,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          name,
+                          style: TextStyle(
                             fontFamily: GoogleFonts.chakraPetch().fontFamily,
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
-                            color: Colors.red),
-                      )
-                    ],
+                          ),
+                        ),
+                        Text(
+                          formatAsCurrency(newprice).toString(),
+                          style: TextStyle(
+                              fontFamily: GoogleFonts.chakraPetch().fontFamily,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: Colors.red),
+                        )
+                      ],
+                    ),
                   ),
-                  Image(
-                    image: AssetImage('img/product/$img'),
-                    width: 60,
-                    fit: BoxFit.cover,
+                  Expanded(
+                    flex: 1,
+                    child: Image(
+                      image: AssetImage('img/product/$img'),
+                      width: 60,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ],
               ),

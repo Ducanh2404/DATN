@@ -108,7 +108,11 @@ class _CollectionProductsState extends State<CollectionProducts> {
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   double containWidth = constraints.maxWidth;
-                  double childWidth = containWidth / 5;
+                  double childWidth = Responsive.isDesktop(context)
+                      ? containWidth / 5
+                      : Responsive.isTablet(context)
+                          ? containWidth / 2
+                          : containWidth;
 
                   return Wrap(
                     children: [

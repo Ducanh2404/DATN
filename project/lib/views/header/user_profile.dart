@@ -234,6 +234,37 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                       backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.orange)),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CustomerOrder()));
+                  },
+                  child: Text('Đơn hàng',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16))),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 12,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: TextButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.symmetric(vertical: 20)),
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
+                      backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.red)),
                   onPressed: () {
                     signOut();

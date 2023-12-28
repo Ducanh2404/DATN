@@ -42,50 +42,54 @@ class _CartMainState extends State<CartMain> {
     }
   }
 
-  Future<void> addOrder() {
-    CollectionReference orders = FirebaseFirestore.instance.collection('order');
-    User? user = FirebaseAuth.instance.currentUser;
-    String? email;
+  Future<void> addOrder() async {
+    try {
+      CollectionReference orders =
+          FirebaseFirestore.instance.collection('order');
+      User? user = FirebaseAuth.instance.currentUser;
+      String? email;
 
-    if (user != null) {
-      email = user.email;
+      if (user != null) {
+        email = user.email;
+      }
+      return orders.add({
+        'receiver': nameController.text,
+        'email': email,
+        'date': DateFormat('dd-MM-yyyy,HH:mm').format(DateTime.now()),
+        'total': sumPrice,
+        'method': selectedMethod,
+        'city': cityController.text,
+        'phone': phoneController.text,
+        'address': addressController.text,
+        'status': '1',
+        'items': itemscart,
+      }).then((value) => {
+            clearCart(email!),
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Đơn hàng đã đặt thành công'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => {
+                        Navigator.of(context).pop(),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyApp(),
+                            ))
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            ),
+          });
+    } catch (e) {
+      print(e);
     }
-    sumPrice = 0;
-    return orders.add({
-      'receiver': nameController.text,
-      'email': email,
-      'date': DateFormat('dd-MM-yyyy,HH:mm').format(DateTime.now()),
-      'total': sumPrice,
-      'method': selectedMethod,
-      'city': cityController.text,
-      'phone': phoneController.text,
-      'address': addressController.text,
-      'status': '1',
-      'items': itemscart,
-    }).then((value) => {
-          clearCart(email!),
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Đơn hàng đã đặt thành công'),
-                actions: [
-                  TextButton(
-                    onPressed: () => {
-                      Navigator.of(context).pop(),
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyApp(),
-                          ))
-                    },
-                    child: Text('OK'),
-                  ),
-                ],
-              );
-            },
-          ),
-        });
   }
 
   void checkingInfo() {

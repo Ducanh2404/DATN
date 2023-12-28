@@ -9,6 +9,7 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   List<Widget> listDrawer = [];
+
   @override
   initState() {
     fetchCollectionData();
@@ -19,6 +20,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     try {
       await FirebaseFirestore.instance
           .collection('categories')
+          .orderBy('name', descending: true)
           .get()
           .then((QuerySnapshot query1) => query1.docs.forEach((cate) async {
                 List<Widget> listSubCate = [];
@@ -39,7 +41,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             child: TextButton(
                                 style: ButtonStyle(
                                     overlayColor: TransparentButton()),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pop(context);
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Collection(
+                                              category: subCate['name'])));
+                                },
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -66,7 +76,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                 child: TextButton(
                                     style: ButtonStyle(
                                         overlayColor: TransparentButton()),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pop(context);
+
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Collection(
+                                                  category: mainCate['name'])));
+                                    },
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
@@ -94,8 +112,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: listSubCate,
+                      Visibility(
+                        child: Column(
+                          children: listSubCate,
+                        ),
                       )
                     ],
                   ));

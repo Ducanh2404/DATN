@@ -1,20 +1,17 @@
 import 'package:intl/intl.dart';
-import 'package:project/views/admin/responsive.dart';
-
-import '../../../constants.dart';
 import 'package:project/all_imports.dart';
 
-class OrderManage extends StatefulWidget {
-  const OrderManage({Key? key}) : super(key: key);
+class CustomerOrderList extends StatefulWidget {
+  const CustomerOrderList({Key? key}) : super(key: key);
 
   @override
-  _OrderManageState createState() => _OrderManageState();
+  _CustomerOrderListState createState() => _CustomerOrderListState();
 }
 
-class _OrderManageState extends State<OrderManage> {
+class _CustomerOrderListState extends State<CustomerOrderList> {
   @override
   void initState() {
-    getAccounts();
+    getOrders();
     super.initState();
   }
 
@@ -33,7 +30,6 @@ class _OrderManageState extends State<OrderManage> {
   Future<void> selectedOrder(String id) async {
     try {
       List<Widget> listItems = [];
-
       detailsOrder = [];
       showOrder = !showOrder;
       infoOrder = !infoOrder;
@@ -41,7 +37,7 @@ class _OrderManageState extends State<OrderManage> {
           await FirebaseFirestore.instance.collection('order').doc(id).get();
       Map<String, dynamic> data =
           documentSnapshot.data() as Map<String, dynamic>;
-      String status = data['status'] == 1 ? 'Đang xử lí' : 'Đang giao';
+      String status = data['status'] == '1' ? 'Chưa giao' : 'Đang giao';
       String city = data['city'];
       String address = data['address'];
       String receiver = data['receiver'];
@@ -136,14 +132,14 @@ class _OrderManageState extends State<OrderManage> {
             ),
             label: Text('Danh sách đơn hàng'),
           ),
-          Text(
-            "Chi tiết đơn hàng",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
           SizedBox(
             height: 10,
           ),
-          Text(status, style: TextStyle(color: Colors.orange)),
+          Text(status,
+              style: TextStyle(
+                  color: Colors.orange,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800)),
           Container(
             margin: EdgeInsets.symmetric(vertical: 20),
             decoration: BoxDecoration(
@@ -178,21 +174,27 @@ class _OrderManageState extends State<OrderManage> {
           ),
           Text(
             'Địa chỉ giao hàng',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(city),
-                Text(address),
+                Text(
+                  city,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                ),
+                Text(
+                  address,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                ),
               ],
             ),
           ),
           Text(
             'Thông tin liên hệ',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -201,9 +203,21 @@ class _OrderManageState extends State<OrderManage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Tên khách hàng'),
-                    Text('Email'),
-                    Text('SĐT'),
+                    Text(
+                      'Tên khách hàng',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      'Email',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      'SĐT',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -212,9 +226,21 @@ class _OrderManageState extends State<OrderManage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(': $receiver'),
-                    Text(': $email'),
-                    Text(': $phone'),
+                    Text(
+                      ': $receiver',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      ': $email',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      ': $phone',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
                   ],
                 ),
               ],
@@ -227,54 +253,54 @@ class _OrderManageState extends State<OrderManage> {
     }
   }
 
-  Future<void> getAccounts() async {
-    i = 1;
-    await FirebaseFirestore.instance
-        .collection('order')
-        .orderBy('date', descending: true)
-        .get()
-        .then((QuerySnapshot users) => users.docs.forEach((doc) {
-              bool select = false;
-              Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
-              String orderId = doc.id;
-              String date = data['date'];
-              String name = data['receiver'];
-              String method = data['method'];
-              String status =
-                  data['status'] == '1' ? "Chưa vận chuyển" : 'Đang vận chuyển';
-              String total = formatAsCurrency(data['total']);
-              setState(() {
-                listOrder.add(DataRow(
-                    selected: select,
-                    onSelectChanged: (value) {
-                      setState(() {
-                        select = !select;
-                        selectedOrder(orderId);
-                      });
-                    },
-                    // mouseCursor: MaterialStateMouseCursor.clickable,
-                    cells: [
-                      DataCell(Text(i.toString())),
-                      DataCell(Text(date)),
-                      DataCell(Text(name)),
-                      DataCell(Text(method)),
-                      DataCell(Text(status)),
-                      DataCell(Text(total)),
-                    ]));
-                i++;
-              });
-            }));
+  Future<void> getOrders() async {
+    try {
+      i = 1;
+      User? user = FirebaseAuth.instance.currentUser;
+      await FirebaseFirestore.instance
+          .collection('order')
+          .where('email', isEqualTo: user!.email)
+          .orderBy('date', descending: true)
+          .get()
+          .then((QuerySnapshot users) => users.docs.forEach((doc) {
+                bool select = false;
+                Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
+                String orderId = doc.id;
+                String date = data['date'];
+                String method = data['method'];
+                String status =
+                    data['status'] == '1' ? "Đang xử lí" : 'Đang vận chuyển';
+                String total = formatAsCurrency(data['total']);
+                setState(() {
+                  listOrder.add(DataRow(
+                      selected: select,
+                      onSelectChanged: (value) {
+                        setState(() {
+                          select = !select;
+                          selectedOrder(orderId);
+                        });
+                      },
+                      cells: [
+                        DataCell(Text(i.toString())),
+                        DataCell(Text(date)),
+                        DataCell(Text(method)),
+                        DataCell(Text(status)),
+                        DataCell(Text(total)),
+                      ]));
+                  i++;
+                });
+              }));
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
+    return CustomContainer(
+      title: 'Đơn hàng đã đặt',
+      morebtn: false,
+      content: Column(
         children: [
           Visibility(
             visible: infoOrder,
@@ -287,114 +313,53 @@ class _OrderManageState extends State<OrderManage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Đơn hàng",
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                if (Responsive.isDesktop(context))
-                  SizedBox(
-                    width: double.infinity,
-                    child: DataTable(
-                      showCheckboxColumn: false,
-                      dataRowMaxHeight: double.infinity,
-                      columnSpacing: defaultPadding,
-                      columns: [
-                        DataColumn(
-                          label: Text(
-                            "STT",
-                            style: TextStyle(fontSize: 18),
-                          ),
+                SizedBox(
+                  width: double.infinity,
+                  child: DataTable(
+                    showCheckboxColumn: false,
+                    dataRowMaxHeight: double.infinity,
+                    columnSpacing: 10,
+                    columns: [
+                      DataColumn(
+                        label: Text(
+                          "STT",
+                          style: TextStyle(fontSize: 18),
                         ),
-                        DataColumn(
-                          label: Text(
-                            "Ngày đặt",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            "Khách hàng",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            "Hình thức TT",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            "Trạng thái",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            "Tổng tiền",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ],
-                      rows: listOrder,
-                    ),
-                  ),
-                if (!Responsive.isDesktop(context))
-                  SizedBox(
-                    width: double.infinity,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        showCheckboxColumn: false,
-                        dataRowMaxHeight: double.infinity,
-                        columnSpacing: defaultPadding,
-                        columns: [
-                          DataColumn(
-                            label: Text(
-                              "STT",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              "Ngày đặt",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              "Khách hàng",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              "Hình thức TT",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              "Trạng thái",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              "Tổng tiền",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ],
-                        rows: listOrder,
                       ),
-                    ),
+                      DataColumn(
+                        label: Text(
+                          "Ngày đặt",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          "Hình thức TT",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          "Trạng thái",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          "Tổng tiền",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ],
+                    rows: listOrder,
                   ),
+                ),
               ],
             ),
           ),
         ],
       ),
+      category: '',
     );
   }
 }

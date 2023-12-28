@@ -54,7 +54,9 @@ export 'package:project/views/single_product/single_product.dart';
 export 'package:project/views/single_product/main_details.dart';
 export 'package:project/views/single_product/product_content.dart';
 export 'package:project/views/single_product/related_product.dart';
-export 'package:project/views/single_product/viewed_product.dart';
+export 'package:project/views/customer_order/customer_order.dart';
+export 'package:project/views/customer_order/customer_list.dart';
+
 export 'package:project/views/admin/responsive.dart';
 
 //firebase

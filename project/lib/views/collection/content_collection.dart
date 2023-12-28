@@ -26,26 +26,41 @@ class _ContentCollectionState extends State<ContentCollection> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 1600,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: FilterSideBar(
-              category: widget.category,
-              listFiltedCollection: getListFiltedCollection,
+      child: Responsive.isDesktop(context)
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: FilterSideBar(
+                    category: widget.category,
+                    listFiltedCollection: getListFiltedCollection,
+                  ),
+                ),
+                Expanded(
+                  flex: 8,
+                  child: CollectionProducts(
+                    title: widget.category,
+                    category: widget.category,
+                    listCollection: listFiltedCollection,
+                  ),
+                )
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FilterSideBar(
+                  category: widget.category,
+                  listFiltedCollection: getListFiltedCollection,
+                ),
+                CollectionProducts(
+                  title: widget.category,
+                  category: widget.category,
+                  listCollection: listFiltedCollection,
+                )
+              ],
             ),
-          ),
-          Expanded(
-            flex: 8,
-            child: CollectionProducts(
-              title: widget.category,
-              category: widget.category,
-              listCollection: listFiltedCollection,
-            ),
-          )
-        ],
-      ),
     );
   }
 }

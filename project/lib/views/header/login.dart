@@ -39,20 +39,32 @@ class _LoginState extends State<Login> {
         });
         return;
       }
+
       await FirebaseFirestore.instance
-          .collection('order')
+          .collection('users')
           .where('email', isEqualTo: user.email)
           .get()
           .then((QuerySnapshot query) => {
                 query.docs.forEach((doc) {
                   Map<String, dynamic> data =
                       doc.data() as Map<String, dynamic>;
-                  if (data['status'] == '1') {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Admin(),
-                        ));
+                  print('ok');
+
+                  if (data['status'] == '0') {
+                    print('ok');
+                    setState(() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Admin(),
+                          ));
+                    });
+                  } else {
+                    print('notok');
+                    setState(() {
+                      widget.toProfile('profile');
+                      widget.updateLoginStatus(userName!);
+                    });
                   }
                 })
               });
@@ -70,10 +82,6 @@ class _LoginState extends State<Login> {
           );
         },
       );
-      setState(() {
-        widget.toProfile('profile');
-        widget.updateLoginStatus(userName!);
-      });
     } catch (e) {
       print(e);
       setState(() {

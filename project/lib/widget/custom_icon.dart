@@ -23,7 +23,9 @@ class CustomIcon extends StatelessWidget {
           FaIcon(size: 18, color: color, icon),
           Text(
             title,
-            style: TextStyle(fontSize: 16, color: titleColor),
+            style: TextStyle(
+                fontSize: Responsive.isDesktop(context) ? 16 : 14,
+                color: titleColor),
           ),
         ],
       ),

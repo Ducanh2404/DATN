@@ -1,8 +1,15 @@
 import 'package:project/all_imports.dart';
 
-class Cart extends StatelessWidget {
-  const Cart({Key? key}) : super(key: key);
+class CustomerOrder extends StatefulWidget {
+  const CustomerOrder({
+    Key? key,
+  }) : super(key: key);
 
+  @override
+  State<CustomerOrder> createState() => _CustomerOrderState();
+}
+
+class _CustomerOrderState extends State<CustomerOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,9 +19,9 @@ class Cart extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Color(0xFFf3f3f3),
           ),
-          child: const Column(children: [
+          child: Column(children: [
             Header(),
-            CartMain(),
+            CustomerOrderList(),
             Footer(),
           ]),
         ),
