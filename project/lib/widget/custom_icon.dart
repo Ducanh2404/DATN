@@ -6,7 +6,7 @@ class CustomIcon extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  CustomIcon({
+  const CustomIcon({
     super.key,
     required this.title,
     required this.icon,

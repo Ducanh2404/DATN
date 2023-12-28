@@ -266,6 +266,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
     try {
       FirebaseFirestore.instance.collection('categories').add({
         'name': categoryController.text,
+        // ignore: avoid_print, invalid_return_type_for_catch_error
       }).catchError((error) => print(" $error"));
       categoryController.clear();
     } catch (err) {
@@ -282,6 +283,7 @@ class _CategoriesManageState extends State<CategoriesManage> {
           .collection('subCate')
           .add({
         'name': subCateController.text,
+        // ignore: invalid_return_type_for_catch_error
       }).catchError((error) => print(" $error"));
       subCateController.clear();
     } catch (err) {
