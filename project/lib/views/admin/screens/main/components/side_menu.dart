@@ -24,7 +24,7 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Sản phẩm",
             press: () {
-              changeWidget(const ProductsManage());
+              changeWidget(ProductsManage());
               Navigator.pop(context);
             },
             icon: const FaIcon(
@@ -39,7 +39,7 @@ class SideMenu extends StatelessWidget {
               size: 18,
             ),
             press: () {
-              changeWidget(const OrderManage());
+              changeWidget(OrderManage());
               Navigator.pop(context);
             },
           ),
@@ -50,7 +50,7 @@ class SideMenu extends StatelessWidget {
               size: 18,
             ),
             press: () {
-              changeWidget(const CategoriesManage());
+              changeWidget(CategoriesManage());
               Navigator.pop(context);
             },
           ),
@@ -61,7 +61,7 @@ class SideMenu extends StatelessWidget {
               size: 18,
             ),
             press: () {
-              changeWidget(const AccountManage());
+              changeWidget(AccountManage());
               Navigator.pop(context);
             },
           ),
