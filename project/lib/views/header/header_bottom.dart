@@ -32,7 +32,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                 child:
                     const Image(image: AssetImage('img/logo.png'), width: 160)),
             const Expanded(child: SearchBarApp()),
-            if (Responsive.isDesktop(context))
+            if (!Responsive.isMobile(context))
               Row(
                 children: [
                   Container(
@@ -233,7 +233,7 @@ class _AccountState extends State<Account> {
           child: CompositedTransformFollower(
             link: layerLink,
             showWhenUnlinked: false,
-            offset: Offset(-size.width, size.height * 2),
+            offset: Offset(-size.width - 100, size.height * 2),
             child: buildOverlay(),
           )),
     );
