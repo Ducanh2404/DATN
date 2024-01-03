@@ -24,7 +24,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_quill: ^9.0.0-dev-9
   flutter_widget_from_html: ^0.14.7
   google_fonts: ^6.1.0
   font_awesome_flutter: ^10.6.0
@@ -32,8 +31,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
   card_swiper: ^3.0.1
-  flutter_quill_extensions: ^9.0.1
-  quill_html_converter: ^9.0.0-dev-9
   firebase_auth: ^4.15.0
   firebase_core: ^2.24.0
   cloud_firestore: ^4.13.3
@@ -43,7 +40,9 @@ dependencies:
   get: ^4.6.6
   intl: ^0.18.1
   image_picker_web: ^3.1.1
-  flutter_html_iframe: ^3.0.0-beta.2
+  firebase_storage: ^11.5.6
+  path: ^1.8.3
+  mime_type: ^1.0.0
 
 dev_dependencies:
   flutter_test:

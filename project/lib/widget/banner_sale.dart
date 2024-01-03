@@ -43,7 +43,7 @@ class _BannerSaleState extends State<BannerSale> {
           },
           onPressed: () {},
           child: Image(
-            image: AssetImage(widget.image_url),
+            image: NetworkImage(widget.image_url),
             fit: BoxFit.contain,
           )),
     ));

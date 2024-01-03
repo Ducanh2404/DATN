@@ -148,7 +148,7 @@ class _MainDetailsState extends State<MainDetails> {
                     child: Column(
                       children: [
                         Image(
-                          image: AssetImage('img/product/${widget.image}'),
+                          image: NetworkImage(widget.image),
                         ),
                       ],
                     )),
@@ -428,7 +428,7 @@ class _MainDetailsState extends State<MainDetails> {
                   children: [
                     Expanded(
                       child: Image(
-                        image: AssetImage('img/product/${widget.image}'),
+                        image: NetworkImage(widget.image),
                       ),
                     ),
                   ],

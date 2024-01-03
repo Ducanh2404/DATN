@@ -25,14 +25,14 @@ class _OrderManageState extends State<OrderManage> {
 
   List<Widget> detailsOrder = [];
   List<DataRow> listOrder = [];
+  List<Widget> listItems = [];
 
   int i = 1;
   bool showOrder = true;
   bool infoOrder = false;
   Future<void> selectedOrder(String id) async {
     try {
-      List<Widget> listItems = [];
-
+      listItems = [];
       detailsOrder = [];
       showOrder = !showOrder;
       infoOrder = !infoOrder;
@@ -67,7 +67,7 @@ class _OrderManageState extends State<OrderManage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Image(
-                    image: AssetImage('img/product/$image'),
+                    image: NetworkImage(image),
                     width: 50,
                   ),
                 ),

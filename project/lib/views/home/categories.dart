@@ -10,13 +10,12 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   CarouselController buttonCarouselController = CarouselController();
   final List<String> imageUrls = [
-    'img/categories/cate1.png',
-    'img/categories/cate2.jpg',
-    'img/categories/cate3.png',
-    'img/categories/cate4.png',
-    'img/categories/cate5.png',
-    'img/categories/cate6.png',
-    // Add more image URLs as needed
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/categories%2Fcate1.png?alt=media&token=6303b68b-4e1c-4813-8ef8-7c7c246fbe63',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/categories%2Fcate2.jpg?alt=media&token=217eaad6-e458-483a-aa45-5f78b77c6cd6',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/categories%2Fcate3.png?alt=media&token=172bf928-866d-4a28-8e3b-efb9022961cc',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/categories%2Fcate4.png?alt=media&token=9bd2b0bc-de1e-4b92-a7a7-d23c9657d6ef',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/categories%2Fcate5.png?alt=media&token=bbe06f9d-e333-446e-a67d-c69e624f054e',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/categories%2Fcate6.png?alt=media&token=03ea0acd-3377-4d24-a3b8-7e9396494d42',
   ];
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class _CategoriesState extends State<Categories> {
                               const EdgeInsets.all(0)),
                         ),
                         child: Image(
-                          image: AssetImage(imageUrl),
+                          image: NetworkImage(imageUrl),
                           width: 588,
                           height: 320,
                         ),

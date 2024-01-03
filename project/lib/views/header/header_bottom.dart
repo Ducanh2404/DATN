@@ -29,8 +29,10 @@ class _HeaderBottomState extends State<HeaderBottom> {
                         MaterialPageRoute(builder: (context) => const MyApp()));
                   });
                 },
-                child:
-                    const Image(image: AssetImage('img/logo.png'), width: 160)),
+                child: const Image(
+                    image: NetworkImage(
+                        'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/logo.png?alt=media&token=63c42d9d-b32a-422a-bffc-ca56d8f6a2ba'),
+                    width: 160)),
             const Expanded(child: SearchBarApp()),
             if (!Responsive.isMobile(context))
               Row(

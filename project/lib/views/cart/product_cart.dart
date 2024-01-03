@@ -128,7 +128,7 @@ class _CartProductState extends State<CartProduct> {
             Expanded(
                 flex: 1,
                 child: Image(
-                  image: AssetImage('img/product/${widget.image}'),
+                  image: NetworkImage(widget.image),
                 )),
             const SizedBox(
               width: 16,
@@ -202,7 +202,8 @@ class _CartProductState extends State<CartProduct> {
                               Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: const Color(0xFF8d94ac), width: 1)),
+                                        color: const Color(0xFF8d94ac),
+                                        width: 1)),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 4.5),
                                 child: Text(

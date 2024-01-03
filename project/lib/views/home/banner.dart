@@ -10,9 +10,9 @@ class CarouselBanner extends StatefulWidget {
 class _CarouselBannerState extends State<CarouselBanner> {
   CarouselController buttonCarouselController = CarouselController();
   final List<String> image = [
-    'img/banner/banner1.jpg',
-    'img/banner/banner2.jpg',
-    'img/banner/banner3.jpg',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/banner%2Fbanner1.jpg?alt=media&token=2e427644-cb4b-432a-aa16-93cc3608face',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/banner%2Fbanner2.jpg?alt=media&token=891f72e5-1b9b-4156-80ab-72998e557f7d',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/banner%2Fbanner3.jpg?alt=media&token=b323bf0a-22fc-4981-98f5-2931c5d6d23a',
   ];
   int _current = 0;
   @override
@@ -46,7 +46,7 @@ class _CarouselBannerState extends State<CarouselBanner> {
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
                       child: Image(
-                        image: AssetImage(url),
+                        image: NetworkImage(url),
                         fit: BoxFit.cover,
                       ));
                 },

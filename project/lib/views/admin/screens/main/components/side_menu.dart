@@ -19,7 +19,8 @@ class SideMenu extends StatelessWidget {
           const DrawerHeader(
               padding: EdgeInsets.all(20),
               child: Image(
-                image: AssetImage('img/logo.png'),
+                image: NetworkImage(
+                    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/logo.png?alt=media&token=63c42d9d-b32a-422a-bffc-ca56d8f6a2ba'),
               )),
           DrawerListTile(
             title: "Sản phẩm",

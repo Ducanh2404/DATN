@@ -33,7 +33,7 @@ class _NewsItemState extends State<NewsItem> {
               ))),
               onPressed: () {},
               child: Image(
-                image: AssetImage(widget.image_url),
+                image: NetworkImage(widget.image_url),
                 width: 160,
                 height: 90,
               )),
@@ -66,10 +66,13 @@ class _NewsItemState extends State<NewsItem> {
                       size: 12,
                       color: Color(0xFF8d94ac),
                     ),
-                    const SizedBox(width: 5,),
+                    const SizedBox(
+                      width: 5,
+                    ),
                     Text(
                       '$currentDate',
-                      style: const TextStyle(color: Color(0xFF8d94ac), fontSize: 12),
+                      style: const TextStyle(
+                          color: Color(0xFF8d94ac), fontSize: 12),
                     )
                   ],
                 )

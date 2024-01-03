@@ -113,7 +113,7 @@ class _SearchBarAppState extends State<SearchBarApp> {
                   Expanded(
                     flex: 1,
                     child: Image(
-                      image: AssetImage('img/product/$img'),
+                      image: NetworkImage(img),
                       width: 60,
                       fit: BoxFit.cover,
                     ),

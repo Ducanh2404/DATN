@@ -28,7 +28,7 @@ class _InfoCartState extends State<InfoCart> {
           Expanded(
               flex: 1,
               child: Image(
-                image: AssetImage('img/product/${widget.image}'),
+                image: NetworkImage(widget.image),
                 fit: BoxFit.contain,
               )),
           const SizedBox(

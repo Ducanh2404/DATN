@@ -10,8 +10,8 @@ class BannerCollection extends StatefulWidget {
 class _BannerCollectionState extends State<BannerCollection> {
   CarouselController buttonCarouselController = CarouselController();
   final List<String> image = [
-    'img/collection/collection1.jpg',
-    'img/collection/collection2.jpg',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/collection%2Fcollection1.jpg?alt=media&token=70fef9eb-07c6-4ddf-aec8-0841c310c9be',
+    'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/collection%2Fcollection2.jpg?alt=media&token=8e22737a-82fb-404b-a598-910a6f8dbaa3',
   ];
   int _current = 0;
 
@@ -44,7 +44,7 @@ class _BannerCollectionState extends State<BannerCollection> {
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
                     child: Image(
-                      image: AssetImage(url),
+                      image: NetworkImage(url),
                       fit: BoxFit.cover,
                     ));
               },

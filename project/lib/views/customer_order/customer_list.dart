@@ -64,7 +64,7 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Image(
-                    image: AssetImage('img/product/$image'),
+                    image: NetworkImage(image),
                     width: 50,
                   ),
                 ),

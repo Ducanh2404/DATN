@@ -86,7 +86,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Image(
-                  image: AssetImage('img/product/${widget.img_url}'),
+                  image: NetworkImage(widget.img_url),
                   fit: BoxFit.contain,
                 ),
               ),

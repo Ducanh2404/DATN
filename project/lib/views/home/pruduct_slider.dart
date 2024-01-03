@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 
 class PruductSlider extends StatefulWidget {
   final String category;
-  const PruductSlider({super.key, required this.category});
+  final String thumbnailImg;
+  const PruductSlider(
+      {super.key, required this.category, required this.thumbnailImg});
 
   @override
   _PruductSliderState createState() => _PruductSliderState();
@@ -79,9 +81,7 @@ class _PruductSliderState extends State<PruductSlider> {
                       overlayColor: TransparentButton(),
                       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                           const EdgeInsets.symmetric(horizontal: 0.0))),
-                  child: const Image(
-                      image:
-                          AssetImage('img/product-thumbnail/category1.jpg'))),
+                  child: Image(image: NetworkImage(widget.thumbnailImg))),
             Expanded(
               child: Stack(
                 children: [

@@ -1,5 +1,9 @@
-import 'package:flutter/services.dart';
+import 'dart:html' as html;
+import 'dart:io';
+import 'package:mime_type/mime_type.dart';
+import 'package:path/path.dart' as Path;
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../../../constants.dart';
 import 'package:project/all_imports.dart';
@@ -53,6 +57,28 @@ class _ProductsManageState extends State<ProductsManage> {
     }
   }
 
+  // thêm ảnh vào database
+  String image_url = '';
+  Future<void> uploadImage(Uint8List file, SettableMetadata metadata) async {
+    try {
+      if (kIsWeb) {
+        final storage = FirebaseStorage.instance;
+        final reference =
+            storage.ref().child('product/${DateTime.now().toString()}');
+        final uploadTask = reference.putData(file, metadata);
+        // Wait for the upload to complete
+        await uploadTask;
+        final imageUrl = await reference.getDownloadURL();
+        setState(() {
+          image_url = imageUrl;
+        });
+        print('Image uploaded successfully.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   //Thêm sản phẩm
   int i = 0;
   Future<void> addProduct() async {
@@ -63,15 +89,17 @@ class _ProductsManageState extends State<ProductsManage> {
       for (int i = 0; i < keyControllers.length; i++) {
         updatefilter[keyControllers[i].text] = valueControllers[i].text;
       }
+      await uploadImage(localImage!, type!);
       await collection.add({
         'name': addNameController.text,
         'sale': double.tryParse(addSaleController.text),
         'money': convertToDouble(addPriceController.text),
         'short-des': addShortDesController.text,
-        'image': webImage,
+        'image': image_url,
         'category': selectedOptions,
         'filter': updatefilter,
       });
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -97,7 +125,7 @@ class _ProductsManageState extends State<ProductsManage> {
     }
   }
 
-  //
+  // cập nhật sản phẩm
   double convertToDouble(String priceText) {
     String priceCleaned = priceText.replaceAll('.', '').replaceAll('₫', '');
     double price = double.tryParse(priceCleaned) ?? 0.0;
@@ -114,15 +142,19 @@ class _ProductsManageState extends State<ProductsManage> {
       for (int i = 0; i < keyControllers.length; i++) {
         updatefilter[keyControllers[i].text] = valueControllers[i].text;
       }
+      if (localImage != null && imageAvailable == true) {
+        await uploadImage(localImage!, type!);
+      }
       await document.update({
         'name': nameController.text,
         'sale': double.tryParse(saleController.text),
         'money': convertToDouble(priceController.text),
         'short-des': shortDesController.text,
-        'image': webImage,
+        'image': image_url,
         'category': selectedOptions,
         'filter': updatefilter,
       });
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -150,15 +182,25 @@ class _ProductsManageState extends State<ProductsManage> {
 
   //chọn ảnh
   bool imageAvailable = false;
-  String webImage = '';
+  SettableMetadata? type;
 
+  Uint8List? localImage;
   Future<void> pickImage() async {
-    final image = await ImagePickerWeb.getImageAsFile();
-    if (image != null) {
-      String fileName = image.name;
+    var mediaData = await ImagePickerWeb.getImageInfo;
+    String? mimeType = mime(Path.basename(mediaData!.fileName!));
+    html.File mediaFile =
+        html.File(mediaData.data!, mediaData.fileName!, {'type': mimeType});
+
+    var metadata = SettableMetadata(
+      contentType: mimeType,
+      customMetadata: {'path': mediaData.fileName!},
+    );
+    if (mediaFile != null) {
       setState(() {
         imageAvailable = true;
-        webImage = fileName;
+        remoteImage = false;
+        type = metadata;
+        localImage = mediaData.data;
       });
     }
   }
@@ -171,11 +213,14 @@ class _ProductsManageState extends State<ProductsManage> {
   }
 
   //sau khi chọn sản phẩm
+  bool remoteImage = true;
   List<Widget> filterWidget = [];
   Set<String> filterList = {};
   List<TextEditingController> keyControllers = [];
   List<TextEditingController> valueControllers = [];
   Future selectedProduct(String id) async {
+    remoteImage = true;
+    imageAvailable = false;
     filterWidget = [];
     keyControllers = [];
     valueControllers = [];
@@ -187,7 +232,8 @@ class _ProductsManageState extends State<ProductsManage> {
     String price = formatAsCurrency(data['money']).toString();
     String sale = data['sale'].toString();
     String shortDes = data['short-des'];
-    String img_url = data['image'];
+    String image = data['image'];
+
     List<String> prodCate = (data['category'] as List<dynamic>)
         .map((item) => item.toString())
         .toList();
@@ -314,10 +360,15 @@ class _ProductsManageState extends State<ProductsManage> {
       ],
     ));
     newprice = data['money'] - (data['money'] * (data['sale'] / 100));
-    if (img_url.isNotEmpty) {
+
+    if (image.isNotEmpty) {
       setState(() {
-        imageAvailable = true;
-        webImage = img_url;
+        image_url = image;
+        remoteImage = true;
+      });
+    } else {
+      setState(() {
+        remoteImage = false;
       });
     }
     setState(() {
@@ -331,18 +382,26 @@ class _ProductsManageState extends State<ProductsManage> {
     });
   }
 
-  //lấy dữ liệu sản phẩm
+  //lấy dữ liệu danh sách sản phẩm từ db
   final TextEditingController searchProduct = TextEditingController();
   List<DataRow> finalList = [];
   Future fetchDocuments() async {
     try {
       List<DataRow> listProd = [];
+
       await FirebaseFirestore.instance.collection("products").get().then(
-          (QuerySnapshot querySnapshot) => querySnapshot.docs.forEach((doc) {
+          (QuerySnapshot querySnapshot) =>
+              querySnapshot.docs.forEach((doc) async {
                 Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
                 String name = data['name'];
                 String image = data['image'];
+                String? url = '';
                 Map<String, dynamic> filter = data['filter'];
+                if (image.isNotEmpty) {
+                  final storage = FirebaseStorage.instance.ref().child(image);
+                  var url_img = await storage.getDownloadURL();
+                  url = url_img;
+                }
                 for (var key in filter.keys) {
                   filterList.add(key);
                 }
@@ -353,10 +412,12 @@ class _ProductsManageState extends State<ProductsManage> {
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Row(
                           children: [
-                            Image(
-                              image: AssetImage('img/product/$image'),
-                              width: 50,
-                            ),
+                            image.isNotEmpty
+                                ? Image(
+                                    image: NetworkImage(url!),
+                                    width: 50,
+                                  )
+                                : Container(),
                             Flexible(
                               child: TextButton(
                                 style: ButtonStyle(
@@ -390,10 +451,12 @@ class _ProductsManageState extends State<ProductsManage> {
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Row(
                           children: [
-                            Image(
-                              image: AssetImage('img/product/$image'),
-                              width: 50,
-                            ),
+                            image.isNotEmpty
+                                ? Image(
+                                    image: NetworkImage(url!),
+                                    width: 50,
+                                  )
+                                : Container(),
                             Flexible(
                               child: TextButton(
                                 style: ButtonStyle(
@@ -571,13 +634,13 @@ class _ProductsManageState extends State<ProductsManage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     imageAvailable
-                        ? Image.asset(
-                            'img/product/$webImage',
+                        ? Image.memory(
+                            localImage!,
                             height: 200,
                             width: 200,
                           )
-                        : Image.asset(
-                            'img/imagepicker.png',
+                        : Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/imagepicker.png?alt=media&token=100b1069-b684-450e-ace5-f333628fc9ca',
                             height: 200,
                             width: 200,
                           ),
@@ -757,17 +820,23 @@ class _ProductsManageState extends State<ProductsManage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    imageAvailable
-                        ? Image.asset(
-                            'img/product/$webImage',
+                    remoteImage
+                        ? Image.network(
+                            image_url,
                             height: 200,
                             width: 200,
                           )
-                        : Image.asset(
-                            'img/imagepicker.png',
-                            height: 200,
-                            width: 200,
-                          ),
+                        : imageAvailable
+                            ? Image.memory(
+                                localImage!,
+                                height: 200,
+                                width: 200,
+                              )
+                            : Image.network(
+                                'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/imagepicker.png?alt=media&token=100b1069-b684-450e-ace5-f333628fc9ca',
+                                height: 200,
+                                width: 200,
+                              ),
                   ],
                 ),
                 Row(
@@ -887,6 +956,7 @@ class _ProductsManageState extends State<ProductsManage> {
               ],
             ),
           ),
+
           //end sửa sản phẩm
           //widget danh sách sản phẩm
           Visibility(

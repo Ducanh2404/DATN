@@ -138,19 +138,27 @@ class FooterMain extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Image(image: AssetImage('img/payment/payment_1.png')),
+                  Image(
+                      image: NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/payment%2Fpayment_1.png?alt=media&token=ba3190a2-3bf2-4d6b-b716-3075a17a7e8a')),
                   SizedBox(
                     width: 8,
                   ),
-                  Image(image: AssetImage('img/payment/payment_2.png')),
+                  Image(
+                      image: NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/payment%2Fpayment_2.png?alt=media&token=8a33c03f-f056-4814-becd-56d1793cc663')),
                   SizedBox(
                     width: 8,
                   ),
-                  Image(image: AssetImage('img/payment/payment_3.png')),
+                  Image(
+                      image: NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/payment%2Fpayment_3.png?alt=media&token=8e548d99-f52c-4eb2-8bf6-2b47b8898559')),
                   SizedBox(
                     width: 8,
                   ),
-                  Image(image: AssetImage('img/payment/payment_4.png')),
+                  Image(
+                      image: NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/payment%2Fpayment_4.png?alt=media&token=640c691f-b120-4ba3-8a0a-40df9ac98b0e')),
                   SizedBox(
                     width: 8,
                   ),

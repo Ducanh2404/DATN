@@ -5,11 +5,9 @@ export 'dart:ui_web';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:url_launcher/url_launcher.dart';
-export 'package:card_swiper/card_swiper.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:go_router/go_router.dart';
 export 'package:get/get.dart';
-export 'package:flutter_html_iframe/flutter_html_iframe.dart';
 
 //widget
 export 'package:project/views/header/header_bottom.dart';
@@ -66,3 +64,4 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:provider/provider.dart';
 export 'package:flutter/foundation.dart';
+export 'package:firebase_storage/firebase_storage.dart';

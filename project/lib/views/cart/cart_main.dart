@@ -400,8 +400,8 @@ class _CartMainState extends State<CartMain> {
                           children: [
                             Expanded(
                                 child: Image(
-                                    image:
-                                        AssetImage('img/payment/pay_cart.png')))
+                                    image: NetworkImage(
+                                        'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/payment%2Fpay_cart.png?alt=media&token=4c8df257-d6c0-491b-a4d3-c05d5ddd5b36')))
                           ],
                         ),
                       ),
