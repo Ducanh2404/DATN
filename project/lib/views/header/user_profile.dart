@@ -90,7 +90,12 @@ class _UserProfileState extends State<UserProfile> {
 
   Future<void> signOut() async {
     try {
-      await auth.signOut();
+      auth.signOut();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MyApp(),
+          ));
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -105,11 +110,6 @@ class _UserProfileState extends State<UserProfile> {
           );
         },
       );
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MyApp(),
-          ));
       widget.updateLoginStatus('');
       widget.toLogin('login');
     } catch (e) {
