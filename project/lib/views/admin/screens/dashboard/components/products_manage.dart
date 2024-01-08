@@ -63,9 +63,9 @@ class _ProductsManageState extends State<ProductsManage> {
       if (kIsWeb) {
         final storage = FirebaseStorage.instance;
         final reference =
-            storage.ref().child('product/${DateTime.now().toString()}');
+            storage.ref().child('product/${metadata.customMetadata!['path']}');
         final uploadTask = reference.putData(file, metadata);
-        // Wait for the upload to complete
+        // chờ ảnh upload lên CSDL
         await uploadTask;
         final imageUrl = await reference.getDownloadURL();
         setState(() {
