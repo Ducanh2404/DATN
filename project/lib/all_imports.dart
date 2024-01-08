@@ -33,7 +33,6 @@ export 'package:project/views/home/banner.dart';
 export 'package:project/views/home/categories.dart';
 export 'package:project/views/home/pruduct_slider.dart';
 export 'package:project/views/home/sales.dart';
-export 'package:project/views/home/news.dart';
 export 'package:project/views/home/brand.dart';
 export 'package:project/color/transparent_button.dart';
 export 'package:project/widget/btn_next.dart';

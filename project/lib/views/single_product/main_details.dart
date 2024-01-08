@@ -636,7 +636,11 @@ class _MainDetailsState extends State<MainDetails> {
                                         ));
                                   }
 
-                                  _delayedFunction();
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
+                                  if (user != null) {
+                                    _delayedFunction();
+                                  }
                                 },
                                 onHover: (b) {
                                   setState(() {
