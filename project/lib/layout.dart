@@ -58,19 +58,19 @@ class _HomeState extends State {
                 CarouselBanner(),
                 Categories(),
                 PruductSlider(
-                  category: 'Laptop Dell',
+                  category: 'PC Gaming',
                   thumbnailImg:
                       'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/product-thumbnail%2Fcategory1.jpg?alt=media&token=c9a25f49-d7e4-4137-9349-63588f6dd362',
                 ),
                 PruductSlider(
-                  category: 'Laptop Gaming',
+                  category: 'Màn Hình Máy Tính',
                   thumbnailImg:
-                      'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/product-thumbnail%2Fcategory1.jpg?alt=media&token=c9a25f49-d7e4-4137-9349-63588f6dd362',
+                      'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/product-thumbnail%2Fcat_big_68_1697793723.jpg?alt=media&token=fa2dd161-036c-4121-ad22-544574b5ed7e',
                 ),
                 PruductSlider(
-                  category: 'Laptop Acer',
+                  category: 'Laptop - Máy Tính Xách Tay',
                   thumbnailImg:
-                      'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/product-thumbnail%2Fcategory1.jpg?alt=media&token=c9a25f49-d7e4-4137-9349-63588f6dd362',
+                      'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/product-thumbnail%2Fcat_big_79_1697613978.jpg?alt=media&token=f3a50b7d-64de-4d30-affe-d9294774cca5',
                 ),
                 Sales(),
                 Brand(),

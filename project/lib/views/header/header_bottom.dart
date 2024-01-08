@@ -31,7 +31,7 @@ class _HeaderBottomState extends State<HeaderBottom> {
                 },
                 child: const Image(
                     image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/logo.png?alt=media&token=63c42d9d-b32a-422a-bffc-ca56d8f6a2ba'),
+                        'https://firebasestorage.googleapis.com/v0/b/datn-cdbee.appspot.com/o/logo.png?alt=media&token=5eb60ab4-8d89-49f2-937c-5159cae90ef5'),
                     width: 160)),
             const Expanded(child: SearchBarApp()),
             if (!Responsive.isMobile(context))

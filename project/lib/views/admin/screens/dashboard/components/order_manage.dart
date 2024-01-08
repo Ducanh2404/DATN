@@ -13,7 +13,7 @@ class OrderManage extends StatefulWidget {
 class _OrderManageState extends State<OrderManage> {
   @override
   void initState() {
-    getAccounts();
+    getOrders();
     super.initState();
   }
 
@@ -26,10 +26,81 @@ class _OrderManageState extends State<OrderManage> {
   List<Widget> detailsOrder = [];
   List<DataRow> listOrder = [];
   List<Widget> listItems = [];
+  String selectedOrderId = '';
 
   int i = 1;
   bool showOrder = true;
   bool infoOrder = false;
+  //cập nhật trạng thái đơn hàng
+  Future<void> updateOrder() async {
+    try {
+      DocumentReference order =
+          FirebaseFirestore.instance.collection('order').doc(selectedOrderId);
+      await order.update({
+        'status': '0',
+      });
+      setState(() {
+        showOrder = !showOrder;
+        infoOrder = !infoOrder;
+        listOrder = [];
+        getOrders();
+      });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Đơn hàng đã được tiến hành giao'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> deleteOrder() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('order')
+          .doc(selectedOrderId)
+          .delete();
+      setState(() {
+        showOrder = !showOrder;
+        infoOrder = !infoOrder;
+        listOrder = [];
+        getOrders();
+      });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Xóa đơn hàng thành công'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      print('$error');
+    }
+  }
+
+  //xóa đơn hàng
+  //chọn đơn hàng
   Future<void> selectedOrder(String id) async {
     try {
       listItems = [];
@@ -40,7 +111,7 @@ class _OrderManageState extends State<OrderManage> {
           await FirebaseFirestore.instance.collection('order').doc(id).get();
       Map<String, dynamic> data =
           documentSnapshot.data() as Map<String, dynamic>;
-      String status = data['status'] == 1 ? 'Đang xử lí' : 'Đang giao';
+      String status = data['status'] == '1' ? 'Đang xử lí' : 'Đang giao';
       String city = data['city'];
       String address = data['address'];
       String receiver = data['receiver'];
@@ -219,6 +290,44 @@ class _OrderManageState extends State<OrderManage> {
               ],
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.green)),
+                      onPressed: () {
+                        updateOrder();
+                      },
+                      child: Text(
+                        'Tiến hành giao hàng',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      onPressed: () {
+                        deleteOrder();
+                      },
+                      child: Text(
+                        'Xóa đơn hàng',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
         ],
       ));
     } catch (e) {
@@ -226,7 +335,7 @@ class _OrderManageState extends State<OrderManage> {
     }
   }
 
-  Future<void> getAccounts() async {
+  Future<void> getOrders() async {
     i = 1;
     await FirebaseFirestore.instance
         .collection('order')
@@ -240,7 +349,7 @@ class _OrderManageState extends State<OrderManage> {
               String name = data['receiver'];
               String method = data['method'];
               String status =
-                  data['status'] == '1' ? "Chưa vận chuyển" : 'Đang vận chuyển';
+                  data['status'] == '1' ? "Chờ xử lí" : 'Đang giao hàng';
               String total = formatAsCurrency(data['total']);
               setState(() {
                 listOrder.add(DataRow(
@@ -248,6 +357,7 @@ class _OrderManageState extends State<OrderManage> {
                     onSelectChanged: (value) {
                       setState(() {
                         select = !select;
+                        selectedOrderId = orderId;
                         selectedOrder(orderId);
                       });
                     },

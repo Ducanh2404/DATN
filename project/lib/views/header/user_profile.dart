@@ -105,6 +105,11 @@ class _UserProfileState extends State<UserProfile> {
           );
         },
       );
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MyApp(),
+          ));
       widget.updateLoginStatus('');
       widget.toLogin('login');
     } catch (e) {

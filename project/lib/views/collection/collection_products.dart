@@ -121,6 +121,10 @@ class _CollectionProductsState extends State<CollectionProducts> {
                           width: childWidth,
                           height: 405,
                           child: widget,
+                        ),
+                      if (widget.listCollection.length == 0)
+                        Center(
+                          child: Text('Không có sản phẩm phù hợp'),
                         )
                     ],
                   );
