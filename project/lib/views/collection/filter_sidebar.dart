@@ -22,6 +22,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
   Map<String, double> filterPrice = {};
 
   Widget priceBox = Container();
+  //sau khi chọn filter
   void addSelectedFilter(String key, List<String> values, bool selected) {
     if (selected == true) {
       setState(() {
@@ -49,6 +50,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
     return numberFormat.format(roundedValue);
   }
 
+  //thêm ô lọc giá
   void addFilterPrice() {
     filterPrice = {'minPrice': rangePrice.start, 'maxPrice': rangePrice.end};
     setState(() {
@@ -351,8 +353,8 @@ class _FilterSideBarState extends State<FilterSideBar> {
           Center(
             child: TextButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(const Color(0xFF3278f6)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFF3278f6)),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                         const EdgeInsets.symmetric(
                             vertical: 20, horizontal: 10)),

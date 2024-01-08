@@ -88,7 +88,9 @@ class _ProductsManageState extends State<ProductsManage> {
       for (int i = 0; i < keyControllers.length; i++) {
         updatefilter[keyControllers[i].text] = valueControllers[i].text;
       }
-      await uploadImage(localImage!, type!);
+      if (localImage != null && imageAvailable == true) {
+        await uploadImage(localImage!, type!);
+      }
       await collection.add({
         'name': addNameController.text,
         'sale': double.tryParse(addSaleController.text),
@@ -110,6 +112,13 @@ class _ProductsManageState extends State<ProductsManage> {
                 onPressed: () {
                   manageProd = !manageProd;
                   addProd = !addProd;
+                  addNameController.clear();
+                  addSaleController.clear();
+                  addPriceController.clear();
+                  addShortDesController.clear();
+                  image_url = '';
+                  i = 0;
+                  updatefilter = {};
                   finalList = [];
                   fetchDocuments();
                   Navigator.of(context).pop();
@@ -388,9 +397,11 @@ class _ProductsManageState extends State<ProductsManage> {
   Future fetchDocuments() async {
     try {
       List<DataRow> listProd = [];
-
-      await FirebaseFirestore.instance.collection("products").get().then(
-          (QuerySnapshot querySnapshot) =>
+      await FirebaseFirestore.instance
+          .collection("products")
+          .orderBy('name', descending: true)
+          .get()
+          .then((QuerySnapshot querySnapshot) =>
               querySnapshot.docs.forEach((doc) async {
                 Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
                 String name = data['name'];
