@@ -1,5 +1,4 @@
 import 'dart:html' as html;
-import 'dart:io';
 import 'package:mime_type/mime_type.dart';
 import 'package:path/path.dart' as Path;
 import 'package:image_picker_web/image_picker_web.dart';
@@ -195,6 +194,7 @@ class _ProductsManageState extends State<ProductsManage> {
       contentType: mimeType,
       customMetadata: {'path': mediaData.fileName!},
     );
+    // ignore: unnecessary_null_comparison
     if (mediaFile != null) {
       setState(() {
         imageAvailable = true;
