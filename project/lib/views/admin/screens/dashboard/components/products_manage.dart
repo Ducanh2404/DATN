@@ -95,6 +95,12 @@ class _ProductsManageState extends State<ProductsManage> {
         'name': addNameController.text,
         'sale': double.tryParse(addSaleController.text),
         'money': convertToDouble(addPriceController.text),
+        'sell': ((double.tryParse(addSaleController.text)! -
+                        (double.tryParse(addSaleController.text)! *
+                            (convertToDouble(addPriceController.text) / 100))) /
+                    1000)
+                .round() *
+            1000,
         'short-des': addShortDesController.text,
         'image': image_url,
         'category': selectedOptions,
@@ -157,6 +163,12 @@ class _ProductsManageState extends State<ProductsManage> {
         'name': nameController.text,
         'sale': double.tryParse(saleController.text),
         'money': convertToDouble(priceController.text),
+        'sell': ((double.tryParse(addSaleController.text)! -
+                        (double.tryParse(addSaleController.text)! *
+                            (convertToDouble(addPriceController.text) / 100))) /
+                    1000)
+                .round() *
+            1000,
         'short-des': shortDesController.text,
         'image': image_url,
         'category': selectedOptions,

@@ -68,7 +68,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
               ),
               controlAffinity: ListTileControlAffinity.leading,
               title: Text(
-                  '${numberFormat.format(rangePrice.start).toString()} - ${numberFormat.format(rangePrice.end).toString()}'),
+                  '${formatAsCurrency(rangePrice.start).toString()} - ${formatAsCurrency(rangePrice.end).toString()}'),
               value: isChecked,
               onChanged: (value) {
                 setState(() {
@@ -96,10 +96,10 @@ class _FilterSideBarState extends State<FilterSideBar> {
         });
       });
       if (filterPrice.isNotEmpty) {
-        query = query.where('money',
+        query = query.where('sell',
             isGreaterThanOrEqualTo: filterPrice['minPrice']);
         query =
-            query.where('money', isLessThanOrEqualTo: filterPrice['maxPrice']);
+            query.where('sell', isLessThanOrEqualTo: filterPrice['maxPrice']);
       }
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await query.where('category', arrayContains: widget.category).get();
@@ -201,6 +201,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
     super.dispose();
   }
 
+  // lấy giá trị lớn nhất , nhỏ nhất bộ lọc
   Future<void> getPrice() async {
     try {
       final collection = FirebaseFirestore.instance
@@ -212,11 +213,9 @@ class _FilterSideBarState extends State<FilterSideBar> {
       double maxMoney = double.negativeInfinity;
 
       querySnapshot.docs.forEach((doc) {
-        late double newprice;
         Map<String, dynamic> data = doc.data();
-        newprice = data['money'] - (data['money'] * (data['sale'] / 100));
-        minMoney = min(minMoney, newprice);
-        maxMoney = max(maxMoney, newprice);
+        minMoney = min(minMoney, data['sell']);
+        maxMoney = max(maxMoney, data['sell']);
       });
 
       setState(() {
@@ -239,6 +238,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
     return price;
   }
 
+  //cập nhật giá trị bộ lọc giá
   void updateRangeValues() {
     double startPrice = convertToDouble(startPriceController.text);
     double endPrice = convertToDouble(endPriceController.text);
