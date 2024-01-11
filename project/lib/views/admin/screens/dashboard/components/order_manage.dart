@@ -25,8 +25,8 @@ class _OrderManageState extends State<OrderManage> {
 
   List<Widget> detailsOrder = [];
   List<DataRow> listOrder = [];
-  List<Widget> listItems = [];
   String selectedOrderId = '';
+  List<Widget> listItems = [];
 
   int i = 1;
   bool showOrder = true;
@@ -66,6 +66,7 @@ class _OrderManageState extends State<OrderManage> {
     }
   }
 
+  //xóa đơn hàng
   Future<void> deleteOrder() async {
     try {
       await FirebaseFirestore.instance
@@ -99,14 +100,12 @@ class _OrderManageState extends State<OrderManage> {
     }
   }
 
-  //xóa đơn hàng
   //chọn đơn hàng
   Future<void> selectedOrder(String id) async {
     try {
-      listItems = [];
-      detailsOrder = [];
       showOrder = !showOrder;
       infoOrder = !infoOrder;
+      List<Widget> lst = [];
       DocumentSnapshot documentSnapshot =
           await FirebaseFirestore.instance.collection('order').doc(id).get();
       Map<String, dynamic> data =
@@ -120,75 +119,72 @@ class _OrderManageState extends State<OrderManage> {
       String total = formatAsCurrency(data['total']);
       Map<String, dynamic> items = data['items'];
       items.forEach((key, value) async {
-        try {
-          DocumentSnapshot prodSnap = await FirebaseFirestore.instance
-              .collection('products')
-              .doc(key)
-              .get();
+        await FirebaseFirestore.instance
+            .collection('products')
+            .doc(key)
+            .get()
+            .then((DocumentSnapshot prodSnap) {
           Map<String, dynamic> prod = prodSnap.data() as Map<String, dynamic>;
           String image = prod['image'];
           String name = prod['name'];
           double newprice =
               prod['money'] - (prod['money'] * (prod['sale'] / 100));
           String sum = formatAsCurrency(newprice * value);
-          Widget item = Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Image(
-                    image: NetworkImage(image),
-                    width: 50,
+          setState(() {
+            listItems.add(Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Image(
+                      image: NetworkImage(image),
+                      width: 50,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 12,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(name),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(formatAsCurrency(newprice)),
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('x'),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(value.toString()),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Container(
-                  alignment: Alignment.centerRight,
+                Expanded(
+                  flex: 12,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(sum),
+                    child: Text(name),
                   ),
                 ),
-              ),
-            ],
-          );
-          setState(() {
-            listItems.add(item);
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(formatAsCurrency(newprice)),
+                  ),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('x'),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(value.toString()),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(sum),
+                    ),
+                  ),
+                ),
+              ],
+            ));
           });
-        } catch (e) {
-          print(e);
-        }
+        });
       });
       detailsOrder.add(Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -335,6 +331,7 @@ class _OrderManageState extends State<OrderManage> {
     }
   }
 
+  //lấy danh sách đơn hàng
   Future<void> getOrders() async {
     i = 1;
     await FirebaseFirestore.instance
@@ -358,6 +355,8 @@ class _OrderManageState extends State<OrderManage> {
                       setState(() {
                         select = !select;
                         selectedOrderId = orderId;
+                        listItems = [];
+                        detailsOrder = [];
                         selectedOrder(orderId);
                       });
                     },

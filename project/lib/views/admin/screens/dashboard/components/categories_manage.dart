@@ -36,7 +36,6 @@ class _CategoriesManageState extends State<CategoriesManage> {
         if (querySnapshot.docs.isNotEmpty) {
           querySnapshot.docs.forEach((doc) async {
             List<Widget> listSubCate = [];
-
             Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
             String mainCate = data['name'];
 
