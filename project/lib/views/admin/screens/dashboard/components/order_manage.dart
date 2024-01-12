@@ -23,10 +23,9 @@ class _OrderManageState extends State<OrderManage> {
     return numberFormat.format(roundedValue);
   }
 
-  List<Widget> detailsOrder = [];
   List<DataRow> listOrder = [];
-  String selectedOrderId = '';
   List<Widget> listItems = [];
+  String selectedOrderId = '';
 
   int i = 1;
   bool showOrder = true;
@@ -101,233 +100,102 @@ class _OrderManageState extends State<OrderManage> {
   }
 
   //chọn đơn hàng
+  String status = '';
+  String city = '';
+  String address = '';
+  String receiver = '';
+  String email = '';
+  String phone = '';
+  String total = '';
   Future<void> selectedOrder(String id) async {
-    try {
-      showOrder = !showOrder;
-      infoOrder = !infoOrder;
-      List<Widget> lst = [];
-      DocumentSnapshot documentSnapshot =
-          await FirebaseFirestore.instance.collection('order').doc(id).get();
-      Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
-      String status = data['status'] == '1' ? 'Đang xử lí' : 'Đang giao';
-      String city = data['city'];
-      String address = data['address'];
-      String receiver = data['receiver'];
-      String email = data['email'];
-      String phone = data['phone'];
-      String total = formatAsCurrency(data['total']);
-      Map<String, dynamic> items = data['items'];
-      items.forEach((key, value) async {
-        await FirebaseFirestore.instance
-            .collection('products')
-            .doc(key)
-            .get()
-            .then((DocumentSnapshot prodSnap) {
-          Map<String, dynamic> prod = prodSnap.data() as Map<String, dynamic>;
-          String image = prod['image'];
-          String name = prod['name'];
-          double newprice =
-              prod['money'] - (prod['money'] * (prod['sale'] / 100));
-          String sum = formatAsCurrency(newprice * value);
-          setState(() {
-            listItems.add(Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Image(
-                      image: NetworkImage(image),
-                      width: 50,
+    if (mounted) {
+      try {
+        listItems = [];
+        showOrder = !showOrder;
+        infoOrder = !infoOrder;
+        DocumentSnapshot documentSnapshot =
+            await FirebaseFirestore.instance.collection('order').doc(id).get();
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+        status = data['status'] == '1' ? 'Đang xử lí' : 'Đang giao';
+        city = data['city'];
+        address = data['address'];
+        receiver = data['receiver'];
+        email = data['email'];
+        phone = data['phone'];
+        total = formatAsCurrency(data['total']);
+        Map<String, dynamic> items = data['items'];
+        items.forEach((key, value) {
+          FirebaseFirestore.instance
+              .collection('products')
+              .doc(key)
+              .get()
+              .then((DocumentSnapshot prodSnap) {
+            Map<String, dynamic> prod = prodSnap.data() as Map<String, dynamic>;
+            String image = prod['image'];
+            String name = prod['name'];
+            double newprice =
+                prod['money'] - (prod['money'] * (prod['sale'] / 100));
+            String sum = formatAsCurrency(newprice * value);
+            setState(() {
+              listItems.add(Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Image(
+                        image: NetworkImage(image),
+                        width: 50,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 12,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(name),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(formatAsCurrency(newprice)),
-                  ),
-                ),
-                const Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('x'),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(value.toString()),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    alignment: Alignment.centerRight,
+                  Expanded(
+                    flex: 12,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(sum),
+                      child: Text(name),
                     ),
                   ),
-                ),
-              ],
-            ));
+                  Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(formatAsCurrency(newprice)),
+                    ),
+                  ),
+                  const Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('x'),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(value.toString()),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(sum),
+                      ),
+                    ),
+                  ),
+                ],
+              ));
+            });
           });
         });
-      });
-      detailsOrder.add(Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextButton.icon(
-            onPressed: () {
-              setState(() {
-                showOrder = !showOrder;
-                infoOrder = !infoOrder;
-              });
-            },
-            icon: const FaIcon(
-              FontAwesomeIcons.arrowLeftLong,
-              size: 16,
-            ),
-            label: const Text('Danh sách đơn hàng'),
-          ),
-          Text(
-            "Chi tiết đơn hàng",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(status, style: const TextStyle(color: Colors.orange)),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            decoration: const BoxDecoration(
-                border: BorderDirectional(
-                    bottom: BorderSide(width: 1, color: Colors.white10))),
-          ),
-          Column(
-            children: listItems,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                  flex: 3,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Tổng cộng'),
-                    ),
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(total),
-                    ),
-                  ))
-            ],
-          ),
-          Text(
-            'Địa chỉ giao hàng',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(city),
-                Text(address),
-              ],
-            ),
-          ),
-          Text(
-            'Thông tin liên hệ',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Tên khách hàng'),
-                    Text('Email'),
-                    Text('SĐT'),
-                  ],
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(': $receiver'),
-                    Text(': $email'),
-                    Text(': $phone'),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Wrap(
-                  alignment: WrapAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green)),
-                      onPressed: () {
-                        updateOrder();
-                      },
-                      child: Text(
-                        'Tiến hành giao hàng',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.red)),
-                      onPressed: () {
-                        deleteOrder();
-                      },
-                      child: Text(
-                        'Xóa đơn hàng',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          )
-        ],
-      ));
-    } catch (e) {
-      print(e);
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -343,7 +211,7 @@ class _OrderManageState extends State<OrderManage> {
               Map<String, dynamic>? data = doc.data() as Map<String, dynamic>;
               String orderId = doc.id;
               String date = data['date'];
-              String name = data['receiver'];
+              String name = data['email'];
               String method = data['method'];
               String status =
                   data['status'] == '1' ? "Chờ xử lí" : 'Đang giao hàng';
@@ -352,12 +220,10 @@ class _OrderManageState extends State<OrderManage> {
                 listOrder.add(DataRow(
                     selected: select,
                     onSelectChanged: (value) {
+                      selectedOrder(orderId);
                       setState(() {
                         select = !select;
                         selectedOrderId = orderId;
-                        listItems = [];
-                        detailsOrder = [];
-                        selectedOrder(orderId);
                       });
                     },
                     // mouseCursor: MaterialStateMouseCursor.clickable,
@@ -385,11 +251,150 @@ class _OrderManageState extends State<OrderManage> {
       child: Column(
         children: [
           Visibility(
-            visible: infoOrder,
-            child: Column(
-              children: detailsOrder,
-            ),
-          ),
+              visible: infoOrder,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        showOrder = !showOrder;
+                        infoOrder = !infoOrder;
+                      });
+                    },
+                    icon: const FaIcon(
+                      FontAwesomeIcons.arrowLeftLong,
+                      size: 16,
+                    ),
+                    label: const Text('Danh sách đơn hàng'),
+                  ),
+                  Text(
+                    "Chi tiết đơn hàng",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(status, style: const TextStyle(color: Colors.orange)),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: const BoxDecoration(
+                        border: BorderDirectional(
+                            bottom:
+                                BorderSide(width: 1, color: Colors.white10))),
+                  ),
+                  Column(
+                    children: listItems,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          flex: 3,
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text('Tổng cộng'),
+                            ),
+                          )),
+                      Expanded(
+                          flex: 2,
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(total),
+                            ),
+                          ))
+                    ],
+                  ),
+                  Text(
+                    'Địa chỉ giao hàng',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(city),
+                        Text(address),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    'Thông tin liên hệ',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Tên người nhận'),
+                            Text('Email'),
+                            Text('SĐT'),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(': $receiver'),
+                            Text(': $email'),
+                            Text(': $phone'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.green)),
+                              onPressed: () {
+                                updateOrder();
+                              },
+                              child: Text(
+                                'Tiến hành giao hàng',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.red)),
+                              onPressed: () {
+                                deleteOrder();
+                              },
+                              child: Text(
+                                'Xóa đơn hàng',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )),
           Visibility(
             visible: showOrder,
             child: Column(
@@ -421,7 +426,7 @@ class _OrderManageState extends State<OrderManage> {
                         ),
                         DataColumn(
                           label: Text(
-                            "Khách hàng",
+                            "Email đặt",
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
@@ -471,7 +476,7 @@ class _OrderManageState extends State<OrderManage> {
                           ),
                           DataColumn(
                             label: Text(
-                              "Khách hàng",
+                              "Email đặt",
                               style: TextStyle(fontSize: 18),
                             ),
                           ),

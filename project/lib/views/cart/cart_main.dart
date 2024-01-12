@@ -368,14 +368,35 @@ class _CartMainState extends State<CartMain> {
                                           color: Color(0xFF3278f6), width: 1),
                                     ))),
                                 onPressed: () {
-                                  setState(() {
-                                    cartVisible = false;
-                                    shipVisible = true;
-                                  });
+                                  setState(() {});
                                   if (confirm == 'Tiến hành thanh toán') {
-                                    setState(() {
-                                      confirm = 'Xác nhận mua hàng';
-                                    });
+                                    if (sumQuantity != 0) {
+                                      setState(() {
+                                        confirm = 'Xác nhận mua hàng';
+                                        cartVisible = false;
+                                        shipVisible = true;
+                                      });
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text(
+                                                'Vui lòng thêm sản phẩm'),
+                                            content: const Text(
+                                                'Vui lòng thêm ít nhất 1 sản phẩm vào giỏ hàng để tiến hành thanh toán'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => {
+                                                  Navigator.of(context).pop(),
+                                                },
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   } else if (confirm == 'Xác nhận mua hàng') {
                                     checkingInfo();
                                   }

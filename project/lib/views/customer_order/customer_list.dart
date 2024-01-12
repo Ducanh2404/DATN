@@ -21,29 +21,35 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
     return numberFormat.format(roundedValue);
   }
 
-  List<Widget> detailsOrder = [];
+  List<Widget> listItems = [];
   List<DataRow> listOrder = [];
 
   int i = 1;
   bool showOrder = true;
   bool infoOrder = false;
+  String status = '';
+  String city = '';
+  String address = '';
+  String receiver = '';
+  String email = '';
+  String phone = '';
+  String total = '';
   Future<void> selectedOrder(String id) async {
     try {
-      List<Widget> listItems = [];
-      detailsOrder = [];
+      listItems = [];
       showOrder = !showOrder;
       infoOrder = !infoOrder;
       DocumentSnapshot documentSnapshot =
           await FirebaseFirestore.instance.collection('order').doc(id).get();
       Map<String, dynamic> data =
           documentSnapshot.data() as Map<String, dynamic>;
-      String status = data['status'] == '1' ? 'Chưa giao' : 'Đang giao';
-      String city = data['city'];
-      String address = data['address'];
-      String receiver = data['receiver'];
-      String email = data['email'];
-      String phone = data['phone'];
-      String total = formatAsCurrency(data['total']);
+      status = data['status'] == '1' ? 'Chưa giao' : 'Đang giao';
+      city = data['city'];
+      address = data['address'];
+      receiver = data['receiver'];
+      email = data['email'];
+      phone = data['phone'];
+      total = formatAsCurrency(data['total']);
       Map<String, dynamic> items = data['items'];
       items.forEach((key, value) async {
         try {
@@ -116,140 +122,6 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
           print(e);
         }
       });
-      detailsOrder.add(Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextButton.icon(
-            onPressed: () {
-              setState(() {
-                showOrder = !showOrder;
-                infoOrder = !infoOrder;
-              });
-            },
-            icon: const FaIcon(
-              FontAwesomeIcons.arrowLeftLong,
-              size: 16,
-            ),
-            label: const Text('Danh sách đơn hàng'),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(status,
-              style: const TextStyle(
-                  color: Colors.orange,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w800)),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            decoration: const BoxDecoration(
-                border: BorderDirectional(
-                    bottom: BorderSide(width: 1, color: Colors.white10))),
-          ),
-          Column(
-            children: listItems,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                  flex: 3,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Tổng cộng'),
-                    ),
-                  )),
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(total),
-                    ),
-                  ))
-            ],
-          ),
-          Text(
-            'Địa chỉ giao hàng',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  city,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w800),
-                ),
-                Text(
-                  address,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w800),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            'Thông tin liên hệ',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tên khách hàng',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
-                    ),
-                    Text(
-                      'Email',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
-                    ),
-                    Text(
-                      'SĐT',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      ': $receiver',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w800),
-                    ),
-                    Text(
-                      ': $email',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w800),
-                    ),
-                    Text(
-                      ': $phone',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w800),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ));
     } catch (e) {
       print(e);
     }
@@ -305,11 +177,142 @@ class _CustomerOrderListState extends State<CustomerOrderList> {
       content: Column(
         children: [
           Visibility(
-            visible: infoOrder,
-            child: Column(
-              children: detailsOrder,
-            ),
-          ),
+              visible: infoOrder,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        showOrder = !showOrder;
+                        infoOrder = !infoOrder;
+                      });
+                    },
+                    icon: const FaIcon(
+                      FontAwesomeIcons.arrowLeftLong,
+                      size: 16,
+                    ),
+                    label: const Text('Danh sách đơn hàng'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(status,
+                      style: const TextStyle(
+                          color: Colors.orange,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800)),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: const BoxDecoration(
+                        border: BorderDirectional(
+                            bottom:
+                                BorderSide(width: 1, color: Colors.white10))),
+                  ),
+                  Column(
+                    children: listItems,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          flex: 3,
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text('Tổng cộng'),
+                            ),
+                          )),
+                      Expanded(
+                          flex: 2,
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(total),
+                            ),
+                          ))
+                    ],
+                  ),
+                  Text(
+                    'Địa chỉ giao hàng',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          city,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w800),
+                        ),
+                        Text(
+                          address,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    'Thông tin liên hệ',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Tên khách hàng',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                            Text(
+                              'SĐT',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              ': $receiver',
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                            Text(
+                              ': $email',
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                            Text(
+                              ': $phone',
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
           Visibility(
             visible: showOrder,
             child: Column(
