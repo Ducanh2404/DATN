@@ -163,9 +163,9 @@ class _ProductsManageState extends State<ProductsManage> {
         'name': nameController.text,
         'sale': double.tryParse(saleController.text),
         'money': convertToDouble(priceController.text),
-        'sell': ((double.tryParse(addSaleController.text)! -
-                        (double.tryParse(addSaleController.text)! *
-                            (convertToDouble(addPriceController.text) / 100))) /
+        'sell': ((double.tryParse(saleController.text)! -
+                        (double.tryParse(saleController.text)! *
+                            (convertToDouble(priceController.text) / 100))) /
                     1000)
                 .round() *
             1000,
