@@ -82,58 +82,81 @@ class _ProductsManageState extends State<ProductsManage> {
   int i = 0;
   Future<void> addProduct() async {
     try {
-      final CollectionReference collection =
-          FirebaseFirestore.instance.collection('products');
-      Map<String, dynamic> updatefilter = {};
-      for (int i = 0; i < keyControllers.length; i++) {
-        updatefilter[keyControllers[i].text] = valueControllers[i].text;
-      }
-      if (localImage != null && imageAvailable == true) {
-        await uploadImage(localImage!, type!);
-      }
-      await collection.add({
-        'name': addNameController.text,
-        'sale': double.tryParse(addSaleController.text),
-        'money': convertToDouble(addPriceController.text),
-        'sell': ((double.tryParse(addSaleController.text)! -
-                        (double.tryParse(addSaleController.text)! *
-                            (convertToDouble(addPriceController.text) / 100))) /
-                    1000)
-                .round() *
-            1000,
-        'short-des': addShortDesController.text,
-        'image': image_url,
-        'category': selectedOptions,
-        'filter': updatefilter,
-      });
+      if (addNameController.text.isEmpty ||
+          addSaleController.text.isEmpty ||
+          addPriceController.text.isEmpty ||
+          addShortDesController.text.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Vui lòng nhập đủ thông tin sản phẩm'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        final CollectionReference collection =
+            FirebaseFirestore.instance.collection('products');
+        Map<String, dynamic> updatefilter = {};
+        for (int i = 0; i < keyControllers.length; i++) {
+          updatefilter[keyControllers[i].text] = valueControllers[i].text;
+        }
+        if (localImage != null && imageAvailable == true) {
+          await uploadImage(localImage!, type!);
+        }
+        await collection.add({
+          'name': addNameController.text,
+          'sale': double.tryParse(addSaleController.text),
+          'money': convertToDouble(addPriceController.text),
+          'sell': ((double.tryParse(addSaleController.text)! -
+                          (double.tryParse(addSaleController.text)! *
+                              (convertToDouble(addPriceController.text) /
+                                  100))) /
+                      1000)
+                  .round() *
+              1000,
+          'short-des': addShortDesController.text,
+          'image': image_url,
+          'category': selectedOptions,
+          'filter': updatefilter,
+        });
 
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Thêm sản phẩm thành công'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  manageProd = !manageProd;
-                  addProd = !addProd;
-                  addNameController.clear();
-                  addSaleController.clear();
-                  addPriceController.clear();
-                  addShortDesController.clear();
-                  image_url = '';
-                  i = 0;
-                  updatefilter = {};
-                  finalList = [];
-                  fetchDocuments();
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Thêm sản phẩm thành công'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    manageProd = !manageProd;
+                    addProd = !addProd;
+                    addNameController.clear();
+                    addSaleController.clear();
+                    addPriceController.clear();
+                    addShortDesController.clear();
+                    image_url = '';
+                    i = 0;
+                    updatefilter = {};
+                    finalList = [];
+                    fetchDocuments();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     } catch (e) {
       print(e);
     }
