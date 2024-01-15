@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Website Technologies',
+      title: 'TechShop',
       theme: ThemeData(
           searchViewTheme: const SearchViewThemeData(
             backgroundColor: Colors.white,

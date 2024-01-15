@@ -1,11 +1,11 @@
 {
-    "name": "project",
-    "short_name": "project",
+    "name": "TechShop",
+    "short_name": "TechShop",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Công ty cung cấp các sản phẩm trong lĩnh vực máy tính và linh kiện điện tử.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
