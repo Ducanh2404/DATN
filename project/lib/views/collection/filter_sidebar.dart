@@ -22,7 +22,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
   Map<String, double> filterPrice = {};
 
   Widget priceBox = Container();
-  //sau khi chọn filter
+  // nhấn lọc sản phẩm
   void addSelectedFilter(String key, List<String> values, bool selected) {
     if (selected == true) {
       setState(() {
@@ -42,8 +42,8 @@ class _FilterSideBarState extends State<FilterSideBar> {
     fetchFiltedCollection();
   }
 
+  // chuyển định dạng tiền
   final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
-
   String formatAsCurrency(double value) {
     final numberFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     final roundedValue = (value / 1000).round() * 1000;
@@ -84,6 +84,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
     });
   }
 
+  // lấy dữ liệu sản phẩm sau khi lọc
   Future<List<Widget>> fetchFiltedCollection() async {
     List<Widget> listFiltedCollection = [];
     try {
@@ -149,6 +150,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
     return listFiltedCollection;
   }
 
+  // lấy dữ liệu tất cả bộ lọc
   Future<List<Widget>> fetchFilters() async {
     try {
       QuerySnapshot<Map<String, dynamic>> products = await FirebaseFirestore
@@ -201,7 +203,7 @@ class _FilterSideBarState extends State<FilterSideBar> {
     super.dispose();
   }
 
-  // lấy giá trị lớn nhất , nhỏ nhất bộ lọc
+  // lấy giá trị lớn nhất , nhỏ nhất bộ lọc giá
   Future<void> getPrice() async {
     try {
       final collection = FirebaseFirestore.instance

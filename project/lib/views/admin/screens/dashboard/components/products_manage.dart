@@ -115,11 +115,10 @@ class _ProductsManageState extends State<ProductsManage> {
         await collection.add({
           'name': addNameController.text,
           'sale': double.tryParse(addSaleController.text),
-          'money': convertToDouble(addPriceController.text),
-          'sell': ((double.tryParse(addSaleController.text)! -
-                          (double.tryParse(addSaleController.text)! *
-                              (convertToDouble(addPriceController.text) /
-                                  100))) /
+          'money': double.tryParse(addPriceController.text),
+          'sell': ((double.tryParse(addPriceController.text)! *
+                          (1 -
+                              double.tryParse(addSaleController.text)! / 100)) /
                       1000)
                   .round() *
               1000,

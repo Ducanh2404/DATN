@@ -77,23 +77,23 @@ class _PruductSliderState extends State<PruductSlider> {
             if (Responsive.isDesktop(context))
               TextButton(
                   onPressed: () {
-                    FirebaseFirestore.instance
-                        .collection('products')
-                        .get()
-                        .then((QuerySnapshot prod) {
-                      prod.docs.forEach((element) {
-                        Map<String, dynamic> data =
-                            element.data() as Map<String, dynamic>;
-                        newprice = data['money'] -
-                            (data['money'] * (data['sale'] / 100));
-                        DocumentReference document = FirebaseFirestore.instance
-                            .collection('products')
-                            .doc(element.id);
-                        document
-                            .update({'sell': (newprice / 1000).round() * 1000});
-                        print('ô kê');
-                      });
-                    });
+                    // FirebaseFirestore.instance
+                    //     .collection('products')
+                    //     .get()
+                    //     .then((QuerySnapshot prod) {
+                    //   prod.docs.forEach((element) {
+                    //     Map<String, dynamic> data =
+                    //         element.data() as Map<String, dynamic>;
+                    //     newprice = data['money'] -
+                    //         (data['money'] * (data['sale'] / 100));
+                    //     DocumentReference document = FirebaseFirestore.instance
+                    //         .collection('products')
+                    //         .doc(element.id);
+                    //     document
+                    //         .update({'sell': (newprice / 1000).round() * 1000});
+                    //     print('ô kê');
+                    //   });
+                    // });
                   },
                   style: ButtonStyle(
                       overlayColor: TransparentButton(),
