@@ -19,7 +19,6 @@ export 'package:project/views/header/forget_pass.dart';
 export 'package:project/views/header/user_profile.dart';
 export 'package:project/views/header/search_bar.dart';
 export 'package:project/views/header/drawer.dart';
-
 export 'package:project/views/cart/cart.dart';
 export 'package:project/views/cart/cart_main.dart';
 export 'package:project/views/cart/info_cart.dart';
@@ -53,7 +52,6 @@ export 'package:project/views/single_product/product_content.dart';
 export 'package:project/views/single_product/related_product.dart';
 export 'package:project/views/customer_order/customer_order.dart';
 export 'package:project/views/customer_order/customer_list.dart';
-
 export 'package:project/views/admin/responsive.dart';
 
 //firebase

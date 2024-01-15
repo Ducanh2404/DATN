@@ -22,7 +22,7 @@ class _PruductSliderState extends State<PruductSlider> {
   List<Widget> listProducts = [];
   late double newprice;
 
-  Future<List<Widget>> fetchDocuments() async {
+  Future<List<Widget>> getProduct() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection("products")
@@ -61,7 +61,7 @@ class _PruductSliderState extends State<PruductSlider> {
 
   @override
   void initState() {
-    fetchDocuments();
+    getProduct();
     super.initState();
   }
 

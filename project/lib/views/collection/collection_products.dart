@@ -19,7 +19,7 @@ class CollectionProducts extends StatefulWidget {
 class _CollectionProductsState extends State<CollectionProducts> {
   @override
   void initState() {
-    fetchDocuments();
+    getCollection();
     super.initState();
   }
 
@@ -32,7 +32,7 @@ class _CollectionProductsState extends State<CollectionProducts> {
 
   late double newprice;
 
-  Future<List<Widget>> fetchDocuments() async {
+  Future<List<Widget>> getCollection() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection("products")
