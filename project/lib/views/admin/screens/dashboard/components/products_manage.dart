@@ -185,9 +185,8 @@ class _ProductsManageState extends State<ProductsManage> {
         'name': nameController.text,
         'sale': double.tryParse(saleController.text),
         'money': convertToDouble(priceController.text),
-        'sell': ((double.tryParse(saleController.text)! -
-                        (double.tryParse(saleController.text)! *
-                            (convertToDouble(priceController.text) / 100))) /
+        'sell': ((convertToDouble(priceController.text) *
+                        (1 - double.tryParse(saleController.text)! / 100)) /
                     1000)
                 .round() *
             1000,
@@ -758,6 +757,7 @@ class _ProductsManageState extends State<ProductsManage> {
                 Center(
                   child: ElevatedButton(
                       onPressed: () {
+                        image_url = '';
                         addProduct();
                       },
                       child: const Text('Thêm sản phẩm')),
