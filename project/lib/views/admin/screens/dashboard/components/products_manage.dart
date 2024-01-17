@@ -652,7 +652,7 @@ class _ProductsManageState extends State<ProductsManage> {
                         keyboardType: TextInputType.number,
                         controller: addSaleController,
                         decoration: const InputDecoration(
-                          labelText: 'Giảm giá',
+                          labelText: 'Phần trăm giảm giá',
                         ),
                       ),
                     ),
@@ -827,7 +827,7 @@ class _ProductsManageState extends State<ProductsManage> {
                         keyboardType: TextInputType.number,
                         controller: saleController,
                         decoration: const InputDecoration(
-                          labelText: 'Giảm giá',
+                          labelText: 'Phần trăm giảm giá',
                         ),
                       ),
                     ),

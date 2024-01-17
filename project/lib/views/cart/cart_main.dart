@@ -77,7 +77,7 @@ class _CartMainState extends State<CartMain> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const MyApp(),
+                              builder: (context) => const CustomerOrder(),
                             ))
                       },
                       child: const Text('OK'),
