@@ -37,7 +37,7 @@ class _RegisterState extends State<Register> {
   }
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+  // thêm thông tin tài khoản vào csdl
   Future<void> addUser() {
     return users
         .add({
@@ -49,6 +49,7 @@ class _RegisterState extends State<Register> {
         .catchError((error) => print("$error"));
   }
 
+  // tạo tài khoản trên firebase
   void createUserWithEmailAndPassword() async {
     if (_controllerName.text.isEmpty) {
       setState(() {

@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-
 import '../../../constants.dart';
 import 'package:project/all_imports.dart';
 
@@ -36,7 +35,8 @@ class _OrderManageState extends State<OrderManage> {
       DocumentReference order =
           FirebaseFirestore.instance.collection('order').doc(selectedOrderId);
       await order.update({
-        'status': '0',
+        if (status == 'Đang xử lí') 'status': '0',
+        if (status == 'Đang giao') 'status': '1',
       });
       setState(() {
         showOrder = !showOrder;
@@ -48,7 +48,7 @@ class _OrderManageState extends State<OrderManage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Đơn hàng đã được tiến hành giao'),
+            title: const Text('Đơn hàng đã được cập nhật'),
             actions: <Widget>[
               TextButton(
                 child: const Text('Ok'),
@@ -371,7 +371,9 @@ class _OrderManageState extends State<OrderManage> {
                                 updateOrder();
                               },
                               child: Text(
-                                'Tiến hành giao hàng',
+                                status == 'Đang xử lí'
+                                    ? 'Tiến hành giao hàng'
+                                    : 'Hủy giao hàng',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
