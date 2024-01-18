@@ -43,9 +43,9 @@ class _AccountManageState extends State<AccountManage> {
   Future<void> addUser() {
     return users
         .add({
-          'name': '',
+          'name': '1',
           'email': _controllerEmail.text,
-          'status': '1',
+          'status': '0',
         })
         .then((value) => print("Thêm user thành công"))
         .catchError((error) => print("$error"));
@@ -98,6 +98,8 @@ class _AccountManageState extends State<AccountManage> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
+                      listAcc = [];
+                      getAccounts();
                     },
                     child: const Text('OK'),
                   ),
@@ -154,6 +156,7 @@ class _AccountManageState extends State<AccountManage> {
                                 controller: _controllerEmail,
                               ),
                               TextField(
+                                obscureText: true,
                                 decoration:
                                     InputDecoration(labelText: 'Mật khẩu'),
                                 controller: _controllerPass,
