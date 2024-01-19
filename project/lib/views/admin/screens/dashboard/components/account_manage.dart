@@ -80,10 +80,6 @@ class _AccountManageState extends State<AccountManage> {
       return;
     }
     try {
-// =      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-//           email: _controllerEmail.text.trim(),
-//           password: _controllerPass.text.trim());
-
       FirebaseApp app = await Firebase.initializeApp(
           name: 'secondary', options: Firebase.app().options);
       await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(
