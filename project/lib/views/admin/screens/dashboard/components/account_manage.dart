@@ -43,7 +43,7 @@ class _AccountManageState extends State<AccountManage> {
   Future<void> addUser() {
     return users
         .add({
-          'name': '1',
+          'name': '',
           'email': _controllerEmail.text,
           'status': '0',
         })
@@ -80,10 +80,17 @@ class _AccountManageState extends State<AccountManage> {
       return;
     }
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+// =      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+//           email: _controllerEmail.text.trim(),
+//           password: _controllerPass.text.trim());
+
+      FirebaseApp app = await Firebase.initializeApp(
+          name: 'secondary', options: Firebase.app().options);
+      await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(
           email: _controllerEmail.text.trim(),
           password: _controllerPass.text.trim());
-      FirebaseAuth.instance.authStateChanges().listen((user) {
+      app.delete();
+      FirebaseAuth.instance.authStateChanges().listen((user) async {
         if (user != null) {
           addUser();
           user.sendEmailVerification();
